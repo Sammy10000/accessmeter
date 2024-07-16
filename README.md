@@ -1,70 +1,79 @@
-[![Build Status](https://travis-ci.org/Automattic/_s.svg?branch=master)](https://travis-ci.org/Automattic/_s)
+# AccessMeter
 
-_s
-===
+A custom WordPress theme designed for maximum accessibility, SEO optimization, and user customization. This theme integrates Lighthouse API by default to help site owners gauge the accessibility of their pages right from the dashboard. Additionally, the theme is WooCommerce ready and offers a variety of customization options to make it versatile and attractive.
 
-Hi. I'm a starter theme called `_s`, or `underscores`, if you like. I'm a theme meant for hacking so don't use me as a Parent Theme. Instead try turning me into the next, most awesome, WordPress theme out there. That's what I'm here for.
+## Features
 
-My ultra-minimal CSS might make me look like theme tartare but that means less stuff to get in your way when you're designing your awesome theme. Here are some of the other more interesting things you'll find here:
+### Accessibility
+- **Lighthouse API Integration**: Provides real-time accessibility scores and suggestions directly within the WordPress dashboard.
+- **ARIA Attributes**: Proper use of ARIA attributes to improve screen reader accessibility.
+- **Keyboard Navigation**: Ensures all interactive elements are accessible via keyboard navigation.
+- **Color Contrast**: High contrast options to meet WCAG guidelines.
 
-* A modern workflow with a pre-made command-line interface to turn your project into a more pleasant experience.
-* A just right amount of lean, well-commented, modern, HTML5 templates.
-* A custom header implementation in `inc/custom-header.php`. Just add the code snippet found in the comments of `inc/custom-header.php` to your `header.php` template.
-* Custom template tags in `inc/template-tags.php` that keep your templates clean and neat and prevent code duplication.
-* Some small tweaks in `inc/template-functions.php` that can improve your theming experience.
-* A script at `js/navigation.js` that makes your menu a toggled dropdown on small screens (like your phone), ready for CSS artistry. It's enqueued in `functions.php`.
-* 2 sample layouts in `sass/layouts/` made using CSS Grid for a sidebar on either side of your content. Just uncomment the layout of your choice in `sass/style.scss`.
-Note: `.no-sidebar` styles are automatically loaded.
-* Smartly organized starter CSS in `style.css` that will help you to quickly get your design off the ground.
-* Full support for `WooCommerce plugin` integration with hooks in `inc/woocommerce.php`, styling override woocommerce.css with product gallery features (zoom, swipe, lightbox) enabled.
-* Licensed under GPLv2 or later. :) Use it to make something cool.
+### SEO Optimization
+- **Optimized HTML Structure**: Proper use of HTML5 elements and schema markup.
+- **Meta Tags**: Easy management of meta tags for better SEO performance.
+- **SEO Plugin Compatibility**: Full support for popular SEO plugins like Yoast SEO and Rank Math.
 
-Installation
----------------
+### Customization Options
+- **Header and Footer**: Options to expand or collapse the header and footer sections.
+- **Sidebar Layouts**: Choose from right sidebar, left sidebar, both sidebars, or no sidebar at all.
+- **Color Schemes**: Four color schemes available: Blue, Purple, Red, and Green.
+- **Light/Dark Modes**: Switch between light and dark modes to suit your preferences.
+
+### WooCommerce Ready
+- **Modular Integration**: WooCommerce support is integrated in a modular way to avoid bloat. Features and styles load only if WooCommerce is active.
+- **Custom WooCommerce Styles**: Custom styles for WooCommerce to match the theme’s aesthetics.
+- **Product Gallery Features**: Includes zoom, swipe, and lightbox functionalities for product images.
+
+### Development and Workflow
+- **Modern Workflow**: Utilizes modern development tools and practices for an efficient workflow.
+- **CLI Commands**: A set of CLI commands tailored for WordPress theme development.
+- **SASS Support**: Uses SASS for organized and maintainable CSS.
+- **Gulp Automation**: Automates tasks like CSS compilation, JavaScript minification, and live reloading.
+
+## Installation
 
 ### Requirements
-
-`_s` requires the following dependencies:
-
 - [Node.js](https://nodejs.org/)
 - [Composer](https://getcomposer.org/)
 
 ### Quick Start
+1. Clone or download this repository.
+2. Install the necessary Node.js and Composer dependencies:
+    ```sh
+    composer install
+    npm install
+    ```
+3. Run the setup commands to initialize the development environment:
+    ```sh
+    npm run build
+    ```
 
-Clone or download this repository, change its name to something else (like, say, `megatherium-is-awesome`), and then you'll need to do a six-step find and replace on the name in all the templates.
+## Available CLI Commands
 
-1. Search for `'_s'` (inside single quotations) to capture the text domain and replace with: `'megatherium-is-awesome'`.
-2. Search for `_s_` to capture all the functions names and replace with: `megatherium_is_awesome_`.
-3. Search for `Text Domain: _s` in `style.css` and replace with: `Text Domain: megatherium-is-awesome`.
-4. Search for <code>&nbsp;_s</code> (with a space before it) to capture DocBlocks and replace with: <code>&nbsp;Megatherium_is_Awesome</code>.
-5. Search for `_s-` to capture prefixed handles and replace with: `megatherium-is-awesome-`.
-6. Search for `_S_` (in uppercase) to capture constants and replace with: `MEGATHERIUM_IS_AWESOME_`.
+- `composer lint:wpcs`: Checks all PHP files against [PHP Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/).
+- `composer lint:php`: Checks all PHP files for syntax errors.
+- `composer make-pot`: Generates a .pot file in the `languages/` directory.
+- `npm run compile:css`: Compiles SASS files to CSS.
+- `npm run compile:rtl`: Generates an RTL stylesheet.
+- `npm run watch`: Watches all SASS files and recompiles them to CSS when they change.
+- `npm run lint:scss`: Checks all SASS files against [CSS Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/css/).
+- `npm run lint:js`: Checks all JavaScript files against [JavaScript Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/javascript/).
+- `npm run bundle`: Generates a .zip archive for distribution, excluding development and system files.
 
-Then, update the stylesheet header in `style.css`, the links in `footer.php` with your own information and rename `_s.pot` from `languages` folder to use the theme's slug. Next, update or delete this readme.
+## Customization Instructions
 
-### Setup
+1. **Header and Footer Customization**:
+   - Access the theme customizer to toggle the expanded/collapsed states.
+2. **Sidebar Layouts**:
+   - Choose your preferred sidebar layout from the theme customizer.
+3. **Color Schemes**:
+   - Select from Blue, Purple, Red, and Green color schemes in the theme customizer.
+4. **Light/Dark Modes**:
+   - Toggle between light and dark modes from the theme customizer.
 
-To start using all the tools that come with `_s`  you need to install the necessary Node.js and Composer dependencies :
+## License
+Licensed under GPLv2 or later. Use it to make something cool and share your improvements.
 
-```sh
-$ composer install
-$ npm install
-```
-
-### Available CLI commands
-
-`_s` comes packed with CLI commands tailored for WordPress theme development :
-
-- `composer lint:wpcs` : checks all PHP files against [PHP Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/).
-- `composer lint:php` : checks all PHP files for syntax errors.
-- `composer make-pot` : generates a .pot file in the `languages/` directory.
-- `npm run compile:css` : compiles SASS files to css.
-- `npm run compile:rtl` : generates an RTL stylesheet.
-- `npm run watch` : watches all SASS files and recompiles them to css when they change.
-- `npm run lint:scss` : checks all SASS files against [CSS Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/css/).
-- `npm run lint:js` : checks all JavaScript files against [JavaScript Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/javascript/).
-- `npm run bundle` : generates a .zip archive for distribution, excluding development and system files.
-
-Now you're ready to go! The next step is easy to say, but harder to do: make an awesome WordPress theme. :)
-
-Good luck!
+Good luck and happy theming!
