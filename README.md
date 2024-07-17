@@ -74,6 +74,6 @@ A custom WordPress theme designed for maximum accessibility, SEO optimization, a
    - Toggle between light and dark modes from the theme customizer.
 
 ## License
-Licensed under GPLv2 or later. Use it to make something cool and share your improvements.
+Licensed under GPLv2 or later. Use it to build 100% SEO-optimized & WCAG-compliant sites.
 
 Good luck and happy theming!
