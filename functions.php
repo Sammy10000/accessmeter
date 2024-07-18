@@ -165,6 +165,171 @@ function enqueue_bootstrap() {
 
 add_action('wp_enqueue_scripts', 'enqueue_bootstrap');
 
+/**
+ * Enqueue custom admin styles to change the appearance of the Accessmeter menu item.
+ */
+function accessmeter_custom_admin_styles() {
+    echo '
+    <style>
+            #adminmenu .toplevel_page_accessmeter-settings > a {            
+            color: green;
+            background-color: black;
+        }
+    </style>';
+}
+
+// Hook the function to the admin_head action to ensure it is included in the admin area
+add_action('admin_head', 'accessmeter_custom_admin_styles');
+
+
+/**
+ * Register Custom Navigation Walker
+ */
+function register_navwalker(){
+    require_once get_template_directory() . '/class-wp-bootstrap-navwalker.php';
+}
+add_action( 'after_setup_theme', 'register_navwalker' );
+
+/**
+ * Register Settings
+ */
+add_action('admin_init', 'my_theme_settings_init');
+function my_theme_settings_init() {
+  register_setting('my_theme_settings', 'header_mode');
+  register_setting('my_theme_settings', 'header_color');
+  register_setting('my_theme_settings', 'body_sidebar');
+  register_setting('my_theme_settings', 'body_mode');
+  register_setting('my_theme_settings', 'footer_mode');
+  register_setting('my_theme_settings', 'footer_color');
+}
+
+/**
+ * Add settings page
+ */
+add_action('admin_menu', 'my_theme_settings_menu');
+function my_theme_settings_menu() {
+  // Add top-level menu
+  add_menu_page(
+    'Accessmeter Settings',
+    'Accessmeter',
+    'manage_options',
+    'accessmeter-settings',
+    'accessmeter_theme_settings_page', // Temporary callback
+    'dashicons-admin-generic',
+    1
+  );
+
+  // Add submenus
+  add_submenu_page(
+    'accessmeter-settings',
+    'Accessibility Settings',
+    'Accessibility',
+    'manage_options',
+    'accessmeter-accessibility',
+    'accessmeter_accessibility_page'
+  );
+
+  add_submenu_page(
+    'accessmeter-settings',
+    'Theme Settings',
+    'Theme Settings',
+    'manage_options',
+    'accessmeter-theme-settings',
+    'accessmeter_theme_settings_page'
+  );
+
+  // Remove the first submenu which was added by add_menu_page
+  remove_submenu_page('accessmeter-settings', 'accessmeter-settings');
+}
+
+/**
+ * Accessibility settings page callback
+ */
+function accessmeter_accessibility_page() {
+  echo '<div class="wrap"><h1>Accessibility Settings</h1><p>Here you can manage accessibility settings.</p></div>';
+}
+
+/**
+ * Theme settings page callback
+ */
+function accessmeter_theme_settings_page() {
+  ?>
+  <div class="wrap">
+    <h1>Theme Settings</h1>
+    <form action="options.php" method="post">
+      <?php settings_fields('my_theme_settings'); ?>
+      <?php do_settings_sections('my_theme_settings'); ?>
+      <table class="form-table">
+        <tr valign="top">
+          <th scope="row">Header Mode</th>
+          <td>
+            <select name="header_mode">
+              <option value="collapsed" <?php selected(get_option('header_mode'), 'collapsed'); ?>>Collapsed</option>
+              <option value="expanded" <?php selected(get_option('header_mode'), 'expanded'); ?>>Expanded</option>
+            </select>
+          </td>
+        </tr>
+        <tr valign="top">
+          <th scope="row">Header Color</th>
+          <td>
+            <select name="header_color">
+              <option value="red" <?php selected(get_option('header_color'), 'red'); ?>>Red</option>
+              <option value="purple" <?php selected(get_option('header_color'), 'purple'); ?>>Purple</option>
+              <option value="black" <?php selected(get_option('header_color'), 'black'); ?>>Black</option>
+              <option value="white" <?php selected(get_option('header_color'), 'white'); ?>>White</option>
+              <option value="blue" <?php selected(get_option('header_color'), 'blue'); ?>>Blue</option>
+              <option value="green" <?php selected(get_option('header_color'), 'green'); ?>>Green</option>
+            </select>
+          </td>
+        </tr>
+        <tr valign="top">
+          <th scope="row">Body Sidebar</th>
+          <td>
+            <select name="body_sidebar">
+              <option value="left" <?php selected(get_option('body_sidebar'), 'left'); ?>>Left Sidebar</option>
+              <option value="right" <?php selected(get_option('body_sidebar'), 'right'); ?>>Right Sidebar</option>
+			  <option value="none" <?php selected(get_option('body_sidebar'), 'none'); ?>>Both Sidebars</option>
+              <option value="none" <?php selected(get_option('body_sidebar'), 'none'); ?>>No Sidebar</option>
+            </select>
+          </td>
+        </tr>
+        <tr valign="top">
+          <th scope="row">Body Mode</th>
+          <td>
+            <select name="body_mode">
+              <option value="dark" <?php selected(get_option('body_mode'), 'dark'); ?>>Dark</option>
+              <option value="light" <?php selected(get_option('body_mode'), 'light'); ?>>Light</option>
+            </select>
+          </td>
+        </tr>
+        <tr valign="top">
+          <th scope="row">Footer Mode</th>
+          <td>
+            <select name="footer_mode">
+              <option value="collapsed" <?php selected(get_option('footer_mode'), 'collapsed'); ?>>Collapsed</option>
+              <option value="expanded" <?php selected(get_option('footer_mode'), 'expanded'); ?>>Expanded</option>
+            </select>
+          </td>
+        </tr>
+        <tr valign="top">
+          <th scope="row">Footer Color</th>
+          <td>
+            <select name="footer_color">
+              <option value="red" <?php selected(get_option('footer_color'), 'red'); ?>>Red</option>
+              <option value="purple" <?php selected(get_option('footer_color'), 'purple'); ?>>Purple</option>
+              <option value="black" <?php selected(get_option('footer_color'), 'black'); ?>>Black</option>
+              <option value="white" <?php selected(get_option('footer_color'), 'white'); ?>>White</option>
+              <option value="blue" <?php selected(get_option('footer_color'), 'blue'); ?>>Blue</option>
+              <option value="green" <?php selected(get_option('footer_color'), 'green'); ?>>Green</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+      <?php submit_button(); ?>
+    </form>
+  </div>
+  <?php
+}
 
 
 /**
