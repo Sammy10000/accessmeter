@@ -193,83 +193,89 @@ add_action( 'after_setup_theme', 'register_navwalker' );
 
 // Add WooCommerce support
 function accessmeter_add_woocommerce_support() {
-  add_theme_support('woocommerce');
+    add_theme_support('woocommerce');
 }
+
+// Set default theme options
+function accessmeter_set_default_options() {
+    if (false === get_option('woocommerce_enabled')) {
+        update_option('woocommerce_enabled', 0);
+    }
+}
+add_action('after_switch_theme', 'accessmeter_set_default_options');
 
 // Load WooCommerce features conditionally
 function accessmeter_load_woocommerce() {
-  if (get_option('woocommerce_enabled')) {
-      // Add WooCommerce support
-      add_action('after_setup_theme', 'accessmeter_add_woocommerce_support');
-      
-      // Customize WooCommerce product layout
-      add_action('woocommerce_before_main_content', 'custom_single_product_start', 5);
-      add_action('woocommerce_after_main_content', 'custom_single_product_end', 15);
+    if (get_option('woocommerce_enabled')) {
+        // Add WooCommerce support
+        add_action('after_setup_theme', 'accessmeter_add_woocommerce_support');
+        
+        // Customize WooCommerce product layout
+        add_action('woocommerce_before_main_content', 'custom_single_product_start', 5);
+        add_action('woocommerce_after_main_content', 'custom_single_product_end', 15);
 
-      function custom_single_product_start() {
-          echo '<div class="custom-single-product">';
-      }
+        function custom_single_product_start() {
+            echo '<div class="custom-single-product">';
+        }
 
-      function custom_single_product_end() {
-          echo '</div>';
-      }
+        function custom_single_product_end() {
+            echo '</div>';
+        }
 
-      // Add custom product thumbnails
-      add_action('after_setup_theme', 'custom_woocommerce_image_sizes');
-      function custom_woocommerce_image_sizes() {
-          add_image_size('custom-shop-catalog', 800, 800, true);
-          add_image_size('custom-shop-single', 1200, 1200, true);
-      }
+        // Add custom product thumbnails
+        add_action('after_setup_theme', 'custom_woocommerce_image_sizes');
+        function custom_woocommerce_image_sizes() {
+            add_image_size('custom-shop-catalog', 800, 800, true);
+            add_image_size('custom-shop-single', 1200, 1200, true);
+        }
 
-      // Customize WooCommerce breadcrumbs
-      add_filter('woocommerce_breadcrumb_defaults', 'custom_woocommerce_breadcrumbs');
-      function custom_woocommerce_breadcrumbs($defaults) {
-          $defaults['delimiter'] = ' &gt; ';
-          $defaults['wrap_before'] = '<nav class="woocommerce-breadcrumb">';
-          $defaults['wrap_after'] = '</nav>';
-          return $defaults;
-      }
+        // Customize WooCommerce breadcrumbs
+        add_filter('woocommerce_breadcrumb_defaults', 'custom_woocommerce_breadcrumbs');
+        function custom_woocommerce_breadcrumbs($defaults) {
+            $defaults['delimiter'] = ' &gt; ';
+            $defaults['wrap_before'] = '<nav class="woocommerce-breadcrumb">';
+            $defaults['wrap_after'] = '</nav>';
+            return $defaults;
+        }
 
-      // Modify checkout fields
-      add_filter('woocommerce_checkout_fields', 'custom_woocommerce_checkout_fields');
-      function custom_woocommerce_checkout_fields($fields) {
-          // Remove the company name field
-          unset($fields['billing']['billing_company']);
-          
-          // Add a custom field
-          $fields['billing']['billing_custom_field'] = array(
-              'label'     => __('Custom Field', 'woocommerce'),
-              'placeholder'   => _x('Custom Field', 'placeholder', 'woocommerce'),
-              'required'  => true,
-              'class'     => array('form-row-wide'),
-              'clear'     => true
-          );
-          
-          return $fields;
-      }
+        // Modify checkout fields
+        add_filter('woocommerce_checkout_fields', 'custom_woocommerce_checkout_fields');
+        function custom_woocommerce_checkout_fields($fields) {
+            // Remove the company name field
+            unset($fields['billing']['billing_company']);
+            
+            // Add a custom field
+            $fields['billing']['billing_custom_field'] = array(
+                'label'     => __('Custom Field', 'woocommerce'),
+                'placeholder'   => _x('Custom Field', 'placeholder', 'woocommerce'),
+                'required'  => true,
+                'class'     => array('form-row-wide'),
+                'clear'     => true
+            );
+            
+            return $fields;
+        }
 
-      // Enqueue custom WooCommerce styles and scripts
-      add_action('wp_enqueue_scripts', 'custom_woocommerce_scripts');
-      function custom_woocommerce_scripts() {
-          if (class_exists('WooCommerce')) {
-              wp_enqueue_style('custom-woocommerce-styles', get_template_directory_uri() . '/woocommerce.css');
-              wp_enqueue_script('custom-woocommerce-scripts', get_template_directory_uri() . '/woocommerce.js', array('jquery'), '', true);
-          }
-      }
+        // Enqueue custom WooCommerce styles and scripts
+        add_action('wp_enqueue_scripts', 'custom_woocommerce_scripts');
+        function custom_woocommerce_scripts() {
+            wp_enqueue_style('custom-woocommerce-styles', get_template_directory_uri() . '/woocommerce.css');
+            wp_enqueue_script('custom-woocommerce-scripts', get_template_directory_uri() . '/woocommerce.js', array('jquery'), '', true);
+        }
 
-      // Customize WooCommerce notices
-      add_action('woocommerce_before_customer_login_form', 'custom_woocommerce_notices');
-      function custom_woocommerce_notices() {
-          wc_print_notices(); // Custom styling can be applied via CSS
-      }
+        // Customize WooCommerce notices
+        add_action('woocommerce_before_customer_login_form', 'custom_woocommerce_notices');
+        function custom_woocommerce_notices() {
+            wc_print_notices(); // Custom styling can be applied via CSS
+        }
 
-      // Add custom sorting options
-      add_filter('woocommerce_get_catalog_ordering_args', 'custom_woocommerce_catalog_ordering_args');
-      function custom_woocommerce_catalog_ordering_args($args) {
-          $args['orderby'] = 'meta_value_num'; // Sort by meta field value
-          return $args;
-      }
-  }
+        // Add custom sorting options
+        add_filter('woocommerce_get_catalog_ordering_args', 'custom_woocommerce_catalog_ordering_args');
+        function custom_woocommerce_catalog_ordering_args($args) {
+            $args['orderby'] = 'meta_value_num'; // Sort by meta field value
+            return $args;
+        }
+    }
 }
 add_action('init', 'accessmeter_load_woocommerce');
 
@@ -419,14 +425,7 @@ function accessmeter_theme_settings_page() {
                         <input type="checkbox" name="gdpr_compliance" value="1" <?php checked(get_option('gdpr_compliance'), 1); ?>>
                         <p class="description"><?php _e('Enable or disable the default GDPR compliance modal.', 'accessmeter'); ?></p>
                     </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><?php _e('Breadcrumb Code', 'accessmeter'); ?></th>
-                    <td>
-                    <textarea name="breadcrumb_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('breadcrumb_code')); ?></textarea>
-                    <p class="description"><?php _e('Paste the breadcrumb snippet from your SEO plugin (e.g., Yoast, Rank Math) here.', 'accessmeter'); ?></p>
-                    </td>
-                </tr>
+                </tr>                
                 <tr valign="top">
                     <th scope="row"><?php _e('Header Mode', 'accessmeter'); ?></th>
                     <td>
@@ -496,6 +495,13 @@ function accessmeter_theme_settings_page() {
                     <td>
                         <input type="text" name="footer_credits" style="width: 500px" value="<?php echo esc_attr(get_option('footer_credits')); ?>" class="regular-text">
                         <p class="description"><?php _e('Enter footer credits text here (example: "Accessmeter. All rights reserved.", "Designed by Accessmeter Agency.", "Powered by Accessmeter Solutions.")', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Breadcrumb Code', 'accessmeter'); ?></th>
+                    <td>
+                    <textarea name="breadcrumb_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('breadcrumb_code')); ?></textarea>
+                    <p class="description"><?php _e('Paste the breadcrumb snippet from your SEO plugin (e.g., Yoast, Rank Math) here.', 'accessmeter'); ?></p>
                     </td>
                 </tr>                
                 <tr valign="top">

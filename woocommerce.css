@@ -1,0 +1,31 @@
+/* Example: Style for custom class added to product titles */
+.custom-product-title {
+    color: #ff0000; /* Red color for product titles */
+    font-weight: bold;
+}
+
+/* Example: Custom style for WooCommerce breadcrumbs */
+.woocommerce-breadcrumb {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Example: Style for expanded product description */
+.woocommerce-product-details__short-description.expanded {
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Example: Custom checkout field */
+.woocommerce-billing-fields .form-row-wide {
+    margin-bottom: 20px;
+}
+
+/* Example: Custom styles for WooCommerce notices */
+.woocommerce-error, .woocommerce-info, .woocommerce-message {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+}
