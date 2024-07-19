@@ -291,6 +291,10 @@ function my_theme_settings_init() {
     register_setting('my_theme_settings', 'site_verification_code', 'sanitize_text_field');
     register_setting('my_theme_settings', 'marketing_pixel_code', 'sanitize_js_code');
     register_setting('my_theme_settings', 'email_service_provider_code', 'sanitize_js_code');
+    register_setting('my_theme_settings', 'footer_credits', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'cookie_consent', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'gdpr_compliance', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'custom_js', 'sanitize_js_code');
 }
 
 /**
@@ -471,6 +475,34 @@ function accessmeter_theme_settings_page() {
                             <option value="blue" <?php selected(get_option('footer_color'), 'blue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
                             <option value="green" <?php selected(get_option('footer_color'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
                         </select>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Footer Credits', 'accessmeter'); ?></th>
+                    <td>
+                        <input type="text" name="footer_credits" value="<?php echo esc_attr(get_option('footer_credits')); ?>" class="regular-text">
+                        <p class="description"><?php _e('Enter footer credits text here (example: "Accessmeter. All rights reserved.", "Designed by Accessmeter Agency.", "Powered by Accessmeter Solutions.")', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Cookie Consent', 'accessmeter'); ?></th>
+                    <td>
+                        <input type="text" name="cookie_consent" value="<?php echo esc_attr(get_option('cookie_consent')); ?>" class="regular-text">
+                        <p class="description"><?php _e('Enter cookie consent text here (example: "We use cookies to enhance your experience on our site. By continuing to browse, you agree to our use of cookies.", "This website uses cookies to ensure you get the best experience on our website.")', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('GDPR Compliance', 'accessmeter'); ?></th>
+                    <td>
+                        <input type="text" name="gdpr_compliance" value="<?php echo esc_attr(get_option('gdpr_compliance')); ?>" class="regular-text">
+                        <p class="description"><?php _e('Enter GDPR compliance text here .', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Custom JavaScript', 'accessmeter'); ?></th>
+                    <td>
+                        <textarea name="custom_js" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('custom_js')); ?></textarea>
+                        <p class="description"><?php _e('Enter custom JavaScript code here.', 'accessmeter'); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
