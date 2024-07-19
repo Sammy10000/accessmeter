@@ -299,7 +299,9 @@ function my_theme_settings_init() {
     register_setting('my_theme_settings', 'email_service_provider_code', 'sanitize_js_code');
     register_setting('my_theme_settings', 'footer_credits', 'sanitize_text_field');
     register_setting('my_theme_settings', 'cookie_consent', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'cookie_consent_text', 'sanitize_textarea_field');
     register_setting('my_theme_settings', 'gdpr_compliance', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'gdpr_compliance_text', 'sanitize_textarea_field');
     register_setting('my_theme_settings', 'custom_js', 'sanitize_js_code');
 }
 
@@ -415,17 +417,31 @@ function accessmeter_theme_settings_page() {
                 <tr valign="top">
                     <th scope="row"><?php _e('Cookie Consent', 'accessmeter'); ?></th>
                     <td>
-                    <input type="checkbox" name="cookie_consent" value="1" <?php checked(get_option('cookie_consent'), 1); ?>>
-                    <p class="description"><?php _e('Enable or disable the default cookie consent modal.', 'accessmeter'); ?></p>
+                        <input type="checkbox" name="cookie_consent" value="1" <?php checked(get_option('cookie_consent'), 1); ?>>
+                        <p class="description"><?php _e('Enable or disable the default cookie consent modal.', 'accessmeter'); ?></p>
                     </td>
-                    </tr>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Cookie Consent Text', 'accessmeter'); ?></th>
+                    <td>
+                        <textarea name="cookie_consent_text" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('cookie_consent_text')); ?></textarea>
+                        <p class="description"><?php _e('Enter the custom text for the cookie consent modal. Leave empty to use the default text.', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
                 <tr valign="top">
                     <th scope="row"><?php _e('GDPR Compliance', 'accessmeter'); ?></th>
                     <td>
                         <input type="checkbox" name="gdpr_compliance" value="1" <?php checked(get_option('gdpr_compliance'), 1); ?>>
                         <p class="description"><?php _e('Enable or disable the default GDPR compliance modal.', 'accessmeter'); ?></p>
                     </td>
-                </tr>                
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('GDPR Compliance Text', 'accessmeter'); ?></th>
+                    <td>
+                        <textarea name="gdpr_compliance_text" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('gdpr_compliance_text')); ?></textarea>
+                        <p class="description"><?php _e('Enter the custom text for the GDPR compliance modal. Leave empty to use the default text.', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
                 <tr valign="top">
                     <th scope="row"><?php _e('Header Mode', 'accessmeter'); ?></th>
                     <td>
@@ -452,10 +468,9 @@ function accessmeter_theme_settings_page() {
                     <th scope="row"><?php _e('Body Sidebar', 'accessmeter'); ?></th>
                     <td>
                         <select name="body_sidebar">
-                            <option value="left" <?php selected(get_option('body_sidebar'), 'left'); ?>><?php _e('Left Sidebar', 'accessmeter'); ?></option>
-                            <option value="right" <?php selected(get_option('body_sidebar'), 'right'); ?>><?php _e('Right Sidebar', 'accessmeter'); ?></option>
-                            <option value="both" <?php selected(get_option('body_sidebar'), 'both'); ?>><?php _e('Both Sidebars', 'accessmeter'); ?></option>
-                            <option value="none" <?php selected(get_option('body_sidebar'), 'none'); ?>><?php _e('No Sidebar', 'accessmeter'); ?></option>
+                            <option value="left" <?php selected(get_option('body_sidebar'), 'left'); ?>><?php _e('Left', 'accessmeter'); ?></option>
+                            <option value="right" <?php selected(get_option('body_sidebar'), 'right'); ?>><?php _e('Right', 'accessmeter'); ?></option>
+                            <option value="none" <?php selected(get_option('body_sidebar'), 'none'); ?>><?php _e('None', 'accessmeter'); ?></option>
                         </select>
                     </td>
                 </tr>
@@ -463,8 +478,8 @@ function accessmeter_theme_settings_page() {
                     <th scope="row"><?php _e('Body Mode', 'accessmeter'); ?></th>
                     <td>
                         <select name="body_mode">
-                            <option value="dark" <?php selected(get_option('body_mode'), 'dark'); ?>><?php _e('Dark', 'accessmeter'); ?></option>
                             <option value="light" <?php selected(get_option('body_mode'), 'light'); ?>><?php _e('Light', 'accessmeter'); ?></option>
+                            <option value="dark" <?php selected(get_option('body_mode'), 'dark'); ?>><?php _e('Dark', 'accessmeter'); ?></option>
                         </select>
                     </td>
                 </tr>
@@ -493,50 +508,50 @@ function accessmeter_theme_settings_page() {
                 <tr valign="top">
                     <th scope="row"><?php _e('Footer Credits', 'accessmeter'); ?></th>
                     <td>
-                        <input type="text" name="footer_credits" style="width: 500px" value="<?php echo esc_attr(get_option('footer_credits')); ?>" class="regular-text">
-                        <p class="description"><?php _e('Enter footer credits text here (example: "Accessmeter. All rights reserved.", "Designed by Accessmeter Agency.", "Powered by Accessmeter Solutions.")', 'accessmeter'); ?></p>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><?php _e('Breadcrumb Code', 'accessmeter'); ?></th>
-                    <td>
-                    <textarea name="breadcrumb_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('breadcrumb_code')); ?></textarea>
-                    <p class="description"><?php _e('Paste the breadcrumb snippet from your SEO plugin (e.g., Yoast, Rank Math) here.', 'accessmeter'); ?></p>
-                    </td>
-                </tr>                
-                <tr valign="top">
-                    <th scope="row"><?php _e('Custom JavaScript', 'accessmeter'); ?></th>
-                    <td>
-                        <textarea name="custom_js" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('custom_js')); ?></textarea>
-                        <p class="description"><?php _e('Enter custom JavaScript code to extend the functionality of the site here.', 'accessmeter'); ?></p>
+                        <input type="text" name="footer_credits" value="<?php echo esc_attr(get_option('footer_credits')); ?>" class="regular-text">
+                        <p class="description"><?php _e('Enter the footer credits text.', 'accessmeter'); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row"><?php _e('Google Analytics Script', 'accessmeter'); ?></th>
                     <td>
                         <textarea name="google_analytics_script" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('google_analytics_script')); ?></textarea>
-                        <p class="description"><?php _e('Paste your Google Analytics script here. For example: Script code from Google Analytics to track website traffic and user behavior', 'accessmeter'); ?></p>
+                        <p class="description"><?php _e('Enter your Google Analytics script here.', 'accessmeter'); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row"><?php _e('Site Verification Code', 'accessmeter'); ?></th>
                     <td>
-                        <textarea name="site_verification_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('site_verification_code')); ?></textarea>
-                        <p class="description"><?php _e('Paste your site verification code here (example: "Google Search Console verification code.", "Bing Webmaster Tools verification meta tag.", "Yandex verification code to prove site ownership.")', 'accessmeter'); ?></p>
+                        <input type="text" name="site_verification_code" value="<?php echo esc_attr(get_option('site_verification_code')); ?>" class="regular-text">
+                        <p class="description"><?php _e('Enter your site verification code (e.g., Google, Bing).', 'accessmeter'); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row"><?php _e('Marketing Pixel Code', 'accessmeter'); ?></th>
                     <td>
                         <textarea name="marketing_pixel_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('marketing_pixel_code')); ?></textarea>
-                        <p class="description"><?php _e('Paste your marketing pixel code here. For example: "Facebook pixel code for tracking user interactions and ad conversions."', 'accessmeter'); ?></p>
+                        <p class="description"><?php _e('Enter your marketing pixel code here.', 'accessmeter'); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row"><?php _e('Email Service Provider Code', 'accessmeter'); ?></th>
                     <td>
                         <textarea name="email_service_provider_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('email_service_provider_code')); ?></textarea>
-                        <p class="description"><?php _e('Paste your email service provider code here. For example: "Mailchimp code for subscribing users to your email lists.", "ConvertKit code for integrating email marketing forms with your site."', 'accessmeter'); ?></p>
+                        <p class="description"><?php _e('Enter your email service provider code here.', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Custom JavaScript', 'accessmeter'); ?></th>
+                    <td>
+                        <textarea name="custom_js" rows="10" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('custom_js')); ?></textarea>
+                        <p class="description"><?php _e('Add any custom JavaScript code you need.', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Breadcrumb Code', 'accessmeter'); ?></th>
+                    <td>
+                        <textarea name="breadcrumb_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('breadcrumb_code')); ?></textarea>
+                        <p class="description"><?php _e('Enter the breadcrumb code or snippet from your plugin.', 'accessmeter'); ?></p>
                     </td>
                 </tr>
             </table>
