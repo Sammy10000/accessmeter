@@ -29,6 +29,12 @@
 </div><!-- #page -->
 
 <?php wp_footer(); ?>
-
+<?php
+    // Inject marketing pixel code
+    accessmeter_marketing_pixel_code();
+    
+    // Inject email service provider code
+    accessmeter_email_service_provider_code();
+?>
 </body>
 </html>

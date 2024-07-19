@@ -278,15 +278,36 @@ add_action('init', 'accessmeter_load_woocommerce');
  */
 add_action('admin_init', 'my_theme_settings_init');
 function my_theme_settings_init() {
-    register_setting('my_theme_settings', 'header_mode');
-    register_setting('my_theme_settings', 'header_color');
-    register_setting('my_theme_settings', 'body_sidebar');
-    register_setting('my_theme_settings', 'body_mode');
-    register_setting('my_theme_settings', 'footer_mode');
-    register_setting('my_theme_settings', 'footer_color');
-    register_setting('my_theme_settings', 'accessmeter_language');
-    register_setting('my_theme_settings', 'breadcrumb_code');
-    register_setting('my_theme_settings', 'woocommerce_enabled');
+    register_setting('my_theme_settings', 'header_mode', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'header_color', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'body_sidebar', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'body_mode', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'footer_mode', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'footer_color', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'accessmeter_language', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'breadcrumb_code', 'sanitize_textarea_field');
+    register_setting('my_theme_settings', 'woocommerce_enabled', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'google_analytics_script', 'sanitize_js_code');
+    register_setting('my_theme_settings', 'site_verification_code', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'marketing_pixel_code', 'sanitize_js_code');
+    register_setting('my_theme_settings', 'email_service_provider_code', 'sanitize_js_code');
+}
+
+/**
+ * Custom sanitization functions for JavaScript code fields.
+ */
+function sanitize_js_code($input) {
+    return wp_kses($input, array(
+        'script' => array(
+            'type' => true,
+            'src' => true,
+            'async' => true,
+            'defer' => true,
+            'crossorigin' => true,
+            'integrity' => true
+        ),
+        'noscript' => array(),
+    ));
 }
 
 /**
@@ -349,6 +370,7 @@ function my_theme_admin_notices() {
         }
     }
 }
+
 /**
  * Theme settings page callback
  */
@@ -383,7 +405,7 @@ function accessmeter_theme_settings_page() {
                 <tr valign="top">
                     <th scope="row"><?php _e('Breadcrumb Code', 'accessmeter'); ?></th>
                     <td>
-                    <textarea name="breadcrumb_code" rows="2" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('breadcrumb_code')); ?></textarea>
+                    <textarea name="breadcrumb_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('breadcrumb_code')); ?></textarea>
                     <p class="description"><?php _e('Paste the breadcrumb snippet from your SEO plugin (e.g., Yoast, Rank Math) here.', 'accessmeter'); ?></p>
                     </td>
                 </tr>
@@ -451,13 +473,40 @@ function accessmeter_theme_settings_page() {
                         </select>
                     </td>
                 </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Google Analytics Script', 'accessmeter'); ?></th>
+                    <td>
+                        <textarea name="google_analytics_script" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('google_analytics_script')); ?></textarea>
+                        <p class="description"><?php _e('Paste your Google Analytics script here.', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Site Verification Code', 'accessmeter'); ?></th>
+                    <td>
+                        <textarea name="site_verification_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('site_verification_code')); ?></textarea>
+                        <p class="description"><?php _e('Paste your site verification code here.', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Marketing Pixel Code', 'accessmeter'); ?></th>
+                    <td>
+                        <textarea name="marketing_pixel_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('marketing_pixel_code')); ?></textarea>
+                        <p class="description"><?php _e('Paste your marketing pixel code here.', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Email Service Provider Code', 'accessmeter'); ?></th>
+                    <td>
+                        <textarea name="email_service_provider_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('email_service_provider_code')); ?></textarea>
+                        <p class="description"><?php _e('Paste your email service provider code here.', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
             </table>
             <?php submit_button(); ?>
         </form>
     </div>
     <?php
 }
-
 /**
  * Set the locale based on the selected language
  */
@@ -469,6 +518,38 @@ function accessmeter_set_locale($locale) {
     return $locale;
 }
 add_filter('locale', 'accessmeter_set_locale');
+
+// Function to get Google Analytics script
+function accessmeter_google_analytics_script() {
+    $google_analytics_script = get_option('google_analytics_script');
+    if ($google_analytics_script) {
+        echo $google_analytics_script;
+    }
+}
+
+// Function to get site verification code
+function accessmeter_site_verification_code() {
+    $site_verification_code = get_option('site_verification_code');
+    if ($site_verification_code) {
+        echo '<meta name="google-site-verification" content="' . esc_attr($site_verification_code) . '">';
+    }
+}
+
+// Function to get marketing pixel code
+function accessmeter_marketing_pixel_code() {
+    $marketing_pixel_code = get_option('marketing_pixel_code');
+    if ($marketing_pixel_code) {
+        echo $marketing_pixel_code;
+    }
+}
+
+// Function to get email service provider code
+function accessmeter_email_service_provider_code() {
+    $email_service_provider_code = get_option('email_service_provider_code');
+    if ($email_service_provider_code) {
+        echo $email_service_provider_code;
+    }
+}
 
 /**
  * Implement the Custom Header feature.
