@@ -12,6 +12,9 @@ get_header();
 
 	<main id="primary" class="site-main">
 
+	<div class="breadcrumb-container">
+	<?php $breadcrumb_code = get_option('breadcrumb_code'); if ($breadcrumb_code) { echo $breadcrumb_code;} ?>
+	</div>
 		<?php
 		while ( have_posts() ) :
 			the_post();

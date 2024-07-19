@@ -172,7 +172,8 @@ function accessmeter_custom_admin_styles() {
     echo '
     <style>
             #adminmenu .toplevel_page_accessmeter-settings > a {            
-            color: green;
+            color: lightgreen;
+            font-weight: bolder;
             background-color: black;
         }
     </style>';
@@ -190,17 +191,102 @@ function register_navwalker(){
 }
 add_action( 'after_setup_theme', 'register_navwalker' );
 
+// Add WooCommerce support
+function accessmeter_add_woocommerce_support() {
+  add_theme_support('woocommerce');
+}
+
+// Load WooCommerce features conditionally
+function accessmeter_load_woocommerce() {
+  if (get_option('woocommerce_enabled')) {
+      // Add WooCommerce support
+      add_action('after_setup_theme', 'accessmeter_add_woocommerce_support');
+      
+      // Customize WooCommerce product layout
+      add_action('woocommerce_before_main_content', 'custom_single_product_start', 5);
+      add_action('woocommerce_after_main_content', 'custom_single_product_end', 15);
+
+      function custom_single_product_start() {
+          echo '<div class="custom-single-product">';
+      }
+
+      function custom_single_product_end() {
+          echo '</div>';
+      }
+
+      // Add custom product thumbnails
+      add_action('after_setup_theme', 'custom_woocommerce_image_sizes');
+      function custom_woocommerce_image_sizes() {
+          add_image_size('custom-shop-catalog', 800, 800, true);
+          add_image_size('custom-shop-single', 1200, 1200, true);
+      }
+
+      // Customize WooCommerce breadcrumbs
+      add_filter('woocommerce_breadcrumb_defaults', 'custom_woocommerce_breadcrumbs');
+      function custom_woocommerce_breadcrumbs($defaults) {
+          $defaults['delimiter'] = ' &gt; ';
+          $defaults['wrap_before'] = '<nav class="woocommerce-breadcrumb">';
+          $defaults['wrap_after'] = '</nav>';
+          return $defaults;
+      }
+
+      // Modify checkout fields
+      add_filter('woocommerce_checkout_fields', 'custom_woocommerce_checkout_fields');
+      function custom_woocommerce_checkout_fields($fields) {
+          // Remove the company name field
+          unset($fields['billing']['billing_company']);
+          
+          // Add a custom field
+          $fields['billing']['billing_custom_field'] = array(
+              'label'     => __('Custom Field', 'woocommerce'),
+              'placeholder'   => _x('Custom Field', 'placeholder', 'woocommerce'),
+              'required'  => true,
+              'class'     => array('form-row-wide'),
+              'clear'     => true
+          );
+          
+          return $fields;
+      }
+
+      // Enqueue custom WooCommerce styles and scripts
+      add_action('wp_enqueue_scripts', 'custom_woocommerce_scripts');
+      function custom_woocommerce_scripts() {
+          if (class_exists('WooCommerce')) {
+              wp_enqueue_style('custom-woocommerce-styles', get_template_directory_uri() . '/woocommerce.css');
+              wp_enqueue_script('custom-woocommerce-scripts', get_template_directory_uri() . '/woocommerce.js', array('jquery'), '', true);
+          }
+      }
+
+      // Customize WooCommerce notices
+      add_action('woocommerce_before_customer_login_form', 'custom_woocommerce_notices');
+      function custom_woocommerce_notices() {
+          wc_print_notices(); // Custom styling can be applied via CSS
+      }
+
+      // Add custom sorting options
+      add_filter('woocommerce_get_catalog_ordering_args', 'custom_woocommerce_catalog_ordering_args');
+      function custom_woocommerce_catalog_ordering_args($args) {
+          $args['orderby'] = 'meta_value_num'; // Sort by meta field value
+          return $args;
+      }
+  }
+}
+add_action('init', 'accessmeter_load_woocommerce');
+
 /**
  * Register Settings
  */
 add_action('admin_init', 'my_theme_settings_init');
 function my_theme_settings_init() {
-  register_setting('my_theme_settings', 'header_mode');
-  register_setting('my_theme_settings', 'header_color');
-  register_setting('my_theme_settings', 'body_sidebar');
-  register_setting('my_theme_settings', 'body_mode');
-  register_setting('my_theme_settings', 'footer_mode');
-  register_setting('my_theme_settings', 'footer_color');
+    register_setting('my_theme_settings', 'header_mode');
+    register_setting('my_theme_settings', 'header_color');
+    register_setting('my_theme_settings', 'body_sidebar');
+    register_setting('my_theme_settings', 'body_mode');
+    register_setting('my_theme_settings', 'footer_mode');
+    register_setting('my_theme_settings', 'footer_color');
+    register_setting('my_theme_settings', 'accessmeter_language');
+    register_setting('my_theme_settings', 'breadcrumb_code');
+    register_setting('my_theme_settings', 'woocommerce_enabled');
 }
 
 /**
@@ -208,129 +294,181 @@ function my_theme_settings_init() {
  */
 add_action('admin_menu', 'my_theme_settings_menu');
 function my_theme_settings_menu() {
-  // Add top-level menu
-  add_menu_page(
-    'Accessmeter Settings',
-    'Accessmeter',
-    'manage_options',
-    'accessmeter-settings',
-    'accessmeter_theme_settings_page', // Temporary callback
-    'dashicons-admin-generic',
-    1
-  );
+    // Add top-level menu
+    add_menu_page(
+        __('Accessmeter Settings', 'accessmeter'),
+        __('Accessmeter', 'accessmeter'),
+        'manage_options',
+        'accessmeter-settings',
+        'accessmeter_theme_settings_page', // Temporary callback
+        'dashicons-admin-generic',
+        1
+    );
 
-  // Add submenus
-  add_submenu_page(
-    'accessmeter-settings',
-    'Accessibility Settings',
-    'Accessibility',
-    'manage_options',
-    'accessmeter-accessibility',
-    'accessmeter_accessibility_page'
-  );
+    // Add submenus
+    add_submenu_page(
+        'accessmeter-settings',
+        __('Accessibility Settings', 'accessmeter'),
+        __('Accessibility', 'accessmeter'),
+        'manage_options',
+        'accessmeter-accessibility',
+        'accessmeter_accessibility_page'
+    );
 
-  add_submenu_page(
-    'accessmeter-settings',
-    'Theme Settings',
-    'Theme Settings',
-    'manage_options',
-    'accessmeter-theme-settings',
-    'accessmeter_theme_settings_page'
-  );
+    add_submenu_page(
+        'accessmeter-settings',
+        __('Theme Settings', 'accessmeter'),
+        __('Theme Settings', 'accessmeter'),
+        'manage_options',
+        'accessmeter-theme-settings',
+        'accessmeter_theme_settings_page'
+    );
 
-  // Remove the first submenu which was added by add_menu_page
-  remove_submenu_page('accessmeter-settings', 'accessmeter-settings');
+    // Remove the first submenu which was added by add_menu_page
+    remove_submenu_page('accessmeter-settings', 'accessmeter-settings');
 }
 
 /**
  * Accessibility settings page callback
  */
 function accessmeter_accessibility_page() {
-  echo '<div class="wrap"><h1>Accessibility Settings</h1><p>Here you can manage accessibility settings.</p></div>';
+    echo '<div class="wrap"><h1>' . __('Accessibility Settings', 'accessmeter') . '</h1><p>' . __('Here you can manage accessibility settings.', 'accessmeter') . '</p></div>';
 }
 
+add_action('admin_notices', 'my_theme_admin_notices');
+function my_theme_admin_notices() {
+    if (isset($_GET['settings-updated'])) {
+        if ($_GET['settings-updated'] === 'true') {
+            echo '<div class="notice notice-success is-dismissible">
+                <p><span style="font-size: 20px; color: green;">&#10004;</span> ' . __('Settings saved successfully!', 'accessmeter') . '</p>
+            </div>';
+        } else {
+            echo '<div class="notice notice-error is-dismissible">
+                <p><span style="font-size: 20px; color: red;">&#10008;</span> ' . __('Settings failed to save!', 'accessmeter') . '</p>
+            </div>';
+        }
+    }
+}
 /**
  * Theme settings page callback
  */
 function accessmeter_theme_settings_page() {
-  ?>
-  <div class="wrap">
-    <h1>Theme Settings</h1>
-    <form action="options.php" method="post">
-      <?php settings_fields('my_theme_settings'); ?>
-      <?php do_settings_sections('my_theme_settings'); ?>
-      <table class="form-table">
-        <tr valign="top">
-          <th scope="row">Header Mode</th>
-          <td>
-            <select name="header_mode">
-              <option value="collapsed" <?php selected(get_option('header_mode'), 'collapsed'); ?>>Collapsed</option>
-              <option value="expanded" <?php selected(get_option('header_mode'), 'expanded'); ?>>Expanded</option>
-            </select>
-          </td>
-        </tr>
-        <tr valign="top">
-          <th scope="row">Header Color</th>
-          <td>
-            <select name="header_color">
-              <option value="red" <?php selected(get_option('header_color'), 'red'); ?>>Red</option>
-              <option value="purple" <?php selected(get_option('header_color'), 'purple'); ?>>Purple</option>
-              <option value="black" <?php selected(get_option('header_color'), 'black'); ?>>Black</option>
-              <option value="white" <?php selected(get_option('header_color'), 'white'); ?>>White</option>
-              <option value="blue" <?php selected(get_option('header_color'), 'blue'); ?>>Blue</option>
-              <option value="green" <?php selected(get_option('header_color'), 'green'); ?>>Green</option>
-            </select>
-          </td>
-        </tr>
-        <tr valign="top">
-          <th scope="row">Body Sidebar</th>
-          <td>
-            <select name="body_sidebar">
-              <option value="left" <?php selected(get_option('body_sidebar'), 'left'); ?>>Left Sidebar</option>
-              <option value="right" <?php selected(get_option('body_sidebar'), 'right'); ?>>Right Sidebar</option>
-			  <option value="none" <?php selected(get_option('body_sidebar'), 'none'); ?>>Both Sidebars</option>
-              <option value="none" <?php selected(get_option('body_sidebar'), 'none'); ?>>No Sidebar</option>
-            </select>
-          </td>
-        </tr>
-        <tr valign="top">
-          <th scope="row">Body Mode</th>
-          <td>
-            <select name="body_mode">
-              <option value="dark" <?php selected(get_option('body_mode'), 'dark'); ?>>Dark</option>
-              <option value="light" <?php selected(get_option('body_mode'), 'light'); ?>>Light</option>
-            </select>
-          </td>
-        </tr>
-        <tr valign="top">
-          <th scope="row">Footer Mode</th>
-          <td>
-            <select name="footer_mode">
-              <option value="collapsed" <?php selected(get_option('footer_mode'), 'collapsed'); ?>>Collapsed</option>
-              <option value="expanded" <?php selected(get_option('footer_mode'), 'expanded'); ?>>Expanded</option>
-            </select>
-          </td>
-        </tr>
-        <tr valign="top">
-          <th scope="row">Footer Color</th>
-          <td>
-            <select name="footer_color">
-              <option value="red" <?php selected(get_option('footer_color'), 'red'); ?>>Red</option>
-              <option value="purple" <?php selected(get_option('footer_color'), 'purple'); ?>>Purple</option>
-              <option value="black" <?php selected(get_option('footer_color'), 'black'); ?>>Black</option>
-              <option value="white" <?php selected(get_option('footer_color'), 'white'); ?>>White</option>
-              <option value="blue" <?php selected(get_option('footer_color'), 'blue'); ?>>Blue</option>
-              <option value="green" <?php selected(get_option('footer_color'), 'green'); ?>>Green</option>
-            </select>
-          </td>
-        </tr>
-      </table>
-      <?php submit_button(); ?>
-    </form>
-  </div>
-  <?php
+    ?>
+    <div class="wrap">
+        <h1><?php _e('Theme Settings', 'accessmeter'); ?></h1>
+        <form action="options.php" method="post">
+            <?php settings_fields('my_theme_settings'); ?>
+            <?php do_settings_sections('my_theme_settings'); ?>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row"><?php _e('Select Language', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="accessmeter_language">
+                            <?php
+                            $languages = get_available_languages();
+                            foreach ($languages as $language) {
+                                echo '<option value="' . esc_attr($language) . '"' . selected(get_option('accessmeter_language'), $language, false) . '>' . esc_html($language) . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Enable WooCommerce', 'accessmeter'); ?></th>
+                    <td>
+                        <input type="checkbox" name="woocommerce_enabled" value="1" <?php checked(get_option('woocommerce_enabled'), 1); ?>>
+                        <label for="woocommerce_enabled"><?php _e('Enable WooCommerce Features', 'accessmeter'); ?></label>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Breadcrumb Code', 'accessmeter'); ?></th>
+                    <td>
+                    <textarea name="breadcrumb_code" rows="2" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('breadcrumb_code')); ?></textarea>
+                    <p class="description"><?php _e('Paste the breadcrumb snippet from your SEO plugin (e.g., Yoast, Rank Math) here.', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Header Mode', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="header_mode">
+                            <option value="collapsed" <?php selected(get_option('header_mode'), 'collapsed'); ?>><?php _e('Collapsed', 'accessmeter'); ?></option>
+                            <option value="expanded" <?php selected(get_option('header_mode'), 'expanded'); ?>><?php _e('Expanded', 'accessmeter'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Header Color', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="header_color">
+                            <option value="red" <?php selected(get_option('header_color'), 'red'); ?>><?php _e('Red', 'accessmeter'); ?></option>
+                            <option value="purple" <?php selected(get_option('header_color'), 'purple'); ?>><?php _e('Purple', 'accessmeter'); ?></option>
+                            <option value="black" <?php selected(get_option('header_color'), 'black'); ?>><?php _e('Black', 'accessmeter'); ?></option>
+                            <option value="white" <?php selected(get_option('header_color'), 'white'); ?>><?php _e('White', 'accessmeter'); ?></option>
+                            <option value="blue" <?php selected(get_option('header_color'), 'blue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
+                            <option value="green" <?php selected(get_option('header_color'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Body Sidebar', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="body_sidebar">
+                            <option value="left" <?php selected(get_option('body_sidebar'), 'left'); ?>><?php _e('Left Sidebar', 'accessmeter'); ?></option>
+                            <option value="right" <?php selected(get_option('body_sidebar'), 'right'); ?>><?php _e('Right Sidebar', 'accessmeter'); ?></option>
+                            <option value="both" <?php selected(get_option('body_sidebar'), 'both'); ?>><?php _e('Both Sidebars', 'accessmeter'); ?></option>
+                            <option value="none" <?php selected(get_option('body_sidebar'), 'none'); ?>><?php _e('No Sidebar', 'accessmeter'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Body Mode', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="body_mode">
+                            <option value="dark" <?php selected(get_option('body_mode'), 'dark'); ?>><?php _e('Dark', 'accessmeter'); ?></option>
+                            <option value="light" <?php selected(get_option('body_mode'), 'light'); ?>><?php _e('Light', 'accessmeter'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Footer Mode', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="footer_mode">
+                            <option value="collapsed" <?php selected(get_option('footer_mode'), 'collapsed'); ?>><?php _e('Collapsed', 'accessmeter'); ?></option>
+                            <option value="expanded" <?php selected(get_option('footer_mode'), 'expanded'); ?>><?php _e('Expanded', 'accessmeter'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Footer Color', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="footer_color">
+                            <option value="red" <?php selected(get_option('footer_color'), 'red'); ?>><?php _e('Red', 'accessmeter'); ?></option>
+                            <option value="purple" <?php selected(get_option('footer_color'), 'purple'); ?>><?php _e('Purple', 'accessmeter'); ?></option>
+                            <option value="black" <?php selected(get_option('footer_color'), 'black'); ?>><?php _e('Black', 'accessmeter'); ?></option>
+                            <option value="white" <?php selected(get_option('footer_color'), 'white'); ?>><?php _e('White', 'accessmeter'); ?></option>
+                            <option value="blue" <?php selected(get_option('footer_color'), 'blue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
+                            <option value="green" <?php selected(get_option('footer_color'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <?php submit_button(); ?>
+        </form>
+    </div>
+    <?php
 }
 
+/**
+ * Set the locale based on the selected language
+ */
+function accessmeter_set_locale($locale) {
+    $selected_language = get_option('accessmeter_language');
+    if ($selected_language) {
+        $locale = $selected_language;
+    }
+    return $locale;
+}
+add_filter('locale', 'accessmeter_set_locale');
 
 /**
  * Implement the Custom Header feature.

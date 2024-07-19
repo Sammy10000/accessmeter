@@ -25,7 +25,7 @@
 <div id="page" class="site">
     <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'accessmeter' ); ?></a>
 
-    <header id="masthead" class="site-header">
+    <header id="masthead" class="site-header bg-dark">
         <div class="site-branding">
             <?php
             the_custom_logo();
@@ -44,27 +44,4 @@
                 <p class="site-description"><?php echo $accessmeter_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
             <?php endif; ?>
         </div><!-- .site-branding -->
-
-        <nav id="site-navigation" class="navbar navbar-expand-lg navbar-light bg-dark">
-            <a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#primary-menu" aria-controls="primary-menu" aria-expanded="false" aria-label="<?php esc_attr_e( 'Toggle navigation', 'accessmeter' ); ?>">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="primary-menu">
-                <?php
-                wp_nav_menu(
-                    array(
-                        'theme_location'  => 'menu-1',
-                        'menu_id'         => 'primary-menu',
-                        'container'       => false,
-                        'menu_class'      => 'navbar-nav mr-auto',
-                        'fallback_cb'     => '__return_false',
-                        'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-                        'depth'           => 2,
-                        'walker'          => new WP_Bootstrap_Navwalker(),
-                    )
-                );
-                ?>
-            </div>
-        </nav><!-- #site-navigation -->
     </header><!-- #masthead -->
