@@ -30,8 +30,8 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <div id="page" class="site">
-<?php display_progress_bar();?>
     <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'accessmeter' ); ?></a>
+    <?php display_progress_bar();?>
     <header id="masthead" class="site-header bg-dark">
         <div class="site-branding">
             <?php

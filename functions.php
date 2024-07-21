@@ -418,11 +418,11 @@ function accessmeter_theme_settings_page() {
                     <th scope="row"><?php _e('Progress Bar Color', 'accessmeter'); ?></th>
                     <td>
                         <select name="progress_bar_color">
-                            <option value="red" <?php selected(get_option('progress_bar_color'), 'red'); ?>><?php _e('Red', 'accessmeter'); ?></option>
+                            <option value="darkred" <?php selected(get_option('progress_bar_color'), 'darkred'); ?>><?php _e('Red', 'accessmeter'); ?></option>
                             <option value="purple" <?php selected(get_option('progress_bar_color'), 'purple'); ?>><?php _e('Purple', 'accessmeter'); ?></option>
                             <option value="black" <?php selected(get_option('progress_bar_color'), 'black'); ?>><?php _e('Black', 'accessmeter'); ?></option>
-                            <option value="white" <?php selected(get_option('progress_bar_color'), 'white'); ?>><?php _e('White', 'accessmeter'); ?></option>
-                            <option value="blue" <?php selected(get_option('progress_bar_color'), 'blue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
+                            <option value="grey" <?php selected(get_option('progress_bar_color'), 'grey'); ?>><?php _e('Grey', 'accessmeter'); ?></option>
+                            <option value="darkblue" <?php selected(get_option('progress_bar_color'), 'darkblue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
                             <option value="green" <?php selected(get_option('progress_bar_color'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
                         </select>
                         <p class="description"><?php _e('Select a color for the scroll progress bar.', 'accessmeter'); ?></p>
@@ -622,13 +622,13 @@ function accessmeter_email_service_provider_code() {
 // Function to get the user's choice for progress bar color
 function display_progress_bar() {
     $color = get_option('progress_bar_color', '#00C900'); // Default color is green
-    $allowed_colors = ['red', 'purple', 'black', 'white', 'blue', 'green'];
+    $allowed_colors = ['darkred', 'purple', 'black', 'grey', 'darkblue', 'green'];
 
     // Sanitize color choice dynamically
     $color = in_array($color, $allowed_colors) ? $color : 'green';
 
-    echo '<div class="progress-bar-container">';
-    echo '<div class="progress-bar" style="background-color: ' . esc_attr($color) . '; width: 100%; height: 5px; position: sticky; top: 0; z-index: 1000;"></div>';
+    echo '<div id="progress-bar-container">';
+    echo '<div id="progress-bar" style="background-color: ' . esc_attr($color) . '; width: 0%; height: 5px; position: sticky; top: 0; z-index: 1000;"></div>';
     echo '</div>';
 }
 

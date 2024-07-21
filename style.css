@@ -958,24 +958,27 @@ textarea {
 .breadcrumb-container {
 	text-align: center;
 }
-/* Sticky Header Styles */
+/* Ensure the progress bar is sticky */
+#progress-bar-container {
+    position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 5px;
+	background: white;
+	z-index: 9999;
+}
+
+/* Style the progress bar */
+#progress-bar {
+    height: 5px;
+    background-color: #00C900; /* Default color */
+	width: 0;
+}
 .site-header {
     position: sticky;
-    top: 0;
-    z-index: 1000; /* Ensures it stays on top of other content */
-    background: #333; /* Default background for visibility */
+    top: 5px;
+    z-index: 999;
 }
 
-/* Sticky Progress Bar Styles */
-.progress-bar {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 10px;
-    z-index: 1000; /* Ensures it stays on top of other content */
-}
 
-/* Optional: If you need some padding below the progress bar */
-body {
-    padding-top: 20px; /* Adjust based on your progress bar height */
-}
