@@ -11,7 +11,6 @@
  *
  * @package Accessmeter
  */
-
 get_header();
 ?>
 

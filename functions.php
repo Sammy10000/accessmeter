@@ -171,10 +171,9 @@ add_action('wp_enqueue_scripts', 'enqueue_bootstrap');
 function accessmeter_custom_admin_styles() {
     echo '
     <style>
-            #adminmenu .toplevel_page_accessmeter-settings > a {            
-            color: lightgreen;
+            #adminmenu .toplevel_page_accessmeter-settings > a {
             font-weight: bolder;
-            background-color: black;
+            background-color: #007A00;
         }
     </style>';
 }
@@ -285,6 +284,7 @@ add_action('init', 'accessmeter_load_woocommerce');
 add_action('admin_init', 'my_theme_settings_init');
 function my_theme_settings_init() {
     register_setting('my_theme_settings', 'header_mode', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'progress_bar_color', 'sanitize_text_field');
     register_setting('my_theme_settings', 'header_color', 'sanitize_text_field');
     register_setting('my_theme_settings', 'body_sidebar', 'sanitize_text_field');
     register_setting('my_theme_settings', 'body_mode', 'sanitize_text_field');
@@ -412,6 +412,20 @@ function accessmeter_theme_settings_page() {
                     <td>
                         <input type="checkbox" name="woocommerce_enabled" value="1" <?php checked(get_option('woocommerce_enabled'), 1); ?>>
                         <label for="woocommerce_enabled"><?php _e('Enable WooCommerce Features.', 'accessmeter'); ?></label>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Progress Bar Color', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="progress_bar_color">
+                            <option value="red" <?php selected(get_option('progress_bar_color'), 'red'); ?>><?php _e('Red', 'accessmeter'); ?></option>
+                            <option value="purple" <?php selected(get_option('progress_bar_color'), 'purple'); ?>><?php _e('Purple', 'accessmeter'); ?></option>
+                            <option value="black" <?php selected(get_option('progress_bar_color'), 'black'); ?>><?php _e('Black', 'accessmeter'); ?></option>
+                            <option value="white" <?php selected(get_option('progress_bar_color'), 'white'); ?>><?php _e('White', 'accessmeter'); ?></option>
+                            <option value="blue" <?php selected(get_option('progress_bar_color'), 'blue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
+                            <option value="green" <?php selected(get_option('progress_bar_color'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
+                        </select>
+                        <p class="description"><?php _e('Select a color for the scroll progress bar.', 'accessmeter'); ?></p>
                     </td>
                 </tr>                                
                 <tr valign="top">
@@ -604,6 +618,20 @@ function accessmeter_email_service_provider_code() {
         echo $email_service_provider_code;
     }
 }
+
+// Function to get the user's choice for progress bar color
+function display_progress_bar() {
+    $color = get_option('progress_bar_color', '#00C900'); // Default color is green
+    $allowed_colors = ['red', 'purple', 'black', 'white', 'blue', 'green'];
+
+    // Sanitize color choice dynamically
+    $color = in_array($color, $allowed_colors) ? $color : 'green';
+
+    echo '<div class="progress-bar-container">';
+    echo '<div class="progress-bar" style="background-color: ' . esc_attr($color) . '; width: 100%; height: 5px; position: sticky; top: 0; z-index: 1000;"></div>';
+    echo '</div>';
+}
+
 
 /**
  * Implement the Custom Header feature.

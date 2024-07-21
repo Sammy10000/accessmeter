@@ -958,3 +958,24 @@ textarea {
 .breadcrumb-container {
 	text-align: center;
 }
+/* Sticky Header Styles */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensures it stays on top of other content */
+    background: #333; /* Default background for visibility */
+}
+
+/* Sticky Progress Bar Styles */
+.progress-bar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 10px;
+    z-index: 1000; /* Ensures it stays on top of other content */
+}
+
+/* Optional: If you need some padding below the progress bar */
+body {
+    padding-top: 20px; /* Adjust based on your progress bar height */
+}
