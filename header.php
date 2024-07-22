@@ -2,7 +2,7 @@
 <html <?php language_attributes(); ?>>
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">     
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <?php
     // Inject Google Analytics script
@@ -26,33 +26,77 @@
     $header_mode = get_option('header_mode', 'collapsed');
     ?>
 
-    <header id="masthead" class="site-header bg-dark" style="position: fixed; width: 100%; top: 0; z-index: 1030; background-color: #343a40;">
-        <!-- Toggler Button for mobile view -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: blue; border: none;">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <header id="masthead" class="site-header bg-dark" style="position: fixed; width: 100%;   top: 0; z-index: 1030; background-color: #343a40;">
+        <div class="d-flex justify-content-between align-items-center" style="padding: 1px;">
+            <!-- Collapse/Expand Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: blue; border: none;">
+                <span class="navbar-toggler-icon"></span>
+            </button>            
+        </div>
 
         <!-- Collapsible Header Content -->
         <div class="collapse <?php echo ($header_mode === 'expanded') ? 'show' : ''; ?>" id="header-collapse">
-            <div class="site-branding">
-                <?php
-                the_custom_logo();
-                if (is_front_page() && is_home()) :
-                    ?>
-                    <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></h1>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="site-branding">
                     <?php
-                else :
-                    ?>
-                    <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></p>
-                    <?php
-                endif;
-                $accessmeter_description = get_bloginfo('description', 'display');
-                if ($accessmeter_description || is_customize_preview()) :
-                    ?>
-                    <p class="site-description"><?php echo $accessmeter_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-                <?php endif; ?>
-            </div><!-- .site-branding -->
+                    the_custom_logo();
+                    if (is_front_page() && is_home()) :
+                        ?>
+                        <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></h1>
+                        <?php
+                    else :
+                        ?>
+                        <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></p>
+                        <?php
+                    endif;
+                    $accessmeter_description = get_bloginfo('description', 'display');
+                    if ($accessmeter_description || is_customize_preview()) :
+                        ?>
+                        <p class="site-description"><?php echo $accessmeter_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+                    <?php endif; ?>
+                </div><!-- .site-branding -->
+
+                <!-- Menu Toggler visible only when header is expanded -->
+                <button class="navbar-toggler me-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: green; border: none;">
+                <i class="bi bi-list" style="color: white; font-size: 24px;"></i>
+                </button>
+            </div>
         </div><!-- #header-collapse -->
+
+        <!-- Offcanvas Navigation Menu -->
+        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex mt-3" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div><!-- #offcanvasNavbar -->
     </header><!-- #masthead -->
 
     <!-- Additional content goes here -->

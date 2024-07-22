@@ -159,6 +159,9 @@ function enqueue_bootstrap() {
     // Enqueue Bootstrap CSS
     wp_enqueue_style('bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css');
 
+    // Enqueue Bootstrap Icons CSS
+    wp_enqueue_style('bootstrap-icons', get_template_directory_uri() . '/assets/icons/bootstrap-icons.min.css');
+
     // Enqueue Bootstrap JS
     wp_enqueue_script('bootstrap-js', get_template_directory_uri() . '/assets/bootstrap/js/bootstrap.bundle.min.js', array('jquery'), null, true);
 }
