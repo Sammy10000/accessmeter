@@ -975,10 +975,13 @@ textarea {
     background-color: #00C900; /* Default color */
 	width: 0;
 }
-.site-header {
-    position: sticky;
-    top: 5px;
-    z-index: 999;
+/* Style the header branding */
+.site-branding {
+	padding-left: 3%;
+	padding-top: 5px;
+	margin-bottom: -5px;
 }
-
+#primary {
+	margin-top: 60px;
+}
 

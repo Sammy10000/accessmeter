@@ -587,6 +587,26 @@ function accessmeter_set_locale($locale) {
 }
 add_filter('locale', 'accessmeter_set_locale');
 
+// Function to get the user's choice for progress bar color
+function display_progress_bar() {
+    $color = get_option('progress_bar_color', '#00C900'); // Default color is green
+    $allowed_colors = ['darkred', 'purple', 'black', 'grey', 'darkblue', 'green'];
+
+    // Sanitize color choice dynamically
+    $color = in_array($color, $allowed_colors) ? $color : 'green';
+
+    echo '<div id="progress-bar-container">';
+    echo '<div id="progress-bar" style="background-color: ' . esc_attr($color) . '; width: 0%; height: 5px; position: sticky; top: 0; z-index: 1000;"></div>';
+    echo '</div>';
+}
+
+//Header mode functions
+function get_header_mode() {
+    // Get the user’s choice from the database; default to 'collapsed' if not set
+    $header_mode = get_option('header_mode', 'collapsed');
+    return $header_mode;
+}
+
 // Function to get Google Analytics script
 function accessmeter_google_analytics_script() {
     $google_analytics_script = get_option('google_analytics_script');
@@ -618,20 +638,6 @@ function accessmeter_email_service_provider_code() {
         echo $email_service_provider_code;
     }
 }
-
-// Function to get the user's choice for progress bar color
-function display_progress_bar() {
-    $color = get_option('progress_bar_color', '#00C900'); // Default color is green
-    $allowed_colors = ['darkred', 'purple', 'black', 'grey', 'darkblue', 'green'];
-
-    // Sanitize color choice dynamically
-    $color = in_array($color, $allowed_colors) ? $color : 'green';
-
-    echo '<div id="progress-bar-container">';
-    echo '<div id="progress-bar" style="background-color: ' . esc_attr($color) . '; width: 0%; height: 5px; position: sticky; top: 0; z-index: 1000;"></div>';
-    echo '</div>';
-}
-
 
 /**
  * Implement the Custom Header feature.
