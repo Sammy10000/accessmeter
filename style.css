@@ -960,7 +960,7 @@ textarea {
 }
 /* Ensure the progress bar is sticky */
 #progress-bar-container {
-    width: 100%;
+    width: 107%;
     height: 5px;
     background: white;
     z-index: 9999;

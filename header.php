@@ -25,9 +25,9 @@
     <header id="masthead" class="site-header fixed-top bg-dark">
         <div class="row">
             <div class="col-12">
-                <div class="d-flex justify-content-between align-items-center p-0">
+                <div class="d-flex justify-content-between align-items-center">
                     <!-- Collapse/Expand Toggler -->
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 2px solid grey; padding: 5px; background-color: black; border-radius: 5px;">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 3px solid grey; padding: 5px; background-color: black; border-radius: 5px;">
                         <i class="bi bi-chevron-down text-white" style="font-size: 1.50rem;"></i>
                     </button>
                 </div>
@@ -62,7 +62,7 @@
                         </div><!-- .site-branding -->
 
                         <!-- Menu Toggler visible only when header is expanded -->
-                        <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: green; border: 2px solid grey; border-radius: 5px; padding: 3px;">
+                        <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: green; border: 3px solid grey; border-radius: 3px; padding: 5px;">
                             <i class="bi bi-list text-white" style="font-size: 1.7rem;"></i>
                         </button>
                     </div>
@@ -71,7 +71,7 @@
         </div><!-- #header-collapse -->
 
         <!-- Offcanvas Navigation Menu -->
-        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="z-index: 9999;">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>

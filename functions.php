@@ -426,7 +426,7 @@ function accessmeter_theme_settings_page() {
                             <option value="black" <?php selected(get_option('progress_bar_color'), 'black'); ?>><?php _e('Black', 'accessmeter'); ?></option>
                             <option value="grey" <?php selected(get_option('progress_bar_color'), 'grey'); ?>><?php _e('Grey', 'accessmeter'); ?></option>
                             <option value="darkblue" <?php selected(get_option('progress_bar_color'), 'darkblue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
-                            <option value="green" <?php selected(get_option('progress_bar_color'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
+                            <option value="#00C900" <?php selected(get_option('progress_bar_color'), '#00C900'); ?>><?php _e('Green', 'accessmeter'); ?></option>
                         </select>
                         <p class="description"><?php _e('Select a color for the scroll progress bar.', 'accessmeter'); ?></p>
                     </td>
@@ -435,8 +435,8 @@ function accessmeter_theme_settings_page() {
                     <th scope="row"><?php _e('Header Mode', 'accessmeter'); ?></th>
                     <td>
                         <select name="header_mode">
-                            <option value="collapsed" <?php selected(get_option('header_mode'), 'collapsed'); ?>><?php _e('Collapsed', 'accessmeter'); ?></option>
                             <option value="expanded" <?php selected(get_option('header_mode'), 'expanded'); ?>><?php _e('Expanded', 'accessmeter'); ?></option>
+                            <option value="collapsed" <?php selected(get_option('header_mode'), 'collapsed'); ?>><?php _e('Collapsed', 'accessmeter'); ?></option> 
                         </select>
                     </td>
                 </tr>
@@ -593,10 +593,10 @@ add_filter('locale', 'accessmeter_set_locale');
 // Function to get the user's choice for progress bar color
 function display_progress_bar() {
     $color = get_option('progress_bar_color', '#00C900'); // Default color is green
-    $allowed_colors = ['darkred', 'purple', 'black', 'grey', 'darkblue', 'green'];
+    $allowed_colors = ['darkred', 'purple', 'black', 'grey', 'darkblue', '#00C900'];
 
     // Sanitize color choice dynamically
-    $color = in_array($color, $allowed_colors) ? $color : 'green';
+    $color = in_array($color, $allowed_colors) ? $color : '#00C900';
 
     echo '<div id="progress-bar-container">';
     echo '<div id="progress-bar" style="background-color: ' . esc_attr($color) . ';"></div>';
@@ -606,7 +606,7 @@ function display_progress_bar() {
 //Header mode functions
 function get_header_mode() {
     // Get the user’s choice from the database; default to 'collapsed' if not set
-    $header_mode = get_option('header_mode', 'collapsed');
+    $header_mode = get_option('header_mode', 'expanded');
     return $header_mode;
 }
 
