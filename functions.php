@@ -599,7 +599,7 @@ function display_progress_bar() {
     $color = in_array($color, $allowed_colors) ? $color : 'green';
 
     echo '<div id="progress-bar-container">';
-    echo '<div id="progress-bar" style="background-color: ' . esc_attr($color) . '; width: 0%; height: 5px; position: sticky; top: 0; z-index: 1000;"></div>';
+    echo '<div id="progress-bar" style="background-color: ' . esc_attr($color) . ';"></div>';
     echo '</div>';
 }
 

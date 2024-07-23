@@ -960,20 +960,29 @@ textarea {
 }
 /* Ensure the progress bar is sticky */
 #progress-bar-container {
-    position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 5px;
-	background: white;
-	z-index: 9999;
+    width: 100%;
+    height: 5px;
+    background: white;
+    z-index: 9999;
 }
 
 /* Style the progress bar */
 #progress-bar {
-    height: 5px;
+    height: 100%;
     background-color: #00C900; /* Default color */
-	width: 0;
+    width: 0;
+}
+
+/* Position when header is expanded */
+#progress-bar-container.expanded {
+    position: absolute;
+    bottom: 0;
+}
+
+/* Position when header is collapsed */
+#progress-bar-container.collapsed {
+    position: fixed;
+    top: 0;
 }
 /* Style the header branding */
 .site-branding {
@@ -982,6 +991,6 @@ textarea {
 	margin-bottom: -5px;
 }
 #primary {
-	margin-top: 60px;
+	margin-top: 55px;
 }
 
