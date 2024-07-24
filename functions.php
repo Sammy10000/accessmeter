@@ -444,11 +444,11 @@ function accessmeter_theme_settings_page() {
                     <th scope="row"><?php _e('Header Color', 'accessmeter'); ?></th>
                     <td>
                         <select name="header_color">
-                            <option value="red" <?php selected(get_option('header_color'), 'red'); ?>><?php _e('Red', 'accessmeter'); ?></option>
+                            <option value="darkred" <?php selected(get_option('header_color'), 'darkred'); ?>><?php _e('Red', 'accessmeter'); ?></option>
                             <option value="purple" <?php selected(get_option('header_color'), 'purple'); ?>><?php _e('Purple', 'accessmeter'); ?></option>
                             <option value="black" <?php selected(get_option('header_color'), 'black'); ?>><?php _e('Black', 'accessmeter'); ?></option>
-                            <option value="white" <?php selected(get_option('header_color'), 'white'); ?>><?php _e('White', 'accessmeter'); ?></option>
-                            <option value="blue" <?php selected(get_option('header_color'), 'blue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
+                            <option value="whitesmoke" <?php selected(get_option('header_color'), 'whitesmoke'); ?>><?php _e('White', 'accessmeter'); ?></option>
+                            <option value="darkblue" <?php selected(get_option('header_color'), 'darkblue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
                             <option value="green" <?php selected(get_option('header_color'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
                         </select>
                     </td>
@@ -609,6 +609,17 @@ function get_header_mode() {
     $header_mode = get_option('header_mode', 'expanded');
     return $header_mode;
 }
+
+//Header color
+function get_header_color() {
+    $color = get_option('header_color', 'white'); // Default color is white
+    $allowed_colors = ['darkred', 'purple', 'black', 'whitesmoke', 'darkblue', 'green'];
+
+    // Sanitize color choice dynamically
+    $color = in_array($color, $allowed_colors) ? $color : 'whitesmoke';
+    echo 'background-color: ' . $color . ';';
+}
+
 
 // Function to get Google Analytics script
 function accessmeter_google_analytics_script() {

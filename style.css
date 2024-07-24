@@ -967,7 +967,7 @@ textarea {
 /** Customization CSS starts here **/
 .breadcrumb-container {
 	text-align: center;
-	margin-bottom: 50px;
+	margin-bottom: 30px;
 }
 /* Ensure the progress bar is sticky */
 #progress-bar-container {
@@ -1003,7 +1003,7 @@ textarea {
 }
 /* Body styling*/
 #primary {
-	margin-top: 120px;
+	margin-top: 70px;
 }
 #secondary {
 	margin-top: 70px;
@@ -1018,11 +1018,11 @@ h1.site-title {
 	font-size: 1.0rem; /* 1.5 times the root element's font size */
   }
 .site-title a{
-	color: darkgreen;
-	text-decoration: none;
-	background-color: white;
+	color: whitesmoke;
+	background-color: rgb(0, 0, 0);
 	padding: 6px;
-	border-radius: 4px;
+	border-radius: 2px;
+	text-decoration: overline;
 }
 /* Apply focus styles to the collapsible and menu toggles */
 /* Specific styles for the collapsible button */
@@ -1046,5 +1046,11 @@ h1.site-title {
 .navbar-toggler[aria-controls="offcanvasNavbar"]:focus:active {
     outline: none;
 }
-
+/*header Logo */
+.custom-logo {
+	max-width: 120px; /* Adjust the size as needed */
+	height: auto;
+	border-radius: 2px;
+	transform: translateY(-10px);
+}
   
