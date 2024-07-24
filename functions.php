@@ -426,7 +426,7 @@ function accessmeter_theme_settings_page() {
                             <option value="black" <?php selected(get_option('progress_bar_color'), 'black'); ?>><?php _e('Black', 'accessmeter'); ?></option>
                             <option value="grey" <?php selected(get_option('progress_bar_color'), 'grey'); ?>><?php _e('Grey', 'accessmeter'); ?></option>
                             <option value="darkblue" <?php selected(get_option('progress_bar_color'), 'darkblue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
-                            <option value="#00C900" <?php selected(get_option('progress_bar_color'), '#00C900'); ?>><?php _e('Green', 'accessmeter'); ?></option>
+                            <option value="green" <?php selected(get_option('progress_bar_color'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
                         </select>
                         <p class="description"><?php _e('Select a color for the scroll progress bar.', 'accessmeter'); ?></p>
                     </td>
@@ -592,11 +592,11 @@ add_filter('locale', 'accessmeter_set_locale');
 
 // Function to get the user's choice for progress bar color
 function display_progress_bar() {
-    $color = get_option('progress_bar_color', '#00C900'); // Default color is green
-    $allowed_colors = ['darkred', 'purple', 'black', 'grey', 'darkblue', '#00C900'];
+    $color = get_option('progress_bar_color', 'green'); // Default color is green
+    $allowed_colors = ['darkred', 'purple', 'black', 'grey', 'darkblue', 'green'];
 
     // Sanitize color choice dynamically
-    $color = in_array($color, $allowed_colors) ? $color : '#00C900';
+    $color = in_array($color, $allowed_colors) ? $color : 'green';
 
     echo '<div id="progress-bar-container">';
     echo '<div id="progress-bar" style="background-color: ' . esc_attr($color) . ';"></div>';

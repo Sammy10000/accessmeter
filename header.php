@@ -3,7 +3,6 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <?php
     // Inject Google Analytics script
@@ -17,7 +16,7 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <div id="page" class="site container-fluid">
-    <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e('Skip to content', 'accessmeter'); ?></a>       
+    <a class="skip-link screen-reader-text" href="#primary" tabindex="1"><?php esc_html_e('Skip to content', 'accessmeter'); ?></a>       
     <?php
     // Get header mode from options
     $header_mode = get_option('header_mode', 'collapsed');
@@ -27,7 +26,7 @@
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center">
                     <!-- Collapse/Expand Toggler -->
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 3px solid grey; padding: 5px; background-color: black; border-radius: 5px;">
+                    <button tabindex="2" class="navbar-toggler position-fixed" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="top: 7px; left: 10px; border: 3px solid grey; padding: 5px; background-color: black; border-radius: 5px; z-index: 1000; left: 50%;">
                         <i class="bi bi-chevron-down text-white" style="font-size: 1.50rem;"></i>
                     </button>
                 </div>
@@ -41,17 +40,17 @@
         <div class="collapse <?php echo ($header_mode === 'expanded') ? 'show' : ''; ?>" id="header-collapse">
             <div class="row">
                 <div class="col-12">
-                    <div class="d-flex justify-content-between align-items-center p-2">
+                    <div class="d-flex justify-content-between align-items-center pt-2 pb-2">
                         <div class="site-branding">
                             <?php
                             the_custom_logo();
                             if (is_front_page() && is_home()) :
                                 ?>
-                                <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></h1>
+                                <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="3"><?php bloginfo('name'); ?></a></h1>
                                 <?php
-                            else :
+                                    else :
                                 ?>
-                                <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home"><?php bloginfo('name'); ?></a></p>
+                                    <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="3"><?php bloginfo('name'); ?></a></p>
                                 <?php
                             endif;
                             $accessmeter_description = get_bloginfo('description', 'display');
@@ -62,7 +61,7 @@
                         </div><!-- .site-branding -->
 
                         <!-- Menu Toggler visible only when header is expanded -->
-                        <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: green; border: 3px solid grey; border-radius: 3px; padding: 5px;">
+                        <button tabindex="4" class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: <?php echo get_option('progress_bar_color', 'green'); ?>; border: 3px solid grey; border-radius: 3px; top: 5px; padding: 5px;">
                             <i class="bi bi-list text-white" style="font-size: 1.7rem;"></i>
                         </button>
                     </div>
@@ -138,6 +137,14 @@
         // Initial position update
         updateProgressBarPosition();
     });
+</script>
+<script>
+    document.querySelectorAll('.navbar-toggler').forEach(button => {
+    button.addEventListener('click', function() {
+        this.blur();
+    });
+});
+
 </script>
 
 </body>

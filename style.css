@@ -523,24 +523,34 @@ a {
 	color: #4169e1;
 }
 
-a:visited {
-	color: #800080;
-}
-
 a:hover,
 a:focus,
 a:active {
-	color: #191970;
+	color: #ffffff;
 }
 
 a:focus {
-	outline: thin dotted;
-}
+	outline: 4px solid #6852c8;
+	border-radius: 5px;
+	background-color: #000000;
+	padding: 5px;
+	outline-offset: 2px;
+  }
+  
 
 a:hover,
 a:active {
 	outline: 0;
 }
+
+/* Forms
+--------------------------------------------- */
+
+button:focus {
+	outline: 4px solid #6852c8;
+	border-radius: 5px;
+	padding: 7px;
+  }
 
 /* Forms
 --------------------------------------------- */
@@ -957,6 +967,7 @@ textarea {
 /** Customization CSS starts here **/
 .breadcrumb-container {
 	text-align: center;
+	margin-bottom: 50px;
 }
 /* Ensure the progress bar is sticky */
 #progress-bar-container {
@@ -990,7 +1001,50 @@ textarea {
 	padding-top: 5px;
 	margin-bottom: -5px;
 }
+/* Body styling*/
 #primary {
-	margin-top: 55px;
+	margin-top: 120px;
+}
+#secondary {
+	margin-top: 70px;
 }
 
+
+/* Site title */
+.site-title {
+	font-weight: bold;
+}
+h1.site-title {
+	font-size: 1.0rem; /* 1.5 times the root element's font size */
+  }
+.site-title a{
+	color: darkgreen;
+	text-decoration: none;
+	background-color: white;
+	padding: 6px;
+	border-radius: 4px;
+}
+/* Apply focus styles to the collapsible and menu toggles */
+/* Specific styles for the collapsible button */
+.navbar-toggler[aria-controls="header-collapse"]:focus {
+    outline: 4px solid #6852c8;
+    border-radius: 5px;
+    outline-offset: 2px;
+}
+
+.navbar-toggler[aria-controls="header-collapse"]:focus:active {
+    outline: none;
+}
+
+/* Specific styles for the menu toggle */
+.navbar-toggler[aria-controls="offcanvasNavbar"]:focus {
+    outline: 4px solid #6852c8;
+    border-radius: 5px;
+    outline-offset: 2px;
+}
+
+.navbar-toggler[aria-controls="offcanvasNavbar"]:focus:active {
+    outline: none;
+}
+
+  
