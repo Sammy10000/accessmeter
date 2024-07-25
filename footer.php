@@ -13,8 +13,8 @@
 <footer id="colophon" class="site-footer bg-dark">
     <div class="container">
         <!-- Collapse/Expand Toggler -->
-        <div class="text-center mb-3">
-            <button tabindex="2" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#footer-collapse" aria-controls="footer-collapse" aria-expanded="<?php echo (get_footer_mode() === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle footer', 'accessmeter'); ?>" style="border: 3px solid grey; padding: 5px; background-color: black; border-radius: 5px;">
+        <div class="text-center">
+            <button tabindex="0" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#footer-collapse" aria-controls="footer-collapse" aria-expanded="<?php echo (get_footer_mode() === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle footer', 'accessmeter'); ?>" style="border: 3px solid grey; padding: 5px; background-color: black; border-radius: 5px; right: 50%;">
                 <i class="bi bi-chevron-<?php echo (get_footer_mode() === 'expanded') ? 'up' : 'down'; ?> text-white" style="font-size: 1.50rem;"></i>
             </button>
         </div>

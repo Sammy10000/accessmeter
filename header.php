@@ -1,6 +1,6 @@
 <!doctype html>
-<html <?php language_attributes(); ?> class="mb-0 bg-success pb-0">
-<div style="margin-bottom: 50px;">
+<html <?php language_attributes(); ?> class="bg-success">
+<div style="margin-bottom: 60px;">
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -30,7 +30,7 @@
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center">
                     <!-- Collapse/Expand Toggler -->
-                    <button tabindex="2" class="navbar-toggler position-fixed" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="top: 5px; left: 10px; border: 3px solid grey; padding: 5px; background-color: black; border-radius: 5px; z-index: 1000; left: 50%;">
+                    <button tabindex="2" class="navbar-toggler position-fixed" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="top: 5px; border: 3px solid grey; padding: 5px; background-color: black; border-radius: 5px; z-index: 1000; left: 50%;">
                         <i class="bi bi-chevron-down text-white" style="font-size: 1.50rem;"></i>
                     </button>
                 </div>
