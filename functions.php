@@ -115,22 +115,96 @@ function accessmeter_content_width() {
 add_action( 'after_setup_theme', 'accessmeter_content_width', 0 );
 
 /**
- * Register widget area.
+ * Register widget areas.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
 function accessmeter_widgets_init() {
-	register_sidebar(
-		array(
-			'name'          => esc_html__( 'Sidebar', 'accessmeter' ),
-			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'accessmeter' ),
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
-		)
-	);
+    // Register Sidebar Widgets
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Sidebar 1', 'accessmeter' ),
+            'id'            => 'sidebar-1',
+            'description'   => esc_html__( 'Add widgets here for Sidebar 1.', 'accessmeter' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Sidebar 2', 'accessmeter' ),
+            'id'            => 'sidebar-2',
+            'description'   => esc_html__( 'Add widgets here for Sidebar 2.', 'accessmeter' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Sidebar 3', 'accessmeter' ),
+            'id'            => 'sidebar-3',
+            'description'   => esc_html__( 'Add widgets here for Sidebar 3.', 'accessmeter' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+
+    // Register Footer Widgets
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Footer 1', 'accessmeter' ),
+            'id'            => 'footer-1',
+            'description'   => esc_html__( 'Add widgets here for Footer 1.', 'accessmeter' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Footer 2', 'accessmeter' ),
+            'id'            => 'footer-2',
+            'description'   => esc_html__( 'Add widgets here for Footer 2.', 'accessmeter' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Footer 3', 'accessmeter' ),
+            'id'            => 'footer-3',
+            'description'   => esc_html__( 'Add widgets here for Footer 3.', 'accessmeter' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Footer 4', 'accessmeter' ),
+            'id'            => 'footer-4',
+            'description'   => esc_html__( 'Add widgets here for Footer 4.', 'accessmeter' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
 }
 add_action( 'widgets_init', 'accessmeter_widgets_init' );
 
@@ -281,26 +355,30 @@ function accessmeter_load_woocommerce() {
 }
 add_action('init', 'accessmeter_load_woocommerce');
 
+
 /**
  * Register Settings
  */
 add_action('admin_init', 'my_theme_settings_init');
 function my_theme_settings_init() {
     register_setting('my_theme_settings', 'header_mode', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'header_position', 'sanitize_text_field');
     register_setting('my_theme_settings', 'progress_bar_color', 'sanitize_text_field');
     register_setting('my_theme_settings', 'header_color', 'sanitize_text_field');
     register_setting('my_theme_settings', 'body_sidebar', 'sanitize_text_field');
     register_setting('my_theme_settings', 'body_mode', 'sanitize_text_field');
     register_setting('my_theme_settings', 'footer_mode', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'footer_position', 'sanitize_text_field');
     register_setting('my_theme_settings', 'footer_color', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'footer_widgets', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'footer_credits', 'sanitize_text_field');    
     register_setting('my_theme_settings', 'accessmeter_language', 'sanitize_text_field');
     register_setting('my_theme_settings', 'breadcrumb_code', 'sanitize_textarea_field');
     register_setting('my_theme_settings', 'woocommerce_enabled', 'sanitize_text_field');
     register_setting('my_theme_settings', 'google_analytics_script', 'sanitize_js_code');
     register_setting('my_theme_settings', 'site_verification_code', 'sanitize_text_field');
     register_setting('my_theme_settings', 'marketing_pixel_code', 'sanitize_js_code');
-    register_setting('my_theme_settings', 'email_service_provider_code', 'sanitize_js_code');
-    register_setting('my_theme_settings', 'footer_credits', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'email_service_provider_code', 'sanitize_js_code');    
     register_setting('my_theme_settings', 'cookie_consent', 'sanitize_text_field');
     register_setting('my_theme_settings', 'gdpr_compliance', 'sanitize_text_field');
     register_setting('my_theme_settings', 'cookie_consent_custom_text', 'sanitize_textarea_field');
@@ -441,6 +519,15 @@ function accessmeter_theme_settings_page() {
                     </td>
                 </tr>
                 <tr valign="top">
+                    <th scope="row"><?php _e('Header Position', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="header_position">
+                            <option value="fixed-top" <?php selected(get_option('header_position'), 'fixed-top'); ?>><?php _e('Fixed => always at top', 'accessmeter'); ?></option>
+                            <option value="static-top" <?php selected(get_option('header_position'), 'static-top'); ?>><?php _e('Static => scrolls with page', 'accessmeter'); ?></option> 
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
                     <th scope="row"><?php _e('Header Color', 'accessmeter'); ?></th>
                     <td>
                         <select name="header_color">
@@ -483,6 +570,16 @@ function accessmeter_theme_settings_page() {
                     </td>
                 </tr>
                 <tr valign="top">
+                    <th scope="row"><?php _e('Footer Position', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="footer_position">
+                            <option value="fixed-bottom" <?php selected(get_option('footer_position'), 'fixed-bottom'); ?>><?php _e('Fixed => always at bottom', 'accessmeter'); ?></option>
+                            <option value="static-bottom" <?php selected(get_option('footer_position'), 'static-bottom'); ?>><?php _e('Static => scrolls with page', 'accessmeter'); ?></option>
+                        </select>
+
+                    </td>
+                </tr>
+                <tr valign="top">
                     <th scope="row"><?php _e('Footer Color', 'accessmeter'); ?></th>
                     <td>
                         <select name="footer_color">
@@ -496,10 +593,21 @@ function accessmeter_theme_settings_page() {
                     </td>
                 </tr>
                 <tr valign="top">
+                    <th scope="row"><?php _e('Footer Widgets', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="footer_widgets">
+                            <option value="4-widgets" <?php selected(get_option('footer_widgets'), '4-widgets'); ?>><?php _e('4-Widgets', 'accessmeter'); ?></option>
+                            <option value="3-widgets" <?php selected(get_option('footer_widgets'), '3-widgets'); ?>><?php _e('3-Widgets', 'accessmeter'); ?></option>
+                            <option value="2-widgets" <?php selected(get_option('footer_widgets'), '2-widgets'); ?>><?php _e('2-Widgets', 'accessmeter'); ?></option>
+                            <option value="1-widget" <?php selected(get_option('footer_widgets'), '1-widget'); ?>><?php _e('1-Widget', 'accessmeter'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
                     <th scope="row"><?php _e('Footer Credits', 'accessmeter'); ?></th>
                     <td>
                         <input type="text" name="footer_credits" style="width: 500px" value="<?php echo esc_attr(get_option('footer_credits')); ?>" class="regular-text">
-                        <p style="width: 500px" class="description"><?php _e('Enter footer credits text here (example: "Accessmeter. All rights reserved.", "Designed by Accessmeter Agency.", "Powered by Accessmeter Solutions.")', 'accessmeter'); ?></p>
+                        <p style="width: 500px" class="description"><?php _e('Enter footer credits text here (example: "Accessmeter. All rights reserved.", "Designed by Accessmeter Agency.", "Powered by Accessmeter Inc.")', 'accessmeter'); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -605,9 +713,16 @@ function display_progress_bar() {
 
 //Header mode functions
 function get_header_mode() {
-    // Get the user’s choice from the database; default to 'collapsed' if not set
+    // Get the user’s choice from the database; default to 'expanded' if not set
     $header_mode = get_option('header_mode', 'expanded');
     return $header_mode;
+}
+
+//Header position functions
+function get_header_position() {
+    // Get the user’s choice from the database; default to 'fixed-top' if not set
+    $header_position = get_option('header_position', 'fixed-top');
+    return $header_position;
 }
 
 //Header color
@@ -618,6 +733,20 @@ function get_header_color() {
     // Sanitize color choice dynamically
     $color = in_array($color, $allowed_colors) ? $color : 'whitesmoke';
     echo 'background-color: ' . $color . ';';
+}
+
+//Footer Widgets
+function get_footer_widgets() {
+    // Get the user’s choice from the database; default to '4-Widgets' if not set
+    $footer_widgets = get_option('footer_widgets', '4-widgets');
+    return $footer_widgets;
+}
+
+//Footer mode functions
+function get_footer_mode() {
+    // Get the user’s choice from the database; default to 'expanded' if not set
+    $footer_mode = get_option('footer_mode', 'expanded');
+    return $footer_mode;
 }
 
 

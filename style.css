@@ -531,10 +531,10 @@ a:active {
 
 a:focus {
 	outline: 4px solid #6852c8;
-	border-radius: 5px;
+	border-radius: 1px;
 	background-color: #000000;
-	padding: 5px;
-	outline-offset: 2px;
+	padding: 1px;
+	outline-offset: 3px;
   }
   
 
@@ -543,7 +543,7 @@ a:active {
 	outline: 0;
 }
 
-/* Forms
+/* Buttons
 --------------------------------------------- */
 
 button:focus {
@@ -971,10 +971,12 @@ textarea {
 }
 /* Ensure the progress bar is sticky */
 #progress-bar-container {
+	position: fixed;
+	top: 0;
     width: 107%;
     height: 5px;
     background: white;
-    z-index: 9999;
+    z-index: 1050;
 }
 
 /* Style the progress bar */
@@ -1054,3 +1056,9 @@ h1.site-title {
 	transform: translateY(-10px);
 }
   
+/* Site Footer styles*/
+.site-footer .row > div {
+    display: flex;
+    justify-content: center;
+}
+

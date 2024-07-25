@@ -1,5 +1,6 @@
 <!doctype html>
-<html <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?> class="mb-0 bg-success pb-0">
+<div style="margin-bottom: 50px;">
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -15,14 +16,17 @@
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<div id="page" class="site container-fluid">
+<div id="page" class="site">
     <a class="skip-link screen-reader-text" href="#primary" tabindex="1"><?php esc_html_e('Skip to content', 'accessmeter'); ?></a>       
     <?php
     // Get header mode from options
     $header_mode = get_option('header_mode', 'collapsed');
     ?>
-    <header id="masthead" class="site-header fixed-top" style="<?php get_header_color() ?>">
-        <div class="row">
+    <header 
+        id="masthead" 
+        class="site-header <?php echo get_option('header_position', 'fixed-top'); ?>" 
+        style="<?php get_header_color(); ?> width: 100%; margin: 0; padding: 0;">
+        <div class="row no-gutters">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center">
                     <!-- Collapse/Expand Toggler -->
@@ -33,12 +37,14 @@
             </div>
         </div>
 
-        <!-- Progress Bar inside the header -->
-        <?php display_progress_bar(); ?>
+        <!-- Progress Bar always fixed at the top -->
+        <div id="progress-bar-container">
+            <?php display_progress_bar(); ?>
+        </div>
 
         <!-- Collapsible Header Content -->
         <div class="collapse <?php echo ($header_mode === 'expanded') ? 'show' : ''; ?>" id="header-collapse">
-            <div class="row">
+            <div class="row no-gutters">
                 <div class="col-12">
                     <div class="d-flex justify-content-between align-items-center pt-2 pb-2">
                         <div class="site-branding">
@@ -117,31 +123,15 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var header = document.getElementById('masthead');
         var progressBarContainer = document.getElementById('progress-bar-container');
 
-        function updateProgressBarPosition() {
-            if (header.classList.contains('show')) {
-                progressBarContainer.classList.add('expanded');
-                progressBarContainer.classList.remove('collapsed');
-            } else {
-                progressBarContainer.classList.add('collapsed');
-                progressBarContainer.classList.remove('expanded');
-            }
-        }
-
-        document.getElementById('header-collapse').addEventListener('show.bs.collapse', function () {
-            header.classList.add('show');
-            updateProgressBarPosition();
-        });
-        document.getElementById('header-collapse').addEventListener('hide.bs.collapse', function () {
-            header.classList.remove('show');
-            updateProgressBarPosition();
-        });
-
-        // Initial position update
-        updateProgressBarPosition();
+        // Ensure the progress bar is always fixed at the top
+        progressBarContainer.style.position = 'fixed';
+        progressBarContainer.style.top = '0';
+        progressBarContainer.style.width = '100%';
+        progressBarContainer.style.zIndex = '1050';
     });
 </script>
 </body>
+</div>
 </html>

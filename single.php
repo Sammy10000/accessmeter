@@ -10,34 +10,70 @@
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
+<main id="primary" class="site-main">
+    <div class="container">
+        <div class="row">
+            <!-- ScrollSpy Navigation Column -->
+            <div class="col-12 col-md-3">
+                <nav id="navbar-example3" class="h-100 sticky-top">
+                    <nav class="nav nav-pills flex-column">
+                        <?php
+                        // Function to extract headers from post content
+                        function extract_headers($content) {
+                            $matches = [];
+                            preg_match_all('/<h[1-6]>(.*?)<\/h[1-6]>/', $content, $matches);
+                            return $matches[1];
+                        }
 
-	<div class="breadcrumb-container">
-	<?php $breadcrumb_code = get_option('breadcrumb_code'); if ($breadcrumb_code) { echo $breadcrumb_code;} ?>
-	</div>
-		<?php
-		while ( have_posts() ) :
-			the_post();
+                        // Get post content
+                        $post_content = get_the_content();
 
-			get_template_part( 'template-parts/content', get_post_type() );
+                        // Extract headers
+                        $headers = extract_headers($post_content);
 
-			the_post_navigation(
-				array(
-					'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'accessmeter' ) . '</span> <span class="nav-title">%title</span>',
-					'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'accessmeter' ) . '</span> <span class="nav-title">%title</span>',
-				)
-			);
+                        // Generate ScrollSpy navigation
+                        foreach ($headers as $index => $header) {
+                            $id = 'header-' . $index;
+                            echo '<a class="nav-link" href="#' . $id . '">' . $header . '</a>';
+                        }
+                        ?>
+                    </nav>
+                </nav>
+            </div>
 
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
+            <!-- Main Content Column -->
+            <div class="col-12 col-md-6">
+                <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+                    <?php
+                    while ( have_posts() ) :
+                        the_post();
+                        
+                        // Replace headers with IDs in post content
+                        $post_content = get_the_content();
+                        foreach ($headers as $index => $header) {
+                            $id = 'header-' . $index;
+                            $post_content = preg_replace('/<h[1-6]>(.*?)<\/h[1-6]>/', '<h2 id="' . $id . '">$1</h2>', $post_content, 1);
+                        }
 
-		endwhile; // End of the loop.
-		?>
+                        echo '<div>' . $post_content . '</div>';
 
-	</main><!-- #main -->
+                        if ( comments_open() || get_comments_number() ) :
+                            comments_template();
+                        endif;
+
+                    endwhile; // End of the loop.
+                    ?>
+                </div>
+            </div>
+
+            <!-- Sidebar Column -->
+            <div class="col-12 col-md-3">
+                <?php get_sidebar(); ?>
+            </div>
+        </div><!-- .row -->
+    </div><!-- .container -->
+</main><!-- #main -->
 
 <?php
-get_sidebar();
 get_footer();
+?>
