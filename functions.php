@@ -384,6 +384,8 @@ function my_theme_settings_init() {
     register_setting('my_theme_settings', 'accessmeter_language', 'sanitize_text_field');
     register_setting('my_theme_settings', 'breadcrumb_code', 'sanitize_textarea_field');
     register_setting('my_theme_settings', 'woocommerce_enabled', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'header_mode_enabled', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'footer_mode_enabled', 'sanitize_text_field');
     register_setting('my_theme_settings', 'google_analytics_script', 'sanitize_js_code');
     register_setting('my_theme_settings', 'site_verification_code', 'sanitize_text_field');
     register_setting('my_theme_settings', 'marketing_pixel_code', 'sanitize_js_code');
@@ -502,6 +504,20 @@ function accessmeter_theme_settings_page() {
                     <td>
                         <input type="checkbox" name="woocommerce_enabled" value="1" <?php checked(get_option('woocommerce_enabled'), 1); ?>>
                         <label for="woocommerce_enabled"><?php _e('Enable WooCommerce Features.', 'accessmeter'); ?></label>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Enable Header Mode', 'accessmeter'); ?></th>
+                    <td>
+                        <input type="checkbox" name="header_mode_enabled" value="1" <?php checked(get_option('header_mode_enabled'), 1); ?>>
+                        <label for="header_mode_enabled"><?php _e('Enable Collapse/Expand of the Header.', 'accessmeter'); ?></label>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Enable Footer Mode', 'accessmeter'); ?></th>
+                    <td>
+                        <input type="checkbox" name="footer_mode_enabled" value="1" <?php checked(get_option('footer_mode_enabled'), 1); ?>>
+                        <label for="footer_mode_enabled"><?php _e('Enable Collapse/Expand of the Footer.', 'accessmeter'); ?></label>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -722,11 +738,36 @@ function display_progress_bar() {
     echo '</div>';
 }
 
-//Header mode functions
+// Function to check if the header mode is enabled
+function is_header_mode_enabled() {
+    return (bool) get_option('header_mode_enabled', 0);
+}
+
+// Header mode functions
 function get_header_mode() {
-    // Get the user’s choice from the database; default to 'expanded' if not set
+    if (!is_header_mode_enabled()) {
+        return 'always-expanded';
+    }
+
+    // Get the user's choice from the database; default to 'expanded' if not set
     $header_mode = get_option('header_mode', 'expanded');
     return $header_mode;
+}
+
+// Function to check if the footer mode is enabled
+function is_footer_mode_enabled() {
+    return (bool) get_option('footer_mode_enabled', 0);
+}
+
+// Footer mode functions
+function get_footer_mode() {
+    if (!is_footer_mode_enabled()) {
+        return 'always-expanded';
+    }
+
+    // Get the user's choice from the database; default to 'expanded' if not set
+    $footer_mode = get_option('footer_mode', 'expanded');
+    return $footer_mode;
 }
 
 //Header position functions
@@ -744,13 +785,6 @@ function get_header_color() {
     // Sanitize color choice dynamically
     $color = in_array($color, $allowed_colors) ? $color : 'whitesmoke';
     echo 'background-color: ' . $color . ';';
-}
-
-//Footer mode functions
-function get_footer_mode() {
-    // Get the user’s choice from the database; default to 'expanded' if not set
-    $footer_mode = get_option('footer_mode', 'expanded');
-    return $footer_mode;
 }
 
 //Footer position functions

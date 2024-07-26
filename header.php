@@ -1,5 +1,5 @@
 <!doctype html>
-<html <?php language_attributes(); ?> class="bg-success">
+<html <?php language_attributes(); ?> class="bg-light">
 <div>
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
@@ -20,7 +20,7 @@
     <a class="skip-link screen-reader-text" href="#primary" tabindex="1"><?php esc_html_e('Skip to content', 'accessmeter'); ?></a>       
     <?php
     // Get header mode from options
-    $header_mode = get_option('header_mode', 'collapsed');
+    $header_mode = get_header_mode();
     ?>
     <header 
         id="masthead" 
@@ -29,10 +29,13 @@
         <div class="row no-gutters">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center">
-                    <!-- Collapse/Expand Toggler -->
-                    <button tabindex="2" class="navbar-toggler position-fixed" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="top: 5px; border: 3px solid grey; padding: 5px; background-color: <?php echo get_option('progress_bar_color', 'green')?>; border-radius: 5px; z-index: 1000; left: 50%;">
-                        <i class="bi bi-chevron-down text-white" style="font-size: 1.50rem;"></i>
-                    </button>
+                    <!-- Check if header mode is enabled before rendering the toggle button -->
+                    <?php if ($header_mode !== 'always-expanded'): ?>
+                        <!-- Collapse/Expand Toggler -->
+                        <button tabindex="2" class="navbar-toggler position-fixed" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="top: 5px; border: 3px solid grey; padding: 5px; background-color: <?php echo get_option('progress_bar_color', 'green')?>; border-radius: 5px; z-index: 1000; left: 50%;">
+                            <i class="bi bi-chevron-down text-white" style="font-size: 1.50rem;"></i>
+                        </button>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -43,7 +46,7 @@
         </div>
 
         <!-- Collapsible Header Content -->
-        <div class="collapse <?php echo ($header_mode === 'expanded') ? 'show' : ''; ?>" id="header-collapse">
+        <div class="collapse <?php echo ($header_mode === 'expanded' || $header_mode === 'always-expanded') ? 'show' : ''; ?>" id="header-collapse">
             <div class="row no-gutters">
                 <div class="col-12">
                     <div class="d-flex justify-content-between align-items-center pt-2 pb-2">

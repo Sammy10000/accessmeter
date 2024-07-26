@@ -14,13 +14,20 @@
     <div class="container">
         <!-- Collapse/Expand Toggler -->
         <div class="text-center">
-            <button tabindex="0" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#footer-collapse" aria-controls="footer-collapse" aria-expanded="<?php echo (get_footer_mode() === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle footer', 'accessmeter'); ?>" style="border: 3px solid grey; padding: 5px; background-color: <?php echo get_option('progress_bar_color', 'green');?>; border-radius: 5px; right: 50%;">
-                <i class="bi bi-chevron-<?php echo (get_footer_mode() === 'expanded') ? 'up' : 'down'; ?> text-white" style="font-size: 1.50rem;"></i>
-            </button>
+            <?php
+            // Get footer mode from options
+            $footer_mode = get_footer_mode();
+            ?>
+            <?php if ($footer_mode !== 'always-expanded'): ?>
+                <!-- Toggle Button -->
+                <button tabindex="0" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#footer-collapse" aria-controls="footer-collapse" aria-expanded="<?php echo ($footer_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle footer', 'accessmeter'); ?>" style="border: 3px solid grey; padding: 5px; background-color: <?php echo get_option('progress_bar_color', 'green');?>; border-radius: 5px; right: 50%;">
+                    <i class="bi bi-chevron-<?php echo ($footer_mode === 'expanded') ? 'up' : 'down'; ?> text-white" style="font-size: 1.50rem;"></i>
+                </button>
+            <?php endif; ?>
         </div>
 
         <!-- Collapsible Footer Content -->
-        <div class="collapse <?php echo (get_footer_mode() === 'expanded') ? 'show' : ''; ?>" id="footer-collapse">
+        <div class="collapse <?php echo ($footer_mode === 'expanded' || $footer_mode === 'always-expanded') ? 'show' : ''; ?>" id="footer-collapse">
             <div class="row">
                 <?php
                 // Get the user’s choice for the number of footer widgets
