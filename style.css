@@ -526,13 +526,12 @@ a {
 a:hover,
 a:focus,
 a:active {
-	color: #ffffff;
+	color: #550c0c;
 }
 
 a:focus {
 	outline: 4px solid #6852c8;
 	border-radius: 1px;
-	background-color: #000000;
 	padding: 1px;
 	outline-offset: 3px;
   }
@@ -1005,10 +1004,13 @@ textarea {
 }
 /* Body styling*/
 #primary {
-	margin-top: 70px;
+	padding-top: 100px;
+	display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 #secondary {
-	margin-top: 70px;
+	margin-top: 0px;
 }
 
 
@@ -1021,7 +1023,6 @@ h1.site-title {
   }
 .site-title a{
 	color: whitesmoke;
-	background-color: rgb(0, 0, 0);
 	padding: 6px;
 	border-radius: 2px;
 	text-decoration: overline;
@@ -1062,3 +1063,32 @@ h1.site-title {
     justify-content: center;
 }
 
+/* Ensure no horizontal scroll */
+body {
+    overflow-x: hidden;
+}
+
+#main {
+    flex: 1;
+}
+
+.site-footer {
+    text-align: center;
+	bottom: 0;
+	position: relative;
+}
+
+/* Style for the footer credits */
+.footer-credits {
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa; /* Adjust background color as needed */
+    text-align: center;
+    box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for better visibility */
+}
+
+/* Optional additional styling for footer credits text */
+.footer-credits-text {
+    margin: 0; /* Remove default margin */
+    color: #ffffff; /* Adjust text color as needed */
+}

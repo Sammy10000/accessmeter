@@ -271,6 +271,15 @@ add_action( 'after_setup_theme', 'register_navwalker' );
 function accessmeter_add_woocommerce_support() {
     add_theme_support('woocommerce');
 }
+add_action( 'after_setup_theme', 'accessmeter_add_woocommerce_support' );
+
+//Ensure Compatibility with WooCommerce Styles and Scripts
+function accessmeter_woocommerce_setup() {
+    add_theme_support( 'woocommerce' );
+}
+
+add_action( 'after_setup_theme', 'accessmeter_woocommerce_setup' );
+
 
 // Set default theme options
 function accessmeter_set_default_options() {
@@ -502,7 +511,7 @@ function accessmeter_theme_settings_page() {
                             <option value="darkred" <?php selected(get_option('progress_bar_color'), 'darkred'); ?>><?php _e('Red', 'accessmeter'); ?></option>
                             <option value="purple" <?php selected(get_option('progress_bar_color'), 'purple'); ?>><?php _e('Purple', 'accessmeter'); ?></option>
                             <option value="black" <?php selected(get_option('progress_bar_color'), 'black'); ?>><?php _e('Black', 'accessmeter'); ?></option>
-                            <option value="grey" <?php selected(get_option('progress_bar_color'), 'grey'); ?>><?php _e('Grey', 'accessmeter'); ?></option>
+                            <option value="#452B1F" <?php selected(get_option('progress_bar_color'), '#452B1F'); ?>><?php _e('Brown', 'accessmeter'); ?></option>
                             <option value="darkblue" <?php selected(get_option('progress_bar_color'), 'darkblue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
                             <option value="green" <?php selected(get_option('progress_bar_color'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
                         </select>
@@ -535,6 +544,7 @@ function accessmeter_theme_settings_page() {
                             <option value="purple" <?php selected(get_option('header_color'), 'purple'); ?>><?php _e('Purple', 'accessmeter'); ?></option>
                             <option value="black" <?php selected(get_option('header_color'), 'black'); ?>><?php _e('Black', 'accessmeter'); ?></option>
                             <option value="whitesmoke" <?php selected(get_option('header_color'), 'whitesmoke'); ?>><?php _e('White', 'accessmeter'); ?></option>
+                            <option value="#452B1F" <?php selected(get_option('header_color'), '#452B1F'); ?>><?php _e('Brown', 'accessmeter'); ?></option>
                             <option value="darkblue" <?php selected(get_option('header_color'), 'darkblue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
                             <option value="green" <?php selected(get_option('header_color'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
                         </select>
@@ -583,11 +593,12 @@ function accessmeter_theme_settings_page() {
                     <th scope="row"><?php _e('Footer Color', 'accessmeter'); ?></th>
                     <td>
                         <select name="footer_color">
-                            <option value="red" <?php selected(get_option('footer_color'), 'red'); ?>><?php _e('Red', 'accessmeter'); ?></option>
+                            <option value="darkred" <?php selected(get_option('footer_color'), 'darkred'); ?>><?php _e('Red', 'accessmeter'); ?></option>
                             <option value="purple" <?php selected(get_option('footer_color'), 'purple'); ?>><?php _e('Purple', 'accessmeter'); ?></option>
                             <option value="black" <?php selected(get_option('footer_color'), 'black'); ?>><?php _e('Black', 'accessmeter'); ?></option>
-                            <option value="white" <?php selected(get_option('footer_color'), 'white'); ?>><?php _e('White', 'accessmeter'); ?></option>
-                            <option value="blue" <?php selected(get_option('footer_color'), 'blue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
+                            <option value="whitesmoke" <?php selected(get_option('footer_color'), 'whitesmoke'); ?>><?php _e('White', 'accessmeter'); ?></option>
+                            <option value="#452B1F" <?php selected(get_option('footer_color'), '#452B1F'); ?>><?php _e('Brown', 'accessmeter'); ?></option>
+                            <option value="darkblue" <?php selected(get_option('footer_color'), 'darkblue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
                             <option value="green" <?php selected(get_option('footer_color'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
                         </select>
                     </td>
@@ -701,7 +712,7 @@ add_filter('locale', 'accessmeter_set_locale');
 // Function to get the user's choice for progress bar color
 function display_progress_bar() {
     $color = get_option('progress_bar_color', 'green'); // Default color is green
-    $allowed_colors = ['darkred', 'purple', 'black', 'grey', 'darkblue', 'green'];
+    $allowed_colors = ['darkred', 'purple', 'black', '#452B1F', 'darkblue', 'green'];
 
     // Sanitize color choice dynamically
     $color = in_array($color, $allowed_colors) ? $color : 'green';
@@ -728,10 +739,34 @@ function get_header_position() {
 //Header color
 function get_header_color() {
     $color = get_option('header_color', 'white'); // Default color is white
-    $allowed_colors = ['darkred', 'purple', 'black', 'whitesmoke', 'darkblue', 'green'];
+    $allowed_colors = ['darkred', 'purple', 'black', 'whitesmoke', '#452B1F', 'darkblue', 'green'];
 
     // Sanitize color choice dynamically
     $color = in_array($color, $allowed_colors) ? $color : 'whitesmoke';
+    echo 'background-color: ' . $color . ';';
+}
+
+//Footer mode functions
+function get_footer_mode() {
+    // Get the user’s choice from the database; default to 'expanded' if not set
+    $footer_mode = get_option('footer_mode', 'expanded');
+    return $footer_mode;
+}
+
+//Footer position functions
+function get_footer_position() {
+    // Get the user’s choice from the database; default to 'static-bottom' if not set
+    $footer_position = get_option('footer_position', 'static-bottom');
+    return $footer_position;
+}
+
+//Footer color
+function get_footer_color() {
+    $color = get_option('footer_color', 'black'); // Default color is black
+    $allowed_colors = ['darkred', 'purple', 'black', 'whitesmoke', '#452B1F', 'darkblue', 'green'];
+
+    // Sanitize color choice dynamically
+    $color = in_array($color, $allowed_colors) ? $color : 'black';
     echo 'background-color: ' . $color . ';';
 }
 
@@ -742,12 +777,18 @@ function get_footer_widgets() {
     return $footer_widgets;
 }
 
-//Footer mode functions
-function get_footer_mode() {
-    // Get the user’s choice from the database; default to 'expanded' if not set
-    $footer_mode = get_option('footer_mode', 'expanded');
-    return $footer_mode;
+// Footer Credits
+function get_footer_credits() {
+    // Get the footer credits text from the theme options, default to site title if not set
+    $footer_credits = get_theme_mod('footer_credits', get_bloginfo('name'));
+    $current_year = date('Y');
+    return sprintf(
+        '&copy; %s %s. All rights reserved.',
+        $current_year,
+        esc_html($footer_credits)
+    );
 }
+
 
 
 // Function to get Google Analytics script

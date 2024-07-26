@@ -1,6 +1,6 @@
 <!doctype html>
 <html <?php language_attributes(); ?> class="bg-success">
-<div style="margin-bottom: 60px;">
+<div>
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -25,12 +25,12 @@
     <header 
         id="masthead" 
         class="site-header <?php echo get_option('header_position', 'fixed-top'); ?>" 
-        style="<?php get_header_color(); ?> width: 100%; margin: 0; padding: 0;">
+        style="<?php get_header_color(); ?> width: 100%;">
         <div class="row no-gutters">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center">
                     <!-- Collapse/Expand Toggler -->
-                    <button tabindex="2" class="navbar-toggler position-fixed" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="top: 5px; border: 3px solid grey; padding: 5px; background-color: black; border-radius: 5px; z-index: 1000; left: 50%;">
+                    <button tabindex="2" class="navbar-toggler position-fixed" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="top: 5px; border: 3px solid grey; padding: 5px; background-color: <?php echo get_option('progress_bar_color', 'green')?>; border-radius: 5px; z-index: 1000; left: 50%;">
                         <i class="bi bi-chevron-down text-white" style="font-size: 1.50rem;"></i>
                     </button>
                 </div>
@@ -56,11 +56,11 @@
                                 // Display the site title if no logo is uploaded
                                 if (is_front_page() && is_home()) :
                                     ?>
-                                    <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="3"><?php bloginfo('name'); ?></a></h1>
+                                    <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="3" style= "background-color: <?php echo get_option('progress_bar_color', 'green');?>"><?php bloginfo('name'); ?></a></h1>
                                     <?php
                                 else :
                                     ?>
-                                    <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="3"><?php bloginfo('name'); ?></a></p>
+                                    <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="3" style= "background-color: <?php echo get_option('progress_bar_color', 'green');?>"><?php bloginfo('name'); ?></a></p>
                                     <?php
                                 endif;
                             }

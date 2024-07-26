@@ -44,6 +44,9 @@ get_header();
             <!-- Main Content Column -->
             <div class="col-12 col-md-6">
                 <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+                <div class="breadcrumb-container">
+                    <?php $breadcrumb_code = get_option('breadcrumb_code'); if ($breadcrumb_code) { echo $breadcrumb_code;} ?>
+                </div>
                     <?php
                     while ( have_posts() ) :
                         the_post();

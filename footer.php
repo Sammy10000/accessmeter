@@ -10,11 +10,11 @@
  */
 ?>
 
-<footer id="colophon" class="site-footer bg-dark">
+<footer id="colophon" class="site-footer <?php echo get_option('footer_position', 'static-bottom'); ?>" style="<?php get_footer_color(); ?> width: 100%;">
     <div class="container">
         <!-- Collapse/Expand Toggler -->
         <div class="text-center">
-            <button tabindex="0" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#footer-collapse" aria-controls="footer-collapse" aria-expanded="<?php echo (get_footer_mode() === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle footer', 'accessmeter'); ?>" style="border: 3px solid grey; padding: 5px; background-color: black; border-radius: 5px; right: 50%;">
+            <button tabindex="0" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#footer-collapse" aria-controls="footer-collapse" aria-expanded="<?php echo (get_footer_mode() === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle footer', 'accessmeter'); ?>" style="border: 3px solid grey; padding: 5px; background-color: <?php echo get_option('progress_bar_color', 'green');?>; border-radius: 5px; right: 50%;">
                 <i class="bi bi-chevron-<?php echo (get_footer_mode() === 'expanded') ? 'up' : 'down'; ?> text-white" style="font-size: 1.50rem;"></i>
             </button>
         </div>
@@ -53,6 +53,11 @@
             </div><!-- .site-info -->
         </div><!-- #footer-collapse -->
     </div><!-- .container -->
+    <!-- Footer Credits -->
+    <div class="footer-credits text-center" style="background-color: <?php echo get_option('progress_bar_color', 'green');?>; color: white; font-size: 50%;">
+        <?php echo get_footer_credits(); ?>
+    </div>
+    <!-- .footer-credits -->
 </footer><!-- #colophon -->
 
 <?php wp_footer(); ?>
