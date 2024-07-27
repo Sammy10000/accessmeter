@@ -1008,6 +1008,7 @@ textarea {
 	display: flex;
     flex-direction: column;
     min-height: 100vh;
+	padding-bottom: 10%;
 }
 #secondary {
 	margin-top: 0px;
@@ -1066,6 +1067,7 @@ h1.site-title {
 /* Ensure no horizontal scroll */
 body {
     overflow-x: hidden;
+	padding-bottom: 10%;
 }
 
 #main {
@@ -1141,41 +1143,62 @@ body {
 
 /* Optional: Hide the TOC item if a level 4 header is present in the content */
 #toc-sidebar .list-group-item {
-    display: block; /* Ensures visibility; modify based on your needs */
+    display: block;
 }
 
 /* Ensure the container takes full width but has a fixed max width */
 .container-fluid {
     width: 100%;
-    max-width: 100%; /* Adjust as needed */
+    max-width: 100%;
     margin: 0 auto;
 }
 
 /* Flexbox container for layout */
 .row.g-0 {
     display: flex;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
 }
 
 html, body {
     height: 100%;
     margin: 0;
-    overflow: hidden; /* Disable scrolling */
-    position: fixed;  /* Fix the page in place */
-    width: 100%;      /* Full width */
-    overflow-y: hidden; /* Hide vertical overflow */
-    overflow-x: hidden; /* Hide horizontal overflow */
+    overflow: hidden;
+    position: fixed; 
+    width: 100%;
 }
 
 #page {
     height: 100%;
-    overflow: hidden; /* Prevent any internal overflow */
-    position: relative; /* Ensure it's contained within the viewport */
+    overflow: hidden;
+    position: relative;
 }
 
 .container-fluid {
     height: 100%;
-    overflow: hidden; /* Ensure no internal overflow */
+    overflow: hidden;
 }
 
+.toc-container, .sidebar-container {
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+	padding-bottom: 10%;
+}
 
+/* Ensure main content column also takes full height */
+.scrollspy-example {
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+/* Ensure the footer is not hidden */
+.site-footer {
+    position: relative; /* or static, depending on your layout */
+    z-index: 1; /* Adjust if other content is overlapping */
+    margin-top: 20px; /* Adjust if there's space needed above the footer */
+}
+
+/* Ensure other content doesn’t push the footer down */
+.main-content {
+    margin-bottom: 0; /* Adjust if there's excess margin */
+}

@@ -10,11 +10,11 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main sticky-body">
+<main id="primary" class="site-main">
     <div class="container-fluid">
         <div class="row g-0">
             <!-- TOC Column -->
-            <div id="toc-sidebar" class="col-12 col-md-3 pe-md-5">
+            <div id="toc-sidebar" class="col-12 col-md-3 toc-container">
                 <!-- TOC will be injected here by jQuery -->
             </div>
 
@@ -44,7 +44,7 @@ get_header();
             </div>
 
             <!-- Right Sidebar Column -->
-            <div id="right-sidebar" class="col-12 col-md-3 ps-md-5">
+            <div id="right-sidebar" class="col-12 col-md-3 sidebar-container">
                 <?php get_sidebar(); ?>
             </div>
         </div><!-- .row -->

@@ -28,7 +28,7 @@ jQuery(document).ready(function($) {
     toc.empty();
 
     // Generate TOC items
-    content.find('h1, h2, h3').each(function(index) {
+    content.find('h1, h2, h3, h4, h5, h6').each(function(index) {
         var $this = $(this);
         var level = $this.prop('tagName').toLowerCase();
         var id = 'heading-' + (index + 1);
