@@ -18,3 +18,34 @@
     window.addEventListener('resize', updateProgressBar);
     document.addEventListener('DOMContentLoaded', updateProgressBar);
 })(jQuery);
+
+//Table of contents.
+jQuery(document).ready(function($) {
+    var toc = $('#toc-sidebar');
+    var content = $('.scrollspy-example');
+
+    // Clear any existing TOC content
+    toc.empty();
+
+    // Generate TOC items
+    content.find('h1, h2, h3').each(function(index) {
+        var $this = $(this);
+        var level = $this.prop('tagName').toLowerCase();
+        var id = 'heading-' + (index + 1);
+
+        // Add an ID to the header
+        $this.attr('id', id);
+
+        // Add TOC item
+        toc.append(
+            $('<a>', {
+                class: 'list-group-item list-group-item-action',
+                href: '#' + id,
+                text: $this.text()
+            })
+        );
+    });
+});
+
+
+

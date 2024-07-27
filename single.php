@@ -10,71 +10,45 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main">
-    <div class="container">
-        <div class="row">
-            <!-- ScrollSpy Navigation Column -->
-            <div class="col-12 col-md-3">
-                <nav id="navbar-example3" class="h-100 sticky-top">
-                    <nav class="nav nav-pills flex-column">
-                        <?php
-                        // Function to extract headers from post content
-                        function extract_headers($content) {
-                            $matches = [];
-                            preg_match_all('/<h[1-6]>(.*?)<\/h[1-6]>/', $content, $matches);
-                            return $matches[1];
-                        }
-
-                        // Get post content
-                        $post_content = get_the_content();
-
-                        // Extract headers
-                        $headers = extract_headers($post_content);
-
-                        // Generate ScrollSpy navigation
-                        foreach ($headers as $index => $header) {
-                            $id = 'header-' . $index;
-                            echo '<a class="nav-link" href="#' . $id . '">' . $header . '</a>';
-                        }
-                        ?>
-                    </nav>
-                </nav>
+<main id="primary" class="site-main sticky-body">
+    <div class="container-fluid">
+        <div class="row g-0">
+            <!-- TOC Column -->
+            <div id="toc-sidebar" class="col-12 col-md-3 pe-md-5">
+                <!-- TOC will be injected here by jQuery -->
             </div>
 
             <!-- Main Content Column -->
-            <div class="col-12 col-md-6">
-                <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+            <div class="scrollspy-example col-12 col-md-6" data-bs-spy="scroll" data-bs-target="#toc-sidebar" data-bs-smooth-scroll="true" tabindex="0">
                 <div class="breadcrumb-container">
-                    <?php $breadcrumb_code = get_option('breadcrumb_code'); if ($breadcrumb_code) { echo $breadcrumb_code;} ?>
-                </div>
-                    <?php
-                    while ( have_posts() ) :
-                        the_post();
-                        
-                        // Replace headers with IDs in post content
-                        $post_content = get_the_content();
-                        foreach ($headers as $index => $header) {
-                            $id = 'header-' . $index;
-                            $post_content = preg_replace('/<h[1-6]>(.*?)<\/h[1-6]>/', '<h2 id="' . $id . '">$1</h2>', $post_content, 1);
-                        }
-
-                        echo '<div>' . $post_content . '</div>';
-
-                        if ( comments_open() || get_comments_number() ) :
-                            comments_template();
-                        endif;
-
-                    endwhile; // End of the loop.
+                    <?php 
+                    $breadcrumb_code = get_option('breadcrumb_code'); 
+                    if ($breadcrumb_code) { 
+                        echo $breadcrumb_code;
+                    } 
                     ?>
                 </div>
+                <?php
+                while ( have_posts() ) :
+                    the_post();
+
+                    // Get and display the post content
+                    echo '<div>' . apply_filters('the_content', get_the_content()) . '</div>';
+
+                    if ( comments_open() || get_comments_number() ) :
+                        comments_template();
+                    endif;
+
+                endwhile; // End of the loop.
+                ?>
             </div>
 
-            <!-- Sidebar Column -->
-            <div class="col-12 col-md-3">
+            <!-- Right Sidebar Column -->
+            <div id="right-sidebar" class="col-12 col-md-3 ps-md-5">
                 <?php get_sidebar(); ?>
             </div>
         </div><!-- .row -->
-    </div><!-- .container -->
+    </div><!-- .container-fluid -->
 </main><!-- #main -->
 
 <?php

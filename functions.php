@@ -119,6 +119,7 @@ add_action( 'after_setup_theme', 'accessmeter_content_width', 0 );
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
+
 function accessmeter_widgets_init() {
     // Register Sidebar Widgets
     register_sidebar(
@@ -814,7 +815,7 @@ function get_footer_widgets() {
 // Footer Credits
 function get_footer_credits() {
     // Get the footer credits text from the theme options, default to site title if not set
-    $footer_credits = get_theme_mod('footer_credits', get_bloginfo('name'));
+    $footer_credits = get_option('footer_credits', get_bloginfo('name'));
     $current_year = date('Y');
     return sprintf(
         '&copy; %s %s. All rights reserved.',
@@ -822,8 +823,6 @@ function get_footer_credits() {
         esc_html($footer_credits)
     );
 }
-
-
 
 // Function to get Google Analytics script
 function accessmeter_google_analytics_script() {
