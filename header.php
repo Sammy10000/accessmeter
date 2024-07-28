@@ -120,7 +120,7 @@
         </div>
     </div>
 
-    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="z-index: 9999;">
+    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="z-index: 1000;">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -160,16 +160,16 @@
 </div><!-- #page -->
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var progressBarContainer = document.getElementById('progress-bar-container');
+    document.addEventListener('DOMContentLoaded', function () {
+        const offcanvasNavbar = document.getElementById('offcanvasNavbar');
+        const links = offcanvasNavbar.querySelectorAll('a.nav-link, button.btn-close');
 
-        // Ensure the progress bar is always fixed at the top
-        progressBarContainer.style.position = 'fixed';
-        progressBarContainer.style.top = '0';
-        progressBarContainer.style.width = '100%';
-        progressBarContainer.style.zIndex = '1050';
+        links.forEach(function (link) {
+            link.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        });
     });
 </script>
 </body>
-</div>
 </html>

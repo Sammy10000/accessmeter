@@ -10,7 +10,7 @@
  */
 ?>
 
-<footer id="colophon" class="site-footer <?php echo get_option('footer_position', 'static-bottom'); ?>" style="<?php get_footer_color(); ?> width: 100%;">
+<footer id="colophon" class="site-footer <?php echo get_option('footer_position', 'static-bottom'); ?>" style="<?php get_footer_color(); ?> width: 100%; z-index: 1;">
     <div class="container">
         <!-- Collapse/Expand Toggler -->
         <div class="text-center">
