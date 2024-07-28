@@ -28,7 +28,7 @@
     style="<?php get_header_color(); ?> width: 100%;">
     <div class="row no-gutters align-items-center">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-around align-items-center pt-1">
                 <div class="site-branding">
                     <?php
                     if (has_custom_logo()) {
@@ -52,13 +52,13 @@
                 </div><!-- .site-branding -->
                 
                 <?php if ($header_mode !== 'always-expanded'): ?>
-                    <button tabindex="2" class="navbar-toggler mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="border: 3px solid grey; padding: 5px; background-color: <?php echo get_option('progress_bar_color', 'green')?>; border-radius: 5px; z-index: 1000;">
-                        <i class="bi bi-chevron-down text-white" style="font-size: 1.50rem;"></i>
+                    <button tabindex="2" class="navbar-toggler mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="padding: 5px; background-color: <?php echo get_option('progress_bar_color', 'green')?>; border-radius: 5px; z-index: 1000;">
+                    <i class="bi bi-list text-white" style="font-size: 1.7rem;"></i>
                     </button>
                 <?php endif; ?>
                 
-                <button tabindex="4" class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: <?php echo get_option('progress_bar_color', 'green'); ?>; border: 3px solid grey; border-radius: 3px; padding: 7px;">
-                    <i class="bi bi-list text-white" style="font-size: 1.7rem;"></i>
+                <button tabindex="4" class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: <?php echo get_option('progress_bar_color', 'green'); ?>; padding: 7px;">
+                <i class="bi bi-gear text-white" style="font-size: 1.7rem;"></i>
                 </button>
             </div>
         </div>
