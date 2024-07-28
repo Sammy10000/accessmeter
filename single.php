@@ -10,11 +10,17 @@
 get_header();
 ?>
 
+<style>
+    body, html {
+        overflow-x: hidden;
+    }
+</style>
+
 <main id="primary" class="site-main">
     <div class="container">
-        <div class="row">
+        <div class="row no-gutters">
             <!-- ScrollSpy Navigation Column -->
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-3 order-md-1 order-3">
                 <nav id="navbar-example3" class="h-100 sticky-top">
                     <nav class="nav nav-pills flex-column">
                         <?php
@@ -42,11 +48,11 @@ get_header();
             </div>
 
             <!-- Main Content Column -->
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 order-md-2 order-1">
                 <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
-                <div class="breadcrumb-container">
-                    <?php $breadcrumb_code = get_option('breadcrumb_code'); if ($breadcrumb_code) { echo $breadcrumb_code;} ?>
-                </div>
+                    <div class="breadcrumb-container">
+                        <?php $breadcrumb_code = get_option('breadcrumb_code'); if ($breadcrumb_code) { echo $breadcrumb_code;} ?>
+                    </div>
                     <?php
                     while ( have_posts() ) :
                         the_post();
@@ -70,7 +76,7 @@ get_header();
             </div>
 
             <!-- Sidebar Column -->
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-3 order-md-3 order-2">
                 <?php get_sidebar(); ?>
             </div>
         </div><!-- .row -->

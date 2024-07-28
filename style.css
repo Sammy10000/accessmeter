@@ -1092,3 +1092,9 @@ body {
     margin: 0; /* Remove default margin */
     color: #ffffff; /* Adjust text color as needed */
 }
+
+/* OFFCANVAS STYLES*/
+.offcanvas-body {
+    max-height: 100%;
+    overflow-y: auto;
+}
