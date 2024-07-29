@@ -20,7 +20,7 @@
             ?>
             <?php if ($footer_mode !== 'always-expanded'): ?>
                 <!-- Toggle Button -->
-                <button tabindex="0" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#footer-collapse" aria-controls="footer-collapse" aria-expanded="<?php echo ($footer_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle footer', 'accessmeter'); ?>" style="border: 3px solid grey; padding: 5px; background-color: <?php echo get_option('basic_color_mode', 'green');?>; border-radius: 5px; right: 50%;">
+                <button tabindex="0" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#footer-collapse" aria-controls="footer-collapse" aria-expanded="<?php echo ($footer_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle footer', 'accessmeter'); ?>" style="border: 3px solid grey; padding: 3px; background-color: <?php echo get_option('basic_color_mode', 'green');?>; border-radius: 5px; right: 50%;">
                     <i class="bi bi-chevron-<?php echo ($footer_mode === 'expanded') ? 'up' : 'down'; ?> text-white" style="font-size: 1.50rem;"></i>
                 </button>
             <?php endif; ?>
@@ -30,11 +30,7 @@
         <div class="collapse <?php echo ($footer_mode === 'expanded' || $footer_mode === 'always-expanded') ? 'show' : ''; ?>" id="footer-collapse">
             <div class="row">
                 <?php
-                // Get the user’s choice for the number of footer widgets
-                $footer_widgets_choice = get_option('footer_widgets', '4-widgets');
-                $footer_widgets_count = intval($footer_widgets_choice);
-
-                // Define footer widget areas
+                // Define the footer widget areas
                 $footer_widgets = array(
                     'footer-1',
                     'footer-2',
@@ -42,14 +38,20 @@
                     'footer-4'
                 );
 
-                // Calculate column size based on the number of widgets
-                $col_size = 12 / $footer_widgets_count;
+                // Find active widget areas
+                $active_widgets = array_filter($footer_widgets, function($widget) {
+                    return is_active_sidebar($widget);
+                });
 
-                // Loop through and display active footer widget areas
-                for ($i = 1; $i <= $footer_widgets_count; $i++) {
-                    if (is_active_sidebar($footer_widgets[$i - 1])) {
+                // Calculate column size based on the number of active widgets
+                $active_count = count($active_widgets);
+                if ($active_count > 0) {
+                    $col_size = 12 / $active_count;
+
+                    // Loop through and display active footer widget areas
+                    foreach ($active_widgets as $widget) {
                         echo '<div class="col-12 col-md-' . $col_size . '">';
-                        dynamic_sidebar($footer_widgets[$i - 1]);
+                        dynamic_sidebar($widget);
                         echo '</div>';
                     }
                 }

@@ -61,7 +61,7 @@
 
             <!-- Menu toggle button -->
             <?php if ($menu_mode !== 'always-expanded'): ?>
-                <button tabindex="2" class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($menu_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="padding: 5px; margin: 5px; background-color: <?php echo get_option('basic_color_mode', 'green')?>; border-radius: 5px; z-index: 1000;">
+                <button tabindex="0" class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($menu_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="padding: 5px; margin: 5px; background-color: <?php echo get_option('basic_color_mode', 'green')?>; border-radius: 5px; z-index: 1000;">
                     <i class="bi bi-list text-white" style="font-size: 1.7rem;"></i>
                 </button>
             <?php endif; ?>

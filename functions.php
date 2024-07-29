@@ -570,7 +570,7 @@ function accessmeter_theme_settings_page() {
                     <td>
                         <select name="footer_position">
                             <option value="fixed-bottom" <?php selected(get_option('footer_position'), 'fixed-bottom'); ?>><?php _e('Fixed => always at bottom', 'accessmeter'); ?></option>
-                            <option value="static-bottom" <?php selected(get_option('footer_position'), 'static-bottom'); ?>><?php _e('Static => scrolls with page', 'accessmeter'); ?></option>
+                            <option value="static-bottom" <?php selected(get_option('footer_position'), 'static-bottom'); ?>><?php _e('Hidden => no footer visibility', 'accessmeter'); ?></option>
                         </select>
 
                     </td>
@@ -724,8 +724,6 @@ function get_menu_mode() {
     return get_option('menu_mode', 'expanded');
 }
 
-
-
 // Function to check if the footer mode is enabled
 function is_footer_mode_enabled() {
     return (bool) get_option('footer_mode_enabled', 0);
@@ -787,6 +785,48 @@ function get_footer_credits() {
         esc_html($footer_credits)
     );
 }
+
+function control_sidebar_layout() {
+    $selected_option = get_option('body_sidebar');
+  
+    if ($selected_option == 'left') {
+      // Hide right sidebar and expand content
+      echo '<style>
+        .col-md-3:last-child {
+          display: none;
+        }
+        #progress-bar-content {
+          flex: 0 0 75%;
+          max-width: 75%;
+        }
+      </style>';
+    } elseif ($selected_option == 'right') {
+      // Hide left sidebar and expand content
+      echo '<style>
+        .col-md-3:first-child {
+          display: none;
+        }
+        #progress-bar-content {
+          flex: 0 0 75%;
+          max-width: 75%;
+        }
+      </style>';
+    } elseif ($selected_option == 'none') {
+      // Hide both sidebars and expand content
+      echo '<style>
+        .col-md-3 {
+          display: none;
+        }
+        #progress-bar-content {
+          flex: 0 0 100%;
+          max-width: 100%;
+        }
+      </style>';
+    } else {
+      // Do nothing, keep default layout
+    }
+  }
+  
 
 // Function to get Google Analytics script
 function accessmeter_google_analytics_script() {

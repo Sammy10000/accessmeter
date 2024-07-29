@@ -15,14 +15,14 @@ get_header();
         <div class="row" style="height: 100vh; overflow: hidden;">
             
             <!-- Sidebar-1 Column -->
-            <div class="col-12 col-md-3" style="overflow-y: auto; height: 100%; padding-top: 70px;">
+            <div class="col-12 col-md-3" style="overflow-y: auto; height: 100%; padding-top: 70px; padding-bottom: 120px;">
                 <?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
                     <?php dynamic_sidebar( 'sidebar-1' ); ?>
                 <?php endif; ?>
             </div>
 
             <!-- Main Content Column -->
-            <div id="progress-bar-content" class="col-12 col-md-6" style="overflow-y: auto; height: 100%; padding-top: 70px;">
+            <div id="progress-bar-content" class="col-12 col-md-6" style="overflow-y: auto; height: 100%; padding-top: 70px; padding-bottom: 120px;">
                 <div tabindex="0">
                     <div class="breadcrumb-container">
                         <?php $breadcrumb_code = get_option('breadcrumb_code'); if ($breadcrumb_code) { echo $breadcrumb_code;} ?>
@@ -57,7 +57,7 @@ get_header();
             </div>
 
             <!-- Sidebar-2 Column -->
-            <div class="col-12 col-md-3" style="overflow-y: auto; height: 100%; padding-top: 70px;">
+            <div class="col-12 col-md-3" style="overflow-y: auto; height: 100%; padding-top: 70px; padding-bottom: 120px;">
                 <?php if ( is_active_sidebar( 'sidebar-2' ) ) : ?>
                     <?php dynamic_sidebar( 'sidebar-2' ); ?>
                 <?php endif; ?>
@@ -99,6 +99,7 @@ get_header();
     });
 })(jQuery);
 </script>
+<?php control_sidebar_layout(); ?>
 </main><!-- #main -->
 
 <?php
