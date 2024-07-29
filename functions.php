@@ -370,9 +370,9 @@ add_action('init', 'accessmeter_load_woocommerce');
  */
 add_action('admin_init', 'my_theme_settings_init');
 function my_theme_settings_init() {
-    register_setting('my_theme_settings', 'header_mode', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'menu_mode', 'sanitize_text_field');
     register_setting('my_theme_settings', 'header_position', 'sanitize_text_field');
-    register_setting('my_theme_settings', 'progress_bar_color', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'basic_color_mode', 'sanitize_text_field');
     register_setting('my_theme_settings', 'header_color', 'sanitize_text_field');
     register_setting('my_theme_settings', 'body_sidebar', 'sanitize_text_field');
     register_setting('my_theme_settings', 'body_mode', 'sanitize_text_field');
@@ -384,7 +384,6 @@ function my_theme_settings_init() {
     register_setting('my_theme_settings', 'accessmeter_language', 'sanitize_text_field');
     register_setting('my_theme_settings', 'breadcrumb_code', 'sanitize_textarea_field');
     register_setting('my_theme_settings', 'woocommerce_enabled', 'sanitize_text_field');
-    register_setting('my_theme_settings', 'header_mode_enabled', 'sanitize_text_field');
     register_setting('my_theme_settings', 'footer_mode_enabled', 'sanitize_text_field');
     register_setting('my_theme_settings', 'google_analytics_script', 'sanitize_js_code');
     register_setting('my_theme_settings', 'site_verification_code', 'sanitize_text_field');
@@ -507,13 +506,6 @@ function accessmeter_theme_settings_page() {
                     </td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><?php _e('Enable Header Mode', 'accessmeter'); ?></th>
-                    <td>
-                        <input type="checkbox" name="header_mode_enabled" value="1" <?php checked(get_option('header_mode_enabled'), 1); ?>>
-                        <label for="header_mode_enabled"><?php _e('Enable Collapse/Expand of the Header.', 'accessmeter'); ?></label>
-                    </td>
-                </tr>
-                <tr valign="top">
                     <th scope="row"><?php _e('Enable Footer Mode', 'accessmeter'); ?></th>
                     <td>
                         <input type="checkbox" name="footer_mode_enabled" value="1" <?php checked(get_option('footer_mode_enabled'), 1); ?>>
@@ -521,25 +513,25 @@ function accessmeter_theme_settings_page() {
                     </td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><?php _e('Progress Bar Color', 'accessmeter'); ?></th>
+                    <th scope="row"><?php _e('Basic Color Scheme', 'accessmeter'); ?></th>
                     <td>
-                        <select name="progress_bar_color">
-                            <option value="darkred" <?php selected(get_option('progress_bar_color'), 'darkred'); ?>><?php _e('Red', 'accessmeter'); ?></option>
-                            <option value="purple" <?php selected(get_option('progress_bar_color'), 'purple'); ?>><?php _e('Purple', 'accessmeter'); ?></option>
-                            <option value="black" <?php selected(get_option('progress_bar_color'), 'black'); ?>><?php _e('Black', 'accessmeter'); ?></option>
-                            <option value="#452B1F" <?php selected(get_option('progress_bar_color'), '#452B1F'); ?>><?php _e('Brown', 'accessmeter'); ?></option>
-                            <option value="darkblue" <?php selected(get_option('progress_bar_color'), 'darkblue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
-                            <option value="green" <?php selected(get_option('progress_bar_color'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
+                        <select name="basic_color_mode">
+                            <option value="darkred" <?php selected(get_option('basic_color_mode'), 'darkred'); ?>><?php _e('Red', 'accessmeter'); ?></option>
+                            <option value="purple" <?php selected(get_option('basic_color_mode'), 'purple'); ?>><?php _e('Purple', 'accessmeter'); ?></option>
+                            <option value="black" <?php selected(get_option('basic_color_mode'), 'black'); ?>><?php _e('Black', 'accessmeter'); ?></option>
+                            <option value="#452B1F" <?php selected(get_option('basic_color_mode'), '#452B1F'); ?>><?php _e('Brown', 'accessmeter'); ?></option>
+                            <option value="darkblue" <?php selected(get_option('basic_color_mode'), 'darkblue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
+                            <option value="green" <?php selected(get_option('basic_color_mode'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
                         </select>
                         <p class="description"><?php _e('Select a color for the scroll progress bar.', 'accessmeter'); ?></p>
                     </td>
                 </tr>                                
                 <tr valign="top">
-                    <th scope="row"><?php _e('Header Mode', 'accessmeter'); ?></th>
+                    <th scope="row"><?php _e('Menu Mode', 'accessmeter'); ?></th>
                     <td>
-                        <select name="header_mode">
-                            <option value="expanded" <?php selected(get_option('header_mode'), 'expanded'); ?>><?php _e('Expanded', 'accessmeter'); ?></option>
-                            <option value="collapsed" <?php selected(get_option('header_mode'), 'collapsed'); ?>><?php _e('Collapsed', 'accessmeter'); ?></option> 
+                        <select name="menu_mode">
+                            <option value="expanded" <?php selected(get_option('menu_mode'), 'expanded'); ?>><?php _e('Expanded', 'accessmeter'); ?></option>
+                            <option value="collapsed" <?php selected(get_option('menu_mode'), 'collapsed'); ?>><?php _e('Collapsed', 'accessmeter'); ?></option> 
                         </select>
                     </td>
                 </tr>
@@ -727,7 +719,7 @@ add_filter('locale', 'accessmeter_set_locale');
 
 // Function to get the user's choice for progress bar color
 function display_progress_bar() {
-    $color = get_option('progress_bar_color', 'green'); // Default color is green
+    $color = get_option('basic_color_mode', 'green'); // Default color is green
     $allowed_colors = ['darkred', 'purple', 'black', '#452B1F', 'darkblue', 'green'];
 
     // Sanitize color choice dynamically
@@ -738,21 +730,23 @@ function display_progress_bar() {
     echo '</div>';
 }
 
-// Function to check if the header mode is enabled
-function is_header_mode_enabled() {
-    return (bool) get_option('header_mode_enabled', 0);
-}
+// Function to check if the Menu Mode is enabled
+function get_menu_mode() {
+    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+    $is_mobile_or_tablet = preg_match('/Mobile|Tablet/', $user_agent);
 
-// Header mode functions
-function get_header_mode() {
-    if (!is_header_mode_enabled()) {
-        return 'always-expanded';
+    // Debugging output
+    error_log('User Agent: ' . $user_agent);
+    error_log('Is Mobile/Tablet: ' . ($is_mobile_or_tablet ? 'Yes' : 'No'));
+
+    if ($is_mobile_or_tablet) {
+        return 'collapsed';
     }
 
-    // Get the user's choice from the database; default to 'expanded' if not set
-    $header_mode = get_option('header_mode', 'expanded');
-    return $header_mode;
+    return get_option('menu_mode', 'expanded');
 }
+
+
 
 // Function to check if the footer mode is enabled
 function is_footer_mode_enabled() {
@@ -813,17 +807,15 @@ function get_footer_widgets() {
 
 // Footer Credits
 function get_footer_credits() {
-    // Get the footer credits text from the theme options, default to site title if not set
-    $footer_credits = get_theme_mod('footer_credits', get_bloginfo('name'));
+    // Sanitize the footer credits option
+    $footer_credits = sanitize_text_field(get_option('footer_credits', get_bloginfo('name')));
     $current_year = date('Y');
     return sprintf(
         '&copy; %s %s. All rights reserved.',
-        $current_year,
+        esc_html($current_year),
         esc_html($footer_credits)
     );
 }
-
-
 
 // Function to get Google Analytics script
 function accessmeter_google_analytics_script() {

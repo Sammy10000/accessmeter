@@ -20,7 +20,7 @@
     <a class="skip-link screen-reader-text" href="#primary" tabindex="1"><?php esc_html_e('Skip to content', 'accessmeter'); ?></a>       
     <?php
     // Get header mode from options
-    $header_mode = get_header_mode();
+    $menu_mode = get_menu_mode();
     ?>
     <header 
     id="masthead" 
@@ -28,7 +28,7 @@
     style="<?php get_header_color(); ?> width: 100%;">
     <div class="row no-gutters align-items-center">
         <div class="col-12">
-            <div class="d-flex justify-content-around align-items-center pt-1">
+            <div class="d-flex justify-content-between align-items-center pt-1">
                 <div class="site-branding">
                     <?php
                     if (has_custom_logo()) {
@@ -36,11 +36,11 @@
                     } else {
                         if (is_front_page() && is_home()) :
                             ?>
-                            <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="3" style="background-color: <?php echo get_option('progress_bar_color', 'green');?>"><?php bloginfo('name'); ?></a></h1>
+                            <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="3" style="background-color: <?php echo get_option('basic_color_mode', 'green');?>"><?php bloginfo('name'); ?></a></h1>
                             <?php
                         else :
                             ?>
-                            <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="3" style="background-color: <?php echo get_option('progress_bar_color', 'green');?>"><?php bloginfo('name'); ?></a></p>
+                            <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="3" style="background-color: <?php echo get_option('basic_color_mode', 'green');?>"><?php bloginfo('name'); ?></a></p>
                             <?php
                         endif;
                     }
@@ -51,14 +51,14 @@
                     <?php endif; ?>
                 </div><!-- .site-branding -->
                 
-                <?php if ($header_mode !== 'always-expanded'): ?>
-                    <button tabindex="2" class="navbar-toggler mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($header_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="padding: 5px; background-color: <?php echo get_option('progress_bar_color', 'green')?>; border-radius: 5px; z-index: 1000;">
+                <?php if ($menu_mode !== 'always-expanded'): ?>
+                    <button tabindex="2" class="navbar-toggler mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($menu_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="padding: 5px; margin: 5px; background-color: <?php echo get_option('basic_color_mode', 'green')?>; border-radius: 5px; z-index: 1000;">
                     <i class="bi bi-list text-white" style="font-size: 1.7rem;"></i>
                     </button>
                 <?php endif; ?>
                 
-                <button tabindex="4" class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: <?php echo get_option('progress_bar_color', 'green'); ?>; padding: 7px;">
-                <i class="bi bi-gear text-white" style="font-size: 1.7rem;"></i>
+                <button tabindex="4" class="navbar-toggler me-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: <?php echo get_option('basic_color_mode', 'green'); ?>; padding: 3px; border: 3px solid grey; border-radius: 30px;">
+                    <i class="bi bi-universal-access-circle text-white" style="font-size: 1.7rem;"></i>
                 </button>
             </div>
         </div>
@@ -68,91 +68,160 @@
         <?php display_progress_bar(); ?>
     </div>
 
-    <div class="collapse <?php echo ($header_mode === 'expanded' || $header_mode === 'always-expanded') ? 'show' : ''; ?>" id="header-collapse">
+    <div class="collapse <?php echo ($menu_mode === 'expanded' || $menu_mode === 'always-expanded') ? 'show' : ''; ?>" id="header-collapse">
         <div class="row no-gutters">
             <div class="col-12">
-                <nav class="navbar navbar-expand-lg bg-dark">
+                <nav class="navbar navbar-expand-lg bg-dark" style="border-bottom: 5px double <?php echo get_option('basic_color_mode', 'green')?>;">
                     <div class="container-fluid">
     <div class="container-fluid px-0">
         <div class="row g-0 h-100">
             <div class="col-12 col-lg-8">
                 <ul class="navbar-nav me-auto my-1 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100%;">
-                    <li class="nav-item">
-                        <a class="nav-link active text-light bg-dark" aria-current="page" href="#">Link 1</a>
+                    <li class="nav-item p-1">
+                        <a class="nav-link active text-light bg-dark text-center" aria-current="page" href="#">Link 1</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light bg-dark" href="#">Link 2</a>
+                    <li class="nav-item p-1">
+                        <a class="nav-link text-light bg-dark text-center" href="#">Link 2</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active text-light bg-dark" aria-current="page" href="#">Link 3</a>
+                    <li class="nav-item p-1">
+                        <a class="nav-link active text-light bg-dark text-center" aria-current="page" href="#">Link 3</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light bg-dark" href="#">Link 4</a>
+                    <li class="nav-item p-1">
+                        <a class="nav-link text-light bg-dark text-center" href="#">Link 4</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active text-light bg-dark" aria-current="page" href="#">Link 5</a>
+                    <li class="nav-item p-1">
+                        <a class="nav-link active text-light bg-dark text-center" aria-current="page" href="#">Link 5</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light bg-dark" href="#">Link 6</a>
+                    <li class="nav-item p-1">
+                        <a class="nav-link text-light bg-dark text-center" href="#">Link 6</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active text-light bg-dark" aria-current="page" href="#">Link 7</a>
+                    <li class="nav-item p-1">
+                        <a class="nav-link active text-light bg-dark text-center" aria-current="page" href="#">Link 7</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light bg-dark" href="#">Link 8</a>
+                    <li class="nav-item p-1">
+                        <a class="nav-link text-light bg-dark text-center" href="#">Link 8</a>
                     </li>
                     <!-- Additional menu items can go here -->
                 </ul>
             </div>
-            <div class="col-12 col-lg-4 h-100">
-                <form class="d-flex w-100 h-100 align-items-center justify-content-center" role="search">
+            <div class="col-12 col-lg-4">
+                <form class="d-flex w-100 h-60 align-items-center justify-content-center" role="search">
                     <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="flex: 1; height: 3.0rem;">
-                    <button class="btn text-light" type="submit" style="background-color: <?php echo get_option('progress_bar_color', 'green'); ?>;">Search</button>
+                    <button class="btn text-light m-1" type="submit" style="background-color: <?php echo get_option('basic_color_mode', 'green'); ?>;">Search</button>
                 </form>
             </div>
         </div>
     </div>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
                     </div>
                 </nav>
             </div>
         </div>
     </div>
-
-    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="z-index: 1000;">
+    <div class="offcanvas offcanvas-end bg-dark text-light" tabindex="0" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Customize Accessibility</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <form class="d-flex mt-3 w-100" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="flex: 1;">
-                <button class="btn btn-success" type="submit" style="background-color: <?php echo get_option('progress_bar_color', 'green'); ?>;">Search</button>
-            </form>
+            <div class="container">
+                <div class="row">
+                    <!-- Light Mode / Dark Mode -->
+                    <div class="row row-border">
+                        <div class="col-6">
+                            <div class="icon-box" tabindex="0">
+                                <i class="bi bi-sun"></i>
+                                <p>Light Mode</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="icon-box" tabindex="0">
+                                <i class="bi bi-moon"></i>
+                                <p>Dark Mode</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Zoom In / Zoom Out -->
+                    <div class="row row-border">
+                        <div class="col-6">
+                            <div class="icon-box" tabindex="0">
+                                <i class="bi bi-zoom-in"></i>
+                                <p>Zoom In</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="icon-box" tabindex="0">
+                                <i class="bi bi-zoom-out"></i>
+                                <p>Zoom Out</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Increase Font Size / Decrease Font Size -->
+                    <div class="row row-border">
+                        <div class="col-6">
+                            <div class="icon-box" tabindex="0">
+                                <i class="bi bi-text-size"></i>
+                                <p>Increase Font Size</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="icon-box" tabindex="0">
+                                <i class="bi bi-text-indent-right"></i>
+                                <p>Decrease Font Size</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Increase Text Spacing / Reduce Text Spacing -->
+                    <div class="row row-border">
+                        <div class="col-6">
+                            <div class="icon-box" tabindex="0">
+                                <i class="bi bi-text-indent"></i>
+                                <p>Increase Text Spacing</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="icon-box" tabindex="0">
+                                <i class="bi bi-text-indent-left"></i>
+                                <p>Reduce Text Spacing</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Increase Cursor Size / Reduce Cursor Size -->
+                    <div class="row row-border">
+                        <div class="col-6">
+                            <div class="icon-box" tabindex="0">
+                                <i class="bi bi-cursor-text"></i>
+                                <p>Increase Cursor Size</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="icon-box" tabindex="0">
+                                <i class="bi bi-cursor"></i>
+                                <p>Reduce Cursor Size</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Language Settings -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="icon-box" tabindex="0">
+                                <i class="bi bi-globe"></i>
+                                <p>Language Settings</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
+
+</div>
 </header><!-- #masthead -->
     <!-- Additional content goes here -->
 
