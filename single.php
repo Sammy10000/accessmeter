@@ -11,51 +11,38 @@ get_header();
 ?>
 
 <main id="primary" class="site-main">
-    <div class="container">
-        <div class="row">
-            <!-- ScrollSpy Navigation Column -->
-            <div class="col-12 col-md-3">
-                <nav id="navbar-example3" class="h-100 sticky-top">
-                    <nav class="nav nav-pills flex-column">
-                        <?php
-                        // Function to extract headers from post content
-                        function extract_headers($content) {
-                            $matches = [];
-                            preg_match_all('/<h[1-6]>(.*?)<\/h[1-6]>/', $content, $matches);
-                            return $matches[1];
-                        }
-
-                        // Get post content
-                        $post_content = get_the_content();
-
-                        // Extract headers
-                        $headers = extract_headers($post_content);
-
-                        // Generate ScrollSpy navigation
-                        foreach ($headers as $index => $header) {
-                            $id = 'header-' . $index;
-                            echo '<a class="nav-link" href="#' . $id . '">' . $header . '</a>';
-                        }
-                        ?>
-                    </nav>
-                </nav>
+    <div class="container-fluid">
+        <div class="row" style="height: 100vh; overflow: hidden;">
+            
+            <!-- Sidebar-1 Column -->
+            <div class="col-12 col-md-3" style="overflow-y: auto; height: 100%; padding-top: 70px;">
+                <?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
+                    <?php dynamic_sidebar( 'sidebar-1' ); ?>
+                <?php endif; ?>
             </div>
 
             <!-- Main Content Column -->
-            <div class="col-12 col-md-6">
-                <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
-                <div class="breadcrumb-container">
-                    <?php $breadcrumb_code = get_option('breadcrumb_code'); if ($breadcrumb_code) { echo $breadcrumb_code;} ?>
-                </div>
+            <div class="col-12 col-md-6" style="overflow-y: auto; height: 100%; padding-top: 70px;">
+                <div tabindex="0">
+                    <div class="breadcrumb-container">
+                        <?php $breadcrumb_code = get_option('breadcrumb_code'); if ($breadcrumb_code) { echo $breadcrumb_code;} ?>
+                    </div>
                     <?php
                     while ( have_posts() ) :
                         the_post();
                         
+                        // Initialize headers array (Example: capturing h2 and h3 elements)
+                        $headers = array();
+                        preg_match_all('/<h[2-3]>(.*?)<\/h[2-3]>/', get_the_content(), $matches);
+                        if (!empty($matches[0])) {
+                            $headers = $matches[0];
+                        }
+
                         // Replace headers with IDs in post content
                         $post_content = get_the_content();
                         foreach ($headers as $index => $header) {
                             $id = 'header-' . $index;
-                            $post_content = preg_replace('/<h[1-6]>(.*?)<\/h[1-6]>/', '<h2 id="' . $id . '">$1</h2>', $post_content, 1);
+                            $post_content = preg_replace('/<h[2-3]>(.*?)<\/h[2-3]>/', '<h2 id="' . $id . '">$1</h2>', $post_content, 1);
                         }
 
                         echo '<div>' . $post_content . '</div>';
@@ -69,9 +56,11 @@ get_header();
                 </div>
             </div>
 
-            <!-- Sidebar Column -->
-            <div class="col-12 col-md-3">
-                <?php get_sidebar(); ?>
+            <!-- Sidebar-2 Column -->
+            <div class="col-12 col-md-3" style="overflow-y: auto; height: 100%; padding-top: 70px;">
+                <?php if ( is_active_sidebar( 'sidebar-2' ) ) : ?>
+                    <?php dynamic_sidebar( 'sidebar-2' ); ?>
+                <?php endif; ?>
             </div>
         </div><!-- .row -->
     </div><!-- .container -->

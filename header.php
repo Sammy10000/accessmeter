@@ -57,7 +57,7 @@
                     </button>
                 <?php endif; ?>
                 
-                <button tabindex="4" class="navbar-toggler me-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: <?php echo get_option('basic_color_mode', 'green'); ?>; padding: 3px; border: 3px solid grey; border-radius: 30px;">
+                <button tabindex="4" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: <?php echo get_option('basic_color_mode', 'green'); ?>; padding: 3px; border: 3px solid grey; border-radius: 30px; margin-right: 10%;">
                     <i class="bi bi-universal-access-circle text-white" style="font-size: 1.7rem;"></i>
                 </button>
             </div>
