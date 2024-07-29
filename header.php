@@ -36,11 +36,11 @@
                     } else {
                         if (is_front_page() && is_home()) :
                             ?>
-                            <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="3" style="background-color: <?php echo get_option('basic_color_mode', 'green');?>"><?php bloginfo('name'); ?></a></h1>
+                            <h1 class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="0" style="background-color: <?php echo get_option('basic_color_mode', 'green');?>"><?php bloginfo('name'); ?></a></h1>
                             <?php
                         else :
                             ?>
-                            <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="3" style="background-color: <?php echo get_option('basic_color_mode', 'green');?>"><?php bloginfo('name'); ?></a></p>
+                            <p class="site-title"><a href="<?php echo esc_url(home_url('/')); ?>" rel="home" tabindex="0" style="background-color: <?php echo get_option('basic_color_mode', 'green');?>"><?php bloginfo('name'); ?></a></p>
                             <?php
                         endif;
                     }
@@ -52,12 +52,12 @@
                 </div><!-- .site-branding -->
                 
                 <?php if ($menu_mode !== 'always-expanded'): ?>
-                    <button tabindex="2" class="navbar-toggler mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($menu_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="padding: 5px; margin: 5px; background-color: <?php echo get_option('basic_color_mode', 'green')?>; border-radius: 5px; z-index: 1000;">
+                    <button tabindex="0" class="navbar-toggler mx-auto" type="button" data-bs-toggle="collapse" data-bs-target="#header-collapse" aria-controls="header-collapse" aria-expanded="<?php echo ($menu_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="padding: 5px; margin: 5px; background-color: <?php echo get_option('basic_color_mode', 'green')?>; border-radius: 5px; z-index: 1000;">
                     <i class="bi bi-list text-white" style="font-size: 1.7rem;"></i>
                     </button>
                 <?php endif; ?>
                 
-                <button tabindex="4" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: <?php echo get_option('basic_color_mode', 'green'); ?>; padding: 3px; border: 3px solid grey; border-radius: 30px; margin-right: 10%;">
+                <button tabindex="0" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" aria-label="<?php _e('Toggle navigation', 'accessmeter'); ?>" style="background-color: <?php echo get_option('basic_color_mode', 'green'); ?>; padding: 3px; border: 3px solid grey; border-radius: 30px; margin-right: 10%;">
                     <i class="bi bi-universal-access-circle text-white" style="font-size: 1.7rem;"></i>
                 </button>
             </div>
