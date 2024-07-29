@@ -22,7 +22,7 @@ get_header();
             </div>
 
             <!-- Main Content Column -->
-            <div class="col-12 col-md-6" style="overflow-y: auto; height: 100%; padding-top: 70px;">
+            <div id="progress-bar-content" class="col-12 col-md-6" style="overflow-y: auto; height: 100%; padding-top: 70px;">
                 <div tabindex="0">
                     <div class="breadcrumb-container">
                         <?php $breadcrumb_code = get_option('breadcrumb_code'); if ($breadcrumb_code) { echo $breadcrumb_code;} ?>
@@ -64,6 +64,41 @@ get_header();
             </div>
         </div><!-- .row -->
     </div><!-- .container -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+(function ($) {
+    function updateProgressBar() {
+        // Get the main content element
+        var $contentElement = $('#progress-bar-content');
+        
+        if ($contentElement.length === 0) return; // Exit if the element is not found
+
+        // Calculate scroll position and height
+        var scrollTop = $contentElement.scrollTop();
+        var scrollHeight = $contentElement[0].scrollHeight;
+        var clientHeight = $contentElement[0].clientHeight;
+        var height = scrollHeight - clientHeight;
+        var scrolled = (scrollTop / height) * 100;
+
+        // Get the progress bar element
+        var $progressBar = $("#progress-bar");
+        if ($progressBar.length) {
+            // Update the progress bar width
+            $progressBar.css('width', (scrolled >= 99.9 ? 100 : scrolled) + "%");
+        }
+    }
+
+    // Attach event listeners
+    $(document).ready(function() {
+        var $contentElement = $('#progress-bar-content');
+        if ($contentElement.length) {
+            $contentElement.on('scroll', updateProgressBar);
+            $(window).on('resize', updateProgressBar);
+            updateProgressBar(); // Initial update on page load
+        }
+    });
+})(jQuery);
+</script>
 </main><!-- #main -->
 
 <?php

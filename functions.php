@@ -359,7 +359,6 @@ add_action('init', 'accessmeter_load_woocommerce');
 add_action('admin_init', 'my_theme_settings_init');
 function my_theme_settings_init() {
     register_setting('my_theme_settings', 'menu_mode', 'sanitize_text_field');
-    register_setting('my_theme_settings', 'header_position', 'sanitize_text_field');
     register_setting('my_theme_settings', 'basic_color_mode', 'sanitize_text_field');
     register_setting('my_theme_settings', 'header_color', 'sanitize_text_field');
     register_setting('my_theme_settings', 'body_sidebar', 'sanitize_text_field');
@@ -520,15 +519,6 @@ function accessmeter_theme_settings_page() {
                         <select name="menu_mode">
                             <option value="expanded" <?php selected(get_option('menu_mode'), 'expanded'); ?>><?php _e('Expanded', 'accessmeter'); ?></option>
                             <option value="collapsed" <?php selected(get_option('menu_mode'), 'collapsed'); ?>><?php _e('Collapsed', 'accessmeter'); ?></option> 
-                        </select>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><?php _e('Header Position', 'accessmeter'); ?></th>
-                    <td>
-                        <select name="header_position">
-                            <option value="fixed-top" <?php selected(get_option('header_position'), 'fixed-top'); ?>><?php _e('Fixed => always at top', 'accessmeter'); ?></option>
-                            <option value="static-top" <?php selected(get_option('header_position'), 'static-top'); ?>><?php _e('Static => scrolls with page', 'accessmeter'); ?></option> 
                         </select>
                     </td>
                 </tr>
@@ -750,13 +740,6 @@ function get_footer_mode() {
     // Get the user's choice from the database; default to 'expanded' if not set
     $footer_mode = get_option('footer_mode', 'expanded');
     return $footer_mode;
-}
-
-//Header position functions
-function get_header_position() {
-    // Get the user’s choice from the database; default to 'fixed-top' if not set
-    $header_position = get_option('header_position', 'fixed-top');
-    return $header_position;
 }
 
 //Header color
