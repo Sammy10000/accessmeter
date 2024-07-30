@@ -22,7 +22,7 @@ get_header();
             </div>
 
             <!-- Main Content Column -->
-            <div id="progress-bar-content" class="col-12 col-md-6" style="overflow-y: auto; height: 100%; padding-top: 70px; padding-bottom: 120px;">
+            <div id="progress-bar-content" class="col-12 col-md-6" style="overflow-y: auto; height: 100%; padding-top: 70px; padding-bottom: 200px;">
                 <div tabindex="0">
                     <div class="breadcrumb-container">
                         <?php $breadcrumb_code = get_option('breadcrumb_code'); if ($breadcrumb_code) { echo $breadcrumb_code;} ?>

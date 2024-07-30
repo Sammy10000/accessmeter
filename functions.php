@@ -785,48 +785,85 @@ function get_footer_credits() {
         esc_html($footer_credits)
     );
 }
-
+//Sidebar Layout
 function control_sidebar_layout() {
     $selected_option = get_option('body_sidebar');
   
     if ($selected_option == 'left') {
-      // Hide right sidebar and expand content
-      echo '<style>
-        .col-md-3:last-child {
-          display: none;
-        }
-        #progress-bar-content {
-          flex: 0 0 75%;
-          max-width: 75%;
-        }
-      </style>';
+        // Hide right sidebar and expand content
+        echo '<style>
+          .col-md-3:last-child {
+            display: none;
+          }
+          #progress-bar-content {
+            flex: 0 0 75%;
+            max-width: 75%;
+          }
+          @media (max-width: 991px) { /* Tablets and below */
+            .col-md-3 {
+              display: none;
+            }
+            #progress-bar-content {
+              flex: 0 0 100%;
+              max-width: 100%;
+            }
+          }
+        </style>';
     } elseif ($selected_option == 'right') {
-      // Hide left sidebar and expand content
-      echo '<style>
-        .col-md-3:first-child {
-          display: none;
-        }
-        #progress-bar-content {
-          flex: 0 0 75%;
-          max-width: 75%;
-        }
-      </style>';
+        // Hide left sidebar and expand content
+        echo '<style>
+          .col-md-3:first-child {
+            display: none;
+          }
+          #progress-bar-content {
+            flex: 0 0 75%;
+            max-width: 75%;
+          }
+          @media (max-width: 991px) { /* Tablets and below */
+            .col-md-3 {
+              display: none;
+            }
+            #progress-bar-content {
+              flex: 0 0 100%;
+              max-width: 100%;
+            }
+          }
+        </style>';
     } elseif ($selected_option == 'none') {
-      // Hide both sidebars and expand content
-      echo '<style>
-        .col-md-3 {
-          display: none;
-        }
-        #progress-bar-content {
-          flex: 0 0 100%;
-          max-width: 100%;
-        }
-      </style>';
+        // Hide both sidebars and expand content
+        echo '<style>
+          .col-md-3 {
+            display: none;
+          }
+          #progress-bar-content {
+            flex: 0 0 100%;
+            max-width: 100%;
+          }
+          @media (max-width: 991px) { /* Tablets and below */
+            .col-md-3 {
+              display: none;
+            }
+            #progress-bar-content {
+              flex: 0 0 100%;
+              max-width: 100%;
+            }
+          }
+        </style>';
     } else {
-      // Do nothing, keep default layout
+        // Do nothing, keep default layout
+        echo '<style>
+          @media (max-width: 991px) { /* Tablets and below */
+            .col-md-3 {
+              display: none;
+            }
+            #progress-bar-content {
+              flex: 0 0 100%;
+              max-width: 100%;
+            }
+          }
+        </style>';
     }
-  }
-  
+}
 
 // Function to get Google Analytics script
 function accessmeter_google_analytics_script() {
