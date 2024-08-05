@@ -77,7 +77,7 @@
     <div class="collapse <?php echo ($menu_mode === 'expanded' || $menu_mode === 'always-expanded') ? 'show' : ''; ?>" id="header-collapse">
         <div class="row no-gutters">
             <div class="col-12">
-                <nav class="navbar navbar-expand-lg bg-dark" style="border-bottom: 5px double <?php echo get_option('basic_color_mode', 'green')?>;">
+                <nav class="navbar navbar-expand-lg bg-dark pb-0" style="border-bottom: 5px double; height: 50px; <?php echo get_option('basic_color_mode', 'green')?>;">
                     <div class="container-fluid">
     <div class="container-fluid px-0">
         <div class="row g-0 h-100">
@@ -112,7 +112,7 @@
             </div>
             <div class="col-12 col-lg-4">
                 <form class="d-flex w-100 h-60 align-items-center justify-content-center" role="search">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="flex: 1; height: 3.0rem;">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" style="flex: 1; height: 2.5rem;">
                     <button class="btn text-light m-1" type="submit" style="background-color: <?php echo get_option('basic_color_mode', 'green'); ?>;">Search</button>
                 </form>
             </div>

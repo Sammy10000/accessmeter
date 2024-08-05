@@ -16,7 +16,7 @@
         <div class="text-center">
             <!-- Toggle Button -->
             <button tabindex="0" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#footer-collapse" aria-controls="footer-collapse" aria-expanded="false" aria-label="<?php _e('Toggle footer', 'accessmeter'); ?>" style="border: 3px solid grey; padding: 3px; background-color: <?php echo get_option('basic_color_mode', 'green');?>; border-radius: 5px; right: 50%;">
-                <i class="bi bi-chevron-down text-white" style="font-size: 1.50rem;"></i>
+                <i class="bi bi-chevron-up text-white" style="font-size: 1.50rem;"></i>
             </button>
         </div>
 

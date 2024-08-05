@@ -15,7 +15,7 @@ get_header();
         <div class="row" style="height: 100vh; overflow: hidden;">
             
             <!-- Sidebar-1 Column -->
-            <div class="col-12 col-md-3" style="overflow-y: auto; height: 100%; padding-top: 70px; padding-bottom: 120px;">
+            <div class="col-12 col-md-3" style="overflow-y: auto; height: 100%; padding-top: 70px; padding-bottom: 120px; border-right: 7px double <?php echo get_option('basic_color_mode', 'green'); ?>;">
                 <?php if ( is_active_sidebar( 'sidebar-1' ) ) : ?>
                     <?php dynamic_sidebar( 'sidebar-1' ); ?>
                 <?php endif; ?>

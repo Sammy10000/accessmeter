@@ -501,7 +501,7 @@ function accessmeter_theme_settings_page() {
                             <option value="darkblue" <?php selected(get_option('basic_color_mode'), 'darkblue'); ?>><?php _e('Blue', 'accessmeter'); ?></option>
                             <option value="green" <?php selected(get_option('basic_color_mode'), 'green'); ?>><?php _e('Green', 'accessmeter'); ?></option>
                         </select>
-                        <p class="description"><?php _e('Select a color for the scroll progress bar.', 'accessmeter'); ?></p>
+                        <p class="description"><?php _e('Select a minimalist color mode for your theme.', 'accessmeter'); ?></p>
                     </td>
                 </tr>                                
                 <tr valign="top">
@@ -528,6 +528,15 @@ function accessmeter_theme_settings_page() {
                     </td>
                 </tr>
                 <tr valign="top">
+                    <th scope="row"><?php _e('Default Body Color Mode', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="body_mode">
+                            <option value="dark" <?php selected(get_option('body_mode'), 'dark'); ?>><?php _e('Dark', 'accessmeter'); ?></option>
+                            <option value="light" <?php selected(get_option('body_mode'), 'light'); ?>><?php _e('Light', 'accessmeter'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
                     <th scope="row"><?php _e('Body Sidebar', 'accessmeter'); ?></th>
                     <td>
                         <select name="body_sidebar">
@@ -537,16 +546,7 @@ function accessmeter_theme_settings_page() {
                             <option value="none" <?php selected(get_option('body_sidebar'), 'none'); ?>><?php _e('No Sidebar', 'accessmeter'); ?></option>
                         </select>
                     </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><?php _e('Body Mode', 'accessmeter'); ?></th>
-                    <td>
-                        <select name="body_mode">
-                            <option value="dark" <?php selected(get_option('body_mode'), 'dark'); ?>><?php _e('Dark', 'accessmeter'); ?></option>
-                            <option value="light" <?php selected(get_option('body_mode'), 'light'); ?>><?php _e('Light', 'accessmeter'); ?></option>
-                        </select>
-                    </td>
-                </tr>
+                </tr>                
                 <tr valign="top">
                     <th scope="row"><?php _e('Footer Position', 'accessmeter'); ?></th>
                     <td>
@@ -718,8 +718,8 @@ function get_header_color() {
 
 //Footer position functions
 function get_footer_position() {
-    // Get the user’s choice from the database; default to 'static-bottom' if not set
-    $footer_position = get_option('footer_position', 'static-bottom');
+    // Get the user’s choice from the database; default to 'fixed-bottom' if not set
+    $footer_position = get_option('footer_position', 'fixed-bottom');
     return $footer_position;
 }
 
