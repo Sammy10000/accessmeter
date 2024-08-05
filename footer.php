@@ -14,20 +14,14 @@
     <div class="container">
         <!-- Collapse/Expand Toggler -->
         <div class="text-center">
-            <?php
-            // Get footer mode from options
-            $footer_mode = get_footer_mode();
-            ?>
-            <?php if ($footer_mode !== 'always-expanded'): ?>
-                <!-- Toggle Button -->
-                <button tabindex="0" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#footer-collapse" aria-controls="footer-collapse" aria-expanded="<?php echo ($footer_mode === 'expanded') ? 'true' : 'false'; ?>" aria-label="<?php _e('Toggle footer', 'accessmeter'); ?>" style="border: 3px solid grey; padding: 3px; background-color: <?php echo get_option('basic_color_mode', 'green');?>; border-radius: 5px; right: 50%;">
-                    <i class="bi bi-chevron-<?php echo ($footer_mode === 'expanded') ? 'up' : 'down'; ?> text-white" style="font-size: 1.50rem;"></i>
-                </button>
-            <?php endif; ?>
+            <!-- Toggle Button -->
+            <button tabindex="0" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#footer-collapse" aria-controls="footer-collapse" aria-expanded="false" aria-label="<?php _e('Toggle footer', 'accessmeter'); ?>" style="border: 3px solid grey; padding: 3px; background-color: <?php echo get_option('basic_color_mode', 'green');?>; border-radius: 5px; right: 50%;">
+                <i class="bi bi-chevron-down text-white" style="font-size: 1.50rem;"></i>
+            </button>
         </div>
 
         <!-- Collapsible Footer Content -->
-        <div class="collapse <?php echo ($footer_mode === 'expanded' || $footer_mode === 'always-expanded') ? 'show' : ''; ?>" id="footer-collapse">
+        <div class="collapse" id="footer-collapse">
             <div class="row">
                 <?php
                 // Define the footer widget areas

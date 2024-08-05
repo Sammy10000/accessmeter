@@ -363,7 +363,6 @@ function my_theme_settings_init() {
     register_setting('my_theme_settings', 'header_color', 'sanitize_text_field');
     register_setting('my_theme_settings', 'body_sidebar', 'sanitize_text_field');
     register_setting('my_theme_settings', 'body_mode', 'sanitize_text_field');
-    register_setting('my_theme_settings', 'footer_mode', 'sanitize_text_field');
     register_setting('my_theme_settings', 'footer_position', 'sanitize_text_field');
     register_setting('my_theme_settings', 'footer_color', 'sanitize_text_field');
     register_setting('my_theme_settings', 'footer_widgets', 'sanitize_text_field');
@@ -371,7 +370,6 @@ function my_theme_settings_init() {
     register_setting('my_theme_settings', 'accessmeter_language', 'sanitize_text_field');
     register_setting('my_theme_settings', 'breadcrumb_code', 'sanitize_textarea_field');
     register_setting('my_theme_settings', 'woocommerce_enabled', 'sanitize_text_field');
-    register_setting('my_theme_settings', 'footer_mode_enabled', 'sanitize_text_field');
     register_setting('my_theme_settings', 'google_analytics_script', 'sanitize_js_code');
     register_setting('my_theme_settings', 'site_verification_code', 'sanitize_text_field');
     register_setting('my_theme_settings', 'marketing_pixel_code', 'sanitize_js_code');
@@ -493,13 +491,6 @@ function accessmeter_theme_settings_page() {
                     </td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><?php _e('Enable Footer Mode', 'accessmeter'); ?></th>
-                    <td>
-                        <input type="checkbox" name="footer_mode_enabled" value="1" <?php checked(get_option('footer_mode_enabled'), 1); ?>>
-                        <label for="footer_mode_enabled"><?php _e('Enable Collapse/Expand of the Footer.', 'accessmeter'); ?></label>
-                    </td>
-                </tr>
-                <tr valign="top">
                     <th scope="row"><?php _e('Basic Color Scheme', 'accessmeter'); ?></th>
                     <td>
                         <select name="basic_color_mode">
@@ -553,15 +544,6 @@ function accessmeter_theme_settings_page() {
                         <select name="body_mode">
                             <option value="dark" <?php selected(get_option('body_mode'), 'dark'); ?>><?php _e('Dark', 'accessmeter'); ?></option>
                             <option value="light" <?php selected(get_option('body_mode'), 'light'); ?>><?php _e('Light', 'accessmeter'); ?></option>
-                        </select>
-                    </td>
-                </tr>
-                <tr valign="top">
-                    <th scope="row"><?php _e('Footer Mode', 'accessmeter'); ?></th>
-                    <td>
-                        <select name="footer_mode">
-                            <option value="collapsed" <?php selected(get_option('footer_mode'), 'collapsed'); ?>><?php _e('Collapsed', 'accessmeter'); ?></option>
-                            <option value="expanded" <?php selected(get_option('footer_mode'), 'expanded'); ?>><?php _e('Expanded', 'accessmeter'); ?></option>
                         </select>
                     </td>
                 </tr>
@@ -722,22 +704,6 @@ function get_menu_mode() {
     }
 
     return get_option('menu_mode', 'expanded');
-}
-
-// Function to check if the footer mode is enabled
-function is_footer_mode_enabled() {
-    return (bool) get_option('footer_mode_enabled', 0);
-}
-
-// Footer mode functions
-function get_footer_mode() {
-    if (!is_footer_mode_enabled()) {
-        return 'always-expanded';
-    }
-
-    // Get the user's choice from the database; default to 'expanded' if not set
-    $footer_mode = get_option('footer_mode', 'expanded');
-    return $footer_mode;
 }
 
 //Header color
