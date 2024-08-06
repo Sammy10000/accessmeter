@@ -62,9 +62,7 @@
     </div>
     <!-- .footer-credits -->
 </footer><!-- #colophon -->
-
 <?php wp_footer(); ?>
-
 <?php
     // Inject marketing pixel code
     accessmeter_marketing_pixel_code();

@@ -593,28 +593,28 @@ function accessmeter_theme_settings_page() {
                     <th scope="row"><?php _e('Cookie Consent', 'accessmeter'); ?></th>
                     <td>
                         <input type="checkbox" name="cookie_consent" value="1" <?php checked(get_option('cookie_consent'), 1); ?>>
-                        <p style="width: 500px" class="description"><?php _e('Enable or disable the default cookie consent modal.', 'accessmeter'); ?></p>
+                        <p class="description"><?php _e('Enable or disable the default cookie consent modal.', 'accessmeter'); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row"><?php _e('Cookie Consent Custom Text', 'accessmeter'); ?></th>
                     <td>
-                        <textarea name="cookie_consent_custom_text" rows="5" style="width: 500px" class="large-text"><?php echo esc_textarea(get_option('cookie_consent_custom_text')); ?></textarea>
-                        <p style="width: 500px" class="description"><?php _e('Enter custom text for the cookie consent modal. Leave empty to use the default text.', 'accessmeter'); ?></p>
+                        <textarea name="cookie_consent_custom_text" style="width: 500px;" rows="5" class="large-text"><?php echo esc_textarea(get_option('cookie_consent_custom_text')); ?></textarea>
+                        <p class="description"><?php _e('Enter custom text for the cookie consent modal. Leave empty to use the default text.', 'accessmeter'); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row"><?php _e('GDPR Compliance', 'accessmeter'); ?></th>
                     <td>
                         <input type="checkbox" name="gdpr_compliance" value="1" <?php checked(get_option('gdpr_compliance'), 1); ?>>
-                        <p style="width: 500px" class="description"><?php _e('Enable or disable the default GDPR compliance modal.', 'accessmeter'); ?></p>
+                        <p class="description"><?php _e('Enable or disable the default GDPR compliance modal.', 'accessmeter'); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
                     <th scope="row"><?php _e('GDPR Compliance Custom Text', 'accessmeter'); ?></th>
                     <td>
-                        <textarea name="gdpr_compliance_custom_text" rows="5" style="width: 500px" class="large-text"><?php echo esc_textarea(get_option('gdpr_compliance_custom_text')); ?></textarea>
-                        <p style="width: 500px" class="description"><?php _e('Enter custom text for the GDPR compliance modal. Leave empty to use the default text.', 'accessmeter'); ?></p>
+                        <textarea name="gdpr_compliance_custom_text" rows="5" style="width: 500px;" class="large-text"><?php echo esc_textarea(get_option('gdpr_compliance_custom_text')); ?></textarea>
+                        <p class="description"><?php _e('Enter custom text for the GDPR compliance modal. Leave empty to use the default text.', 'accessmeter'); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -622,13 +622,6 @@ function accessmeter_theme_settings_page() {
                     <td>
                     <textarea name="breadcrumb_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('breadcrumb_code')); ?></textarea>
                     <p style="width: 500px" class="description"><?php _e('Paste the breadcrumb snippet from your SEO plugin (e.g., Yoast, Rank Math) here.', 'accessmeter'); ?></p>
-                    </td>
-                </tr>                
-                <tr valign="top">
-                    <th scope="row"><?php _e('Custom JavaScript', 'accessmeter'); ?></th>
-                    <td>
-                        <textarea name="custom_js" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('custom_js')); ?></textarea>
-                        <p style="width: 500px" class="description"><?php _e('Enter custom JavaScript code to extend the functionality of the site here.', 'accessmeter'); ?></p>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -657,6 +650,13 @@ function accessmeter_theme_settings_page() {
                     <td>
                         <textarea name="email_service_provider_code" rows="5" class="large-text" style="width: 500px;"><?php echo esc_textarea(get_option('email_service_provider_code')); ?></textarea>
                         <p style="width: 500px" class="description"><?php _e('Paste your email service provider code here. For example: "Mailchimp code for subscribing users to your email lists.", "ConvertKit code for integrating email marketing forms with your site."', 'accessmeter'); ?></p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Custom JavaScript', 'accessmeter'); ?></th>
+                    <td>
+                        <textarea name="custom_js" rows="5" class="large-text" style="width: 500px; height: 500px;"><?php echo esc_textarea(get_option('custom_js')); ?></textarea>
+                        <p style="width: 500px" class="description"><?php _e('Enter custom JavaScript code to extend the functionality of the site here.', 'accessmeter'); ?></p>
                     </td>
                 </tr>
             </table>
@@ -830,6 +830,135 @@ function control_sidebar_layout() {
         </style>';
     }
 }
+
+function accessmeter_display_consent_modals() {
+    // Fetch user settings
+    $cookie_consent = get_option('cookie_consent');
+    $gdpr_compliance = get_option('gdpr_compliance');
+    $cookie_consent_text = get_option('cookie_consent_custom_text', 'We use cookies to ensure you get the best experience on our website.');
+    $gdpr_compliance_text = get_option('gdpr_compliance_custom_text', 'We require your consent to process your data as per GDPR regulations.');
+
+    // Check if the consent cookies are set
+    $cookie_consent_cookie = isset($_COOKIE['cookie_consent']) ? $_COOKIE['cookie_consent'] : '';
+    $gdpr_consent_cookie = isset($_COOKIE['gdpr_consent']) ? $_COOKIE['gdpr_consent'] : '';
+
+    // Determine whether to show the modal container
+    $show_gdpr = $gdpr_compliance && $gdpr_consent_cookie !== 'accepted';
+    $show_cookie = $cookie_consent && $cookie_consent_cookie !== 'accepted';
+    $show_modal = $show_gdpr || $show_cookie;
+
+    if ($show_modal) : ?>
+        <div id="consentModal" class="consent-modal">
+            <div class="consent-content">
+                <?php if ($show_gdpr) : ?>
+                    <div id="gdprConsentSection">
+                        <p><?php echo esc_html($gdpr_compliance_text); ?></p>
+                        <button id="acceptGDPR" class="button button-primary"><?php _e('Accept GDPR', 'accessmeter'); ?></button>
+                        <button id="declineGDPR" class="button"><?php _e('Decline GDPR', 'accessmeter'); ?></button>
+                    </div>
+                <?php endif; ?>
+                <?php if ($show_cookie) : ?>
+                    <div id="cookieConsentSection">
+                        <p><?php echo esc_html($cookie_consent_text); ?></p>
+                        <button id="acceptAll" class="button button-primary"><?php _e('Accept All Cookies', 'accessmeter'); ?></button>
+                        <button id="acceptNecessary" class="button"><?php _e('Accept Necessary Cookies', 'accessmeter'); ?></button>
+                    </div>
+                <?php endif; ?>                
+            </div>
+        </div>
+        <style>
+            .consent-modal {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: #333;
+                color: #fff;
+                padding: 20px;
+                text-align: center;
+                z-index: 9999;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+                display: none; /* Start hidden */
+            }
+            .consent-modal .consent-content {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            .consent-modal .button {
+                margin: 5px;
+                padding: 10px 20px;
+                border: none;
+                cursor: pointer;
+                width: 300px;
+                border-radius: 7px;
+            }
+            .consent-modal .button-primary {
+                background-color: #0073aa;
+                color: #fff;
+            }
+            .consent-modal .button:hover {
+                background-color: #005177;
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var consentModal = document.getElementById('consentModal');
+                var gdprConsentSection = document.getElementById('gdprConsentSection');
+                var cookieConsentSection = document.getElementById('cookieConsentSection');
+
+                // Function to set cookies
+                function setCookie(name, value, days) {
+                    var expires = "";
+                    if (days) {
+                        var date = new Date();
+                        date.setTime(date.getTime() + (days*24*60*60*1000));
+                        expires = "; expires=" + date.toUTCString();
+                    }
+                    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+                }
+
+                // Function to check if the modal should be hidden
+                function checkAndHideModal() {
+                    if ((cookieConsentSection && cookieConsentSection.style.display !== 'none') ||
+                        (gdprConsentSection && gdprConsentSection.style.display !== 'none')) {
+                        return; // Keep modal visible if any section is still shown
+                    }
+                    consentModal.style.display = 'none';
+                }
+
+                // Initialize modal display based on user settings
+                consentModal.style.display = 'block';
+
+                // Add event listeners for buttons
+                document.getElementById('acceptAll')?.addEventListener('click', function() {
+                    setCookie('cookie_consent', 'accepted', 365);
+                    cookieConsentSection.style.display = 'none';
+                    checkAndHideModal();
+                });
+
+                document.getElementById('acceptNecessary')?.addEventListener('click', function() {
+                    setCookie('cookie_consent', 'necessary', 365);
+                    cookieConsentSection.style.display = 'none';
+                    checkAndHideModal();
+                });
+
+                document.getElementById('acceptGDPR')?.addEventListener('click', function() {
+                    setCookie('gdpr_consent', 'accepted', 365);
+                    gdprConsentSection.style.display = 'none';
+                    checkAndHideModal();
+                });
+
+                document.getElementById('declineGDPR')?.addEventListener('click', function() {
+                    setCookie('gdpr_consent', 'declined', 365);
+                    gdprConsentSection.style.display = 'none';
+                    checkAndHideModal();
+                });
+            });
+        </script>
+    <?php endif;
+}
+add_action('wp_footer', 'accessmeter_display_consent_modals');
+
 
 // Function to get Google Analytics script
 function accessmeter_google_analytics_script() {
