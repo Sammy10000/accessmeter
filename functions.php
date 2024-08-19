@@ -196,26 +196,56 @@ function accessmeter_widgets_init() {
 }
 add_action( 'widgets_init', 'accessmeter_widgets_init' );
 
+//Register Woocommerce specific sidebars
+function mytheme_register_woocommerce_sidebars() {
+    // Register Left Sidebar for WooCommerce
+    register_sidebar(array(
+        'name'          => __('WooCommerce Left Sidebar', 'your-theme'),
+        'id'            => 'woocommerce-left-sidebar',
+        'description'   => __('Widgets in this area will be shown on the left side of WooCommerce pages.', 'your-theme'),
+        'before_widget' => '<div class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ));
+
+    // Register Right Sidebar for WooCommerce
+    register_sidebar(array(
+        'name'          => __('WooCommerce Right Sidebar', 'your-theme'),
+        'id'            => 'woocommerce-right-sidebar',
+        'description'   => __('Widgets in this area will be shown on the right side of WooCommerce pages.', 'your-theme'),
+        'before_widget' => '<div class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ));
+}
+add_action('widgets_init', 'mytheme_register_woocommerce_sidebars');
+
 /**
  * Enqueue scripts and styles.
  */
 function accessmeter_scripts() {
-	wp_enqueue_style( 'accessmeter-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'accessmeter-style', 'rtl', 'replace' );
+    wp_enqueue_style('accessmeter-style', get_stylesheet_uri(), array(), _S_VERSION);
+    wp_style_add_data('accessmeter-style', 'rtl', 'replace');
 
-	wp_enqueue_script( 'accessmeter-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+    wp_enqueue_script('accessmeter-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
 
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
+    // Enqueue custom script handle
+    wp_enqueue_script('accessmeter-custom-script', get_template_directory_uri() . '/js/custom.js', array('jquery'), null, true);
+
+    // Add inline script from settings
+    $custom_js = get_option('custom_js');
+    if (!empty($custom_js)) {
+        wp_add_inline_script('accessmeter-custom-script', $custom_js);
+    }
+
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
 }
-add_action( 'wp_enqueue_scripts', 'accessmeter_scripts' );
+add_action('wp_enqueue_scripts', 'accessmeter_scripts');
 
-function my_custom_theme_scripts() {
-    wp_enqueue_style('my-custom-style', get_template_directory_uri() . '/css/custom.css');
-    wp_enqueue_script('my-custom-script', get_template_directory_uri() . '/js/custom.js', array('jquery'), null, true);
-}
-add_action('wp_enqueue_scripts', 'my_custom_theme_scripts');
 
 function enqueue_bootstrap() {
     // Enqueue Bootstrap CSS
@@ -361,7 +391,9 @@ function my_theme_settings_init() {
     register_setting('my_theme_settings', 'menu_mode', 'sanitize_text_field');
     register_setting('my_theme_settings', 'basic_color_mode', 'sanitize_text_field');
     register_setting('my_theme_settings', 'header_color', 'sanitize_text_field');
-    register_setting('my_theme_settings', 'body_sidebar', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'body_sidebar_posts', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'body_sidebar_pages', 'sanitize_text_field');
+    register_setting('my_theme_settings', 'body_sidebar_woocommerce', 'sanitize_text_field');
     register_setting('my_theme_settings', 'body_mode', 'sanitize_text_field');
     register_setting('my_theme_settings', 'footer_position', 'sanitize_text_field');
     register_setting('my_theme_settings', 'footer_color', 'sanitize_text_field');
@@ -385,18 +417,10 @@ function my_theme_settings_init() {
  * Custom sanitization functions for JavaScript code fields.
  */
 function sanitize_js_code($input) {
-    return wp_kses($input, array(
-        'script' => array(
-            'type' => true,
-            'src' => true,
-            'async' => true,
-            'defer' => true,
-            'crossorigin' => true,
-            'integrity' => true
-        ),
-        'noscript' => array(),
-    ));
+    // Allow any character for JavaScript code
+    return trim($input); // Basic sanitization; JavaScript is allowed
 }
+
 
 /**
  * Add settings page
@@ -537,16 +561,39 @@ function accessmeter_theme_settings_page() {
                     </td>
                 </tr>
                 <tr valign="top">
-                    <th scope="row"><?php _e('Body Sidebar', 'accessmeter'); ?></th>
+                    <th scope="row"><?php _e('Body Sidebar for Posts', 'accessmeter'); ?></th>
                     <td>
-                        <select name="body_sidebar">
-                            <option value="left" <?php selected(get_option('body_sidebar'), 'left'); ?>><?php _e('Left Sidebar', 'accessmeter'); ?></option>
-                            <option value="right" <?php selected(get_option('body_sidebar'), 'right'); ?>><?php _e('Right Sidebar', 'accessmeter'); ?></option>
-                            <option value="both" <?php selected(get_option('body_sidebar'), 'both'); ?>><?php _e('Both Sidebars', 'accessmeter'); ?></option>
-                            <option value="none" <?php selected(get_option('body_sidebar'), 'none'); ?>><?php _e('No Sidebar', 'accessmeter'); ?></option>
+                        <select name="body_sidebar_posts">
+                            <option value="left" <?php selected(get_option('body_sidebar_posts'), 'left'); ?>><?php _e('Left Sidebar', 'accessmeter'); ?></option>
+                            <option value="right" <?php selected(get_option('body_sidebar_posts'), 'right'); ?>><?php _e('Right Sidebar', 'accessmeter'); ?></option>
+                            <option value="both" <?php selected(get_option('body_sidebar_posts'), 'both'); ?>><?php _e('Both Sidebars', 'accessmeter'); ?></option>
+                            <option value="none" <?php selected(get_option('body_sidebar_posts'), 'none'); ?>><?php _e('No Sidebar', 'accessmeter'); ?></option>
                         </select>
                     </td>
-                </tr>                
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Body Sidebar for Pages', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="body_sidebar_pages">
+                            <option value="left" <?php selected(get_option('body_sidebar_pages'), 'left'); ?>><?php _e('Left Sidebar', 'accessmeter'); ?></option>
+                            <option value="right" <?php selected(get_option('body_sidebar_pages'), 'right'); ?>><?php _e('Right Sidebar', 'accessmeter'); ?></option>
+                            <option value="both" <?php selected(get_option('body_sidebar_pages'), 'both'); ?>><?php _e('Both Sidebars', 'accessmeter'); ?></option>
+                            <option value="none" <?php selected(get_option('body_sidebar_pages'), 'none'); ?>><?php _e('No Sidebar', 'accessmeter'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row"><?php _e('Body Sidebar for WooCommerce', 'accessmeter'); ?></th>
+                    <td>
+                        <select name="body_sidebar_woocommerce">
+                            <option value="left" <?php selected(get_option('body_sidebar_woocommerce'), 'left'); ?>><?php _e('Left Sidebar', 'accessmeter'); ?></option>
+                            <option value="right" <?php selected(get_option('body_sidebar_woocommerce'), 'right'); ?>><?php _e('Right Sidebar', 'accessmeter'); ?></option>
+                            <option value="both" <?php selected(get_option('body_sidebar_woocommerce'), 'both'); ?>><?php _e('Both Sidebars', 'accessmeter'); ?></option>
+                            <option value="none" <?php selected(get_option('body_sidebar_woocommerce'), 'none'); ?>><?php _e('No Sidebar', 'accessmeter'); ?></option>
+                        </select>
+                    </td>
+                </tr>
+                
                 <tr valign="top">
                     <th scope="row"><?php _e('Footer Position', 'accessmeter'); ?></th>
                     <td>
@@ -751,10 +798,20 @@ function get_footer_credits() {
         esc_html($footer_credits)
     );
 }
+
 //Sidebar Layout
 function control_sidebar_layout() {
-    $selected_option = get_option('body_sidebar');
-  
+    if (is_single()) {
+        $selected_option = get_option('body_sidebar_posts');
+    } elseif (is_page()) {
+        $selected_option = get_option('body_sidebar_pages');
+    } elseif (is_woocommerce()) {
+        $selected_option = get_option('body_sidebar_woocommerce');
+    } else {
+        // Default to no sidebar if none of the conditions match
+        $selected_option = 'none';
+    }
+
     if ($selected_option == 'left') {
         // Hide right sidebar and expand content
         echo '<style>
@@ -831,6 +888,9 @@ function control_sidebar_layout() {
     }
 }
 
+add_action('wp_head', 'control_sidebar_layout');
+
+// Cookies and GDPR
 function accessmeter_display_consent_modals() {
     // Fetch user settings
     $cookie_consent = get_option('cookie_consent');
@@ -991,6 +1051,16 @@ function accessmeter_email_service_provider_code() {
         echo $email_service_provider_code;
     }
 }
+
+// Retrieve and implement user custom javascript
+function accessmeter_add_custom_js() {
+    $custom_js = get_option('custom_js');
+    if (!empty($custom_js)) {
+        echo '<script type="text/javascript">' . esc_js($custom_js) . '</script>';
+    }
+}
+add_action('wp_footer', 'accessmeter_add_custom_js');
+
 
 /**
  * Implement the Custom Header feature.
