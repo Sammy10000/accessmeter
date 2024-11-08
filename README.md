@@ -1,11 +1,11 @@
 # AccessMeter
 
-A custom WordPress theme designed for maximum accessibility, SEO optimization, and user customization. This theme integrates Lighthouse API by default to help site owners gauge the accessibility of their pages right from the dashboard. Additionally, the theme is WooCommerce-ready and offers a variety of customization options to make it versatile and attractive.
+A custom WordPress theme designed for maximum accessibility, SEO optimization, and user customization. This theme integrates AXE + Lighthouse API by default to help site owners gauge the accessibility of their pages right from the dashboard. Additionally, the theme is WooCommerce-ready, integrates well with popular builders like Elementor, Beaver, Oxygen, and Fusion. It offers a variety of customization options to make it versatile and attractive.
 
 ## Features
 
 ### Accessibility
-- **Lighthouse API Integration**: Provides real-time accessibility scores and suggestions directly within the WordPress dashboard.
+- ** AXE + Lighthouse API Integration**: Provides real-time accessibility scores and suggestions for remedy directly within the WordPress dashboard.
 - **ARIA Attributes**: Proper use of ARIA attributes to improve screen reader accessibility.
 - **Keyboard Navigation**: Ensures all interactive elements are accessible via keyboard navigation.
 - **Color Contrast**: High contrast options to meet WCAG guidelines.
