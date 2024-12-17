@@ -59,4 +59,4 @@ AccessMeter is licensed under the [GNU General Public License v3.0 (GPL-3.0)](ht
 
 ## Support
 
-For **support**, **feedback**, or to **report issues**, please visit our [GitHub Issues page](https://github.com/Sammy10000/accessmeter/issues).
+For **support**, **feedback**, or to **report issues**, please visit our [GitHub Issues page](https://github.com/Sammy10000/accessmeter/issues) or email audit@accessmeter.com.
