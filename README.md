@@ -1,4 +1,4 @@
-# AccessMeter: Real-Time Accessibility Audit for WordPress
+# AccessMeter: Accessibility Audit + Fixes for WordPress
 
 **AccessMeter** is a powerful, open-source WordPress plugin designed to help you build more inclusive websites by providing **real-time automated accessibility audit reports** directly from your WordPress dashboard. Using the latest **A11y APIs** and **Google Lighthouse**, AccessMeter delivers instant feedback on the accessibility of your website, helping you identify and fix issues to create a better user experience for everyone.
 
