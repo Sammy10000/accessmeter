@@ -9,7 +9,7 @@
 - **Detailed Reports**: Access in-depth accessibility reports that help identify issues affecting users with disabilities.
 - **Full Remediation Support**: Not only will AccessMeter highlight accessibility issues, but it also provides full remediation support, including both automated and manual fixes for issues detected during the audit.
   - **Automated Fixes**: AccessMeter suggests automatic fixes for common accessibility issues, such as missing alt text, improper heading structure, and color contrast problems.
-  - **Manual Fixes**: For issues that require manual intervention (e.g., complex form issues or keyboard navigation problems), the plugin provides detailed instructions and recommendations on how to resolve them.
+  - **Manual Fixes**: For issues that require manual intervention (e.g., complex form issues or keyboard navigation problems), the plugin provides a simplified interface to help professionals and site owners quickly fix them.
 - **Easy to Use**: Simple, user-friendly interface for beginners and professionals alike.
 - **Free and Open-Source**: Licensed under the GPL, free for anyone to use, modify, and contribute.
 
