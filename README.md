@@ -1,10 +1,10 @@
 # AccessMeter: Accessibility Audit + Fixes for WordPress
 
-**AccessMeter** is a powerful, open-source WordPress plugin designed to help you build more inclusive websites by providing **real-time automated accessibility audit reports** directly from your WordPress dashboard. Using the latest **A11y APIs** and **Google Lighthouse**, AccessMeter delivers instant feedback on the accessibility of your website, helping you identify and fix issues to create a better user experience for everyone.
+**AccessMeter** is a powerful, open-source WordPress plugin designed to help you build more inclusive websites by providing **real-time automated accessibility audit reports** directly from your WordPress dashboard. Using a unified audit report powered by **AXE Core**, **Google Lighthouse**, and **Pa11y**, AccessMeter delivers instant feedback on the accessibility of your website, helping you identify and fix issues to create a better user experience for everyone.
 
 ## Key Features
 
-- **Automated Accessibility Audits**: Get real-time, automated accessibility reports using the AXE and Lighthouse APIs.
+- **Automated Accessibility Audits**: Get real-time, automated accessibility reports using a unified API built on AXE Core, Lighthouse, and Pa11y.
 - **Instant Feedback**: Receive immediate accessibility insights directly from your WordPress dashboard, allowing you to fix issues quickly.
 - **Detailed Reports**: Access in-depth accessibility reports that help identify issues affecting users with disabilities.
 - **Full Remediation Support**: Not only will AccessMeter highlight accessibility issues, but it also provides full remediation support, including both automated and manual fixes for issues detected during the audit.
@@ -19,8 +19,9 @@ Creating an accessible website isn’t just about compliance; it’s about ensur
 
 ### Built With
 
-- **AXE Accessibility API**
+- **AXE Core**
 - **Google Lighthouse**
+- **Pa11y**
 - **WordPress Plugin Development**
 
 ## Installation
@@ -60,3 +61,4 @@ AccessMeter is licensed under the [GNU General Public License v3.0 (GPL-3.0)](ht
 ## Support
 
 For **support**, **feedback**, or to **report issues**, please visit our [GitHub Issues page](https://github.com/Sammy10000/accessmeter/issues) or email audit@accessmeter.com.
+
