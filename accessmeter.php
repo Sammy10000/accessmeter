@@ -34,7 +34,7 @@ add_action('admin_enqueue_scripts', 'enqueue_custom_ajax_script'); // Use admin_
 // Add a menu item
 function accessmeter_admin_menu() {
     add_menu_page(
-        'AccessMeter', 'AccessMeter', 'manage_options', 'accessmeter-dashboard',
+        'Accessmeter', 'Accessmeter', 'manage_options', 'accessmeter-dashboard',
         'accessmeter_dashboard', 'dashicons-universal-access-alt', 2.000006756455
     );
 
@@ -50,7 +50,7 @@ function accessmeter_admin_menu() {
 }
 add_action('admin_menu', 'accessmeter_admin_menu');
 
-// Disable WordPress notifications on the AccessMeter page
+// Disable WordPress notifications on the Accessmeter page
 function accessmeter_hide_wp_notices() {
     if (isset($_GET['page']) && strpos($_GET['page'], 'accessmeter') !== false) {
         remove_all_actions('admin_notices');

@@ -22,7 +22,8 @@ Creating an accessible website isn’t just about compliance; it’s about ensur
 - **AXE Core**
 - **Google Lighthouse**
 - **Pa11y**
-- **WordPress Plugin Development**
+- **Puppeteer**
+- **Bootstrap**
 
 ## Installation
 

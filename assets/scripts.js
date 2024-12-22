@@ -164,6 +164,20 @@ document.addEventListener('DOMContentLoaded', function () {
             button.setAttribute('aria-live', 'polite');
         });
     }
+
+    // New script to handle modal show and hide events
+    const collapseButton = document.querySelector('.collapse-button-icon');
+    const modal = document.getElementById('staticBackdrop');
+
+    // Listen for the modal show event
+    modal.addEventListener('show.bs.modal', () => {
+        collapseButton.click();
+    });
+
+    // Listen for the modal hidden event
+    modal.addEventListener('hidden.bs.modal', () => {
+        collapseButton.click();
+    });
     
     initializeTabs();
     bindRowEvents(document.querySelectorAll('.post-row'));

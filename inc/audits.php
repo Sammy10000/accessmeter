@@ -34,7 +34,7 @@ function accessmeter_audits() {
 
     <div id="automated-audits" class="tab-content" role="tabpanel" aria-labelledby="automated-audits-tab">
         <!-- LAP Content -->
-        <div id="lap-content" class="tab-content" role="tabpanel" aria-label="Live audit report for recent posts">
+        <div id="lap-content" role="tabpanel" aria-label="Live audit report for recent posts">
             <table style="width: 100%; border-collapse: separate;">
                 <thead>
                     <tr>
@@ -69,14 +69,13 @@ function accessmeter_audits() {
     </div>
 
     <!-- Modal -->
-    <div class="modal fade mt-4 ms-4" id="staticBackdrop" data-bs-backdrop="true" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal fade ms-4" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-border-green">
             <div class="modal-content bg-dark">
-            <div class="modal-header">
-                <h1 class="modal-title" id="staticBackdropLabel"> Modal title</h1>
-                <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
+                <div class="modal-header">
+                    <h1 class="modal-title" id="staticBackdropLabel">Modal title</h1>
+                    <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
                     <p id="modal-body-content"></p>
                 </div>
@@ -86,7 +85,6 @@ function accessmeter_audits() {
             </div>
         </div>
     </div>
-
 
 <script>
     let loadedPosts = [];
