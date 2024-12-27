@@ -1,6 +1,21 @@
 /* General styles for the admin dashboard */
 h1 {
     color: #fff;
+    font-size: 14px !important;
+}
+
+h2 {
+    color: #fff;
+    font-size: 12px !important;
+}
+
+h3 {
+    color: #fff;
+    font-size: 10px !important;
+}
+
+h4 {
+    color: #fff;
     font-size: 12px !important;
 }
 
@@ -66,6 +81,7 @@ body {
     border-radius: 5px;
     display: block;
     margin: 40px auto;
+    width: 300px !important;
 }
 
 #manual-audit-btn:hover {
@@ -90,7 +106,7 @@ body {
 }
 
 .tab.active:after {
-    content: ' ✔';
+    content: '✔' !important;
     color: white !important;
     font-size: 0.9em;
     margin-left: 5px;
@@ -155,11 +171,11 @@ table tr[role="button"]:focus {
     outline: 3px solid #007A00;
 }
 
-#load-more-lap, #load-more-lighthouse {
+#load-more-lap {
     display: block;
     margin: 20px auto;
     padding: 15px 30px;
-    font-size: 16px;
+    font-size: 100%;
     color: #ffffff;
     background-color: #007A00;
     border: none;
@@ -167,6 +183,7 @@ table tr[role="button"]:focus {
     cursor: pointer;
     text-align: center;
     transition: background-color 0.3s ease;
+    width: 150px !important;
 }
 
 #load-more-lap:hover, #load-more-lighthouse:hover {
@@ -195,18 +212,19 @@ table tr[role="button"]:focus {
 .button {
     background-color: #007A00 !important;
     color: white !important;
+    padding: 10px !important;
+    width: 150px !important;
+    border: 2px solid white !important;
+    font-size: 80% !important;
 }
 
 /* Modal Styles */
-.modal-dialog {
-    width: 80vw;
-    height: 95vh;
-    max-width: none;
+.modal-dialog {    
+    height: 95vh !important;
     max-height: none;
     margin: auto; 
     display: flex;
     align-items: center;
-    justify-content: right;
 }  
 
 .modal-content {
@@ -222,15 +240,68 @@ table tr[role="button"]:focus {
 }
 .modal-footer {
     border-top: none;
+    padding: 0px !important;
 }
 .modal-border-green .modal-content {
     border: 4px solid green;
 }
 .modal {
-    margin-top: 2.2%;
+    margin-top: 10px;
 }
 #lap-content{
     border-top: 1px solid green;
     padding: 20px;
     margin-top: 20px; 
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+}
+h1 {
+    color: #ffffff;
+}
+.accordion-button {
+    font-weight: bold !important;
+    background-color: #333 !important;
+    color: #fff !important;
+    border: 1px solid #444 !important;
+    margin-bottom: 5px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    display: inline-block !important;
+    height: 10% !important;
+}
+.accordion-button:not(.collapsed) {
+    background-color: #555 !important;
+    color: #fff !important;
+}
+.accordion-body {
+    background-color: #222 !important;
+    color: #fff !important;
+    border-bottom: 5px solid #121212 !important;
+    padding: 15px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+.bold {
+    font-weight: bold !important;
+}
+.accordion-item {
+    background-color: #121212 !important;
+}
+
+.accordion-button::after { content: "" !important; color: #ffffff !important; display: inline-block; margin-left: 95% !important; margin-top: -20px !important; transition: transform 0.2s ease-in-out; } .accordion-button.collapsed::after { transform: rotate(0deg); } .accordion-button:not(.collapsed)::after { transform: rotate(180deg); } .accordion-button::after { filter: invert(1);}
+.microcopy-text {
+    color: white !important;
+}
+code {
+    color: #61A1E3 !important;
+    font-weight: bold !important;
+    font-size: 15px !important;
+  }
+/* Custom spinner size */
+.small-spinner .spinner-border {
+    width: 1rem !important;
+    height: 1rem !important;
+    border-width: 0.3em !important;
 }
